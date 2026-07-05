@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATLAS — Istanbul</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Albert+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0C1A1D;
+    --petrol:#14303A;
+    --petrol-2:#1B3D46;
+    --marble:#EDE6D8;
+    --marble-dim:#B9B2A4;
+    --copper:#C08552;
+    --verdigris:#7E9E8F;
+    --line:rgba(237,230,216,.14);
+    --maxw:1120px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--marble);
+    font-family:'Albert Sans',sans-serif;
+    font-weight:300;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--copper);color:var(--ink)}
+  h1,h2,h3,.serif{font-family:'Marcellus',serif;font-weight:400;letter-spacing:.01em}
+  a{color:inherit}
+  button{font-family:inherit;cursor:pointer}
+
+  .eyebrow{
+    font-size:11px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--copper);font-weight:500;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:20px 32px;
+    background:linear-gradient(to bottom, rgba(12,26,29,.92), rgba(12,26,29,0));
+    backdrop-filter:blur(2px);
+  }
+  .logo{font-family:'Marcellus',serif;font-size:20px;letter-spacing:.32em;text-transform:uppercase}
+  .logo span{color:var(--copper)}
+  .nav-right{display:flex;gap:28px;align-items:center;font-size:13px;letter-spacing:.06em}
+  .nav-right a{text-decoration:none;color:var(--marble-dim);transition:color .2s}
+  .nav-right a:hover,.nav-right a:focus-visible{color:var(--marble)}
+  .btn{
+    display:inline-block;border:1px solid var(--copper);color:var(--marble);
+    background:transparent;padding:11px 26px;font-size:13px;letter-spacing:.12em;
+    text-transform:uppercase;text-decoration:none;transition:background .25s,color .25s;
+  }
+  .btn:hover,.btn:focus-visible{background:var(--copper);color:var(--ink)}
+  .btn-solid{background:var(--copper);color:var(--ink)}
+  .btn-solid:hover,.btn-solid:focus-visible{background:#D49664}
+  :focus-visible{outline:2px solid var(--verdigris);outline-offset:3px}
+
+  /* ---------- HERO ---------- */
+  header{
+    min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+    position:relative;
+    background:
+      radial-gradient(ellipse 90% 60% at 70% 110%, rgba(126,158,143,.13), transparent 60%),
+      radial-gradient(ellipse 70% 55% at 20% -10%, rgba(27,61,70,.85), transparent 65%),
+      var(--ink);
+  }
+  header::after{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(237,230,216,.05) 1px, transparent 1px);
+    background-size:26px 26px;
+    mask-image:linear-gradient(to bottom, transparent, black 30%, transparent 95%);
+  }
+  .hero-inner{position:relative;z-index:1;padding-top:80px}
+  .hero-inner .eyebrow{display:block;margin-bottom:28px}
+  h1{
+    font-size:clamp(38px,5.8vw,76px);line-height:1.12;max-width:18ch;
+    color:var(--marble);
+  }
+  .hero-tr{
+    margin-top:18px;font-family:'Marcellus',serif;font-size:clamp(17px,2vw,22px);
+    color:var(--copper);letter-spacing:.02em;
+  }
+  .hero-witness{
+    margin-top:26px;font-size:13px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--verdigris);font-weight:500;
+  }
+  .hero-sub{
+    margin-top:22px;max-width:52ch;font-size:17px;color:var(--marble-dim);
+  }
+  .hero-cta{margin-top:44px;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+  .hero-note{font-size:12px;letter-spacing:.08em;color:var(--marble-dim)}
+  .hero-note b{color:var(--verdigris);font-weight:500}
+
+  /* ---------- MARQUEE STRIP ---------- */
+  .strip{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:16px 0;overflow:hidden;white-space:nowrap;
+    font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--marble-dim);
+  }
+  .strip-track{display:inline-block;animation:slide 38s linear infinite}
+  .strip span{margin:0 34px}
+  .strip i{font-style:normal;color:var(--copper)}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:110px 0}
+  .sec-head{max-width:640px;margin-bottom:64px}
+  .sec-head .eyebrow{display:block;margin-bottom:18px}
+  h2{font-size:clamp(30px,4vw,48px);line-height:1.15}
+  .sec-head p{margin-top:20px;color:var(--marble-dim);font-size:16px}
+
+  /* ---------- CONSTELLATION ---------- */
+  #map{background:linear-gradient(to bottom, var(--ink), #0E2126 55%, var(--ink))}
+  .const-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .const-copy h2{max-width:12ch}
+  .const-copy p{margin-top:22px;color:var(--marble-dim)}
+  .const-copy .lead{color:var(--marble);font-size:18px}
+  #const-caption{
+    margin-top:30px;padding:18px 22px;border-left:2px solid var(--copper);
+    background:rgba(27,61,70,.35);font-size:15px;color:var(--marble);
+    min-height:86px;transition:opacity .2s;
+  }
+  #const-caption .serif{display:block;font-size:17px;margin-bottom:4px;color:var(--copper)}
+  svg text{font-family:'Albert Sans',sans-serif;font-size:11.5px;letter-spacing:.08em;fill:var(--marble-dim);text-transform:uppercase}
+  .node{cursor:pointer}
+  .node circle{fill:var(--petrol-2);stroke:var(--marble-dim);stroke-width:1;transition:all .25s}
+  .node.active circle{fill:var(--copper);stroke:var(--copper)}
+  .node.linked circle{stroke:var(--verdigris);fill:#22454F}
+  .node.active text,.node.linked text{fill:var(--marble)}
+  .edge{stroke:var(--line);stroke-width:1;transition:all .25s}
+  .edge.lit{stroke:var(--verdigris);stroke-width:1.6}
+
+  /* ---------- PILLARS ---------- */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  .pillar{background:var(--ink);padding:38px 30px;transition:background .3s}
+  .pillar:hover{background:var(--petrol)}
+  .pillar .serif{font-size:20px;display:block;margin-bottom:12px}
+  .pillar p{font-size:14px;color:var(--marble-dim)}
+  .pillar .tag{display:inline-block;margin-bottom:18px;font-size:10px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--verdigris);border:1px solid rgba(126,158,143,.4);padding:4px 10px}
+
+  /* ---------- JOURNEY: PHASES ---------- */
+  #journey{background:#0E2126;border-top:1px solid var(--line)}
+  .phases{display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative;margin-bottom:96px}
+  .phases::before{
+    content:'';position:absolute;top:7px;left:calc(100%/12);right:calc(100%/12);
+    height:1px;background:var(--line);
+  }
+  .phase{padding:0 10px;position:relative}
+  .phase .dot{
+    width:15px;height:15px;border-radius:50%;
+    border:1px solid var(--copper);background:var(--ink);
+    margin:0 auto 18px;position:relative;z-index:1;
+  }
+  .phase.solid .dot{background:var(--copper)}
+  .phase h3{font-size:15px;text-align:center;margin-bottom:8px}
+  .phase p{font-size:12.5px;color:var(--marble-dim);text-align:center;line-height:1.55}
+  .phase .tag{
+    display:block;text-align:center;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--verdigris);margin-bottom:6px;font-weight:500;
+  }
+
+  /* ---------- JOURNEY: SPINES ---------- */
+  .goal-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+  .goal-tab{
+    border:1px solid var(--line);background:transparent;color:var(--marble-dim);
+    padding:12px 20px;font-size:13px;letter-spacing:.06em;transition:all .25s;
+  }
+  .goal-tab[aria-selected="true"]{border-color:var(--copper);color:var(--marble);background:rgba(192,133,82,.08)}
+  .goal-tab:hover{color:var(--marble)}
+  .spine-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:48px;align-items:start;margin-bottom:96px}
+  .jspine{position:relative;padding-left:26px}
+  .jspine::before{content:'';position:absolute;left:7px;top:10px;bottom:10px;width:1px;background:var(--line)}
+  .vertebra{position:relative;padding:0 0 26px}
+  .vertebra::before{
+    content:'';position:absolute;left:-26px;top:7px;width:15px;height:15px;border-radius:50%;
+    border:1px solid var(--verdigris);background:var(--ink);
+  }
+  .vertebra.primary::before{background:var(--copper);border-color:var(--copper);box-shadow:0 0 0 4px rgba(192,133,82,.15)}
+  .vertebra .dom{font-family:'Marcellus',serif;font-size:17px}
+  .vertebra.primary .dom{color:var(--copper);font-size:19px}
+  .vertebra .why{font-size:13px;color:var(--marble-dim);max-width:44ch;margin-top:3px}
+  .vertebra .wt{
+    display:inline-block;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--verdigris);margin-top:7px;font-weight:500;
+  }
+  .season-box{border:1px solid var(--line);padding:28px 26px;background:linear-gradient(180deg, rgba(27,61,70,.4), transparent)}
+  .season-box h3{font-size:16px;margin-bottom:4px}
+  .season-box .sub{font-size:12.5px;color:var(--marble-dim);margin-bottom:24px}
+  .track{margin-bottom:18px}
+  .track .lbl{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px}
+  .track .lbl span:last-child{color:var(--marble-dim)}
+  .rail{height:8px;background:rgba(237,230,216,.07);position:relative;overflow:hidden}
+  .fill{
+    position:absolute;top:0;bottom:0;background:var(--verdigris);opacity:.85;
+    transform-origin:left;transition:left .5s ease,width .5s ease;
+  }
+  .fill.copper{background:var(--copper)}
+  .weeks{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.14em;color:var(--marble-dim);margin-top:14px;text-transform:uppercase}
+  .review-note{
+    margin-top:22px;padding-top:18px;border-top:1px solid var(--line);
+    font-size:13px;color:var(--marble-dim);
+  }
+  .review-note strong{color:var(--marble);font-weight:500}
+
+  /* ---------- JOURNEY: LAYERS ---------- */
+  .touch{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  .touch article{background:var(--ink);padding:26px 24px}
+  .touch h3{font-size:16px;margin-bottom:10px;color:var(--copper)}
+  .touch p{font-size:13.5px;color:var(--marble-dim)}
+
+  /* ---------- QUOTE + DISCRETION BANDS ---------- */
+  .band{
+    padding:100px 32px;text-align:center;border-top:1px solid var(--line);
+  }
+  .band .serif{
+    font-size:clamp(23px,3.4vw,38px);max-width:26ch;margin:0 auto;line-height:1.28;display:block;
+  }
+  .band .serif em{color:var(--copper);font-style:normal}
+  .band .eyebrow{display:block;margin-bottom:22px}
+  .band p{margin:22px auto 0;max-width:52ch;color:var(--marble-dim);font-size:15px}
+
+  /* ---------- METHOD (removed, replaced by journey) ---------- */
+
+  /* ---------- MEMBERSHIP ---------- */
+  #membership{background:#0E2126;border-top:1px solid var(--line)}
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;align-items:stretch}
+  .tier{
+    border:1px solid var(--line);padding:40px 32px;display:flex;flex-direction:column;
+    background:var(--ink);transition:transform .3s,border-color .3s;
+  }
+  .tier:hover{transform:translateY(-6px);border-color:rgba(192,133,82,.5)}
+  .tier.featured{border-color:var(--copper);background:linear-gradient(180deg,#182F36,var(--ink))}
+  .tier .serif{font-size:24px}
+  .tier .price{font-family:'Marcellus',serif;font-size:34px;margin:18px 0 4px;color:var(--marble)}
+  .tier .per{font-size:12px;color:var(--marble-dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:24px}
+  .tier ul{list-style:none;margin-bottom:32px;flex:1}
+  .tier li{font-size:14px;color:var(--marble-dim);padding:9px 0;border-bottom:1px solid rgba(237,230,216,.07)}
+  .tier li b{color:var(--marble);font-weight:500}
+  .tier .btn{text-align:center}
+  .tier-note{margin-top:26px;font-size:12.5px;color:var(--marble-dim);text-align:center;letter-spacing:.04em;max-width:70ch;margin-left:auto;margin-right:auto}
+
+  /* ---------- CITY ---------- */
+  .city{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+  .city-visual{
+    aspect-ratio:4/5;border:1px solid var(--line);position:relative;overflow:hidden;
+    background:
+      linear-gradient(200deg, rgba(126,158,143,.12), transparent 45%),
+      radial-gradient(ellipse 120% 60% at 50% 115%, rgba(192,133,82,.28), transparent 65%),
+      linear-gradient(#10262C,#0A1518);
+  }
+  .city-visual::before{
+    content:'';position:absolute;left:0;right:0;bottom:34%;height:1px;background:rgba(237,230,216,.25);
+  }
+  .skyline{position:absolute;bottom:34%;left:0;right:0;height:120px}
+  .city-label{
+    position:absolute;bottom:26px;left:26px;
+    font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--marble-dim);
+  }
+  .city-copy p{color:var(--marble-dim);margin-top:20px;font-size:15.5px}
+  .city-copy p b{color:var(--marble);font-weight:500}
+
+  /* ---------- FOOTER CTA ---------- */
+  .final{
+    text-align:center;padding:140px 32px;
+    background:radial-gradient(ellipse 60% 70% at 50% 100%, rgba(192,133,82,.14), transparent 70%), var(--ink);
+    border-top:1px solid var(--line);
+  }
+  .final h2{max-width:20ch;margin:0 auto 20px}
+  .final p{color:var(--marble-dim);max-width:48ch;margin:0 auto 40px}
+  .final p b{color:var(--marble);font-weight:500}
+  footer{border-top:1px solid var(--line);padding:30px 32px;display:flex;justify-content:space-between;
+    font-size:12px;color:var(--marble-dim);letter-spacing:.08em}
+
+  /* ---------- ONBOARDING OVERLAY ---------- */
+  .overlay{
+    position:fixed;inset:0;z-index:100;background:rgba(10,20,23,.97);backdrop-filter:blur(8px);
+    display:none;align-items:center;justify-content:center;padding:24px;
+  }
+  .overlay.open{display:flex}
+  .ob{
+    width:100%;max-width:680px;max-height:92vh;overflow-y:auto;
+    border:1px solid var(--line);background:var(--ink);
+    padding:56px;position:relative;animation:rise .45s ease both;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  .ob-close{
+    position:sticky;top:0;float:right;background:none;border:none;color:var(--marble-dim);
+    font-size:22px;line-height:1;padding:6px;z-index:2;
+  }
+  .ob-close:hover{color:var(--marble)}
+  .ob-progress{display:flex;gap:6px;margin-bottom:40px}
+  .ob-progress i{height:2px;flex:1;background:var(--line)}
+  .ob-progress i.done{background:var(--copper)}
+  .ob .eyebrow{display:block;margin-bottom:14px}
+  .ob h3{font-size:clamp(24px,3.4vw,32px);line-height:1.2;margin-bottom:10px}
+  .ob .sub{color:var(--marble-dim);font-size:15px;margin-bottom:34px}
+  .chips{display:flex;flex-wrap:wrap;gap:12px}
+  .chip{
+    border:1px solid var(--line);background:transparent;color:var(--marble);
+    padding:13px 22px;font-size:14.5px;letter-spacing:.02em;transition:all .2s;
+  }
+  .chip:hover{border-color:var(--copper)}
+  .chip.sel{background:var(--copper);border-color:var(--copper);color:var(--ink);font-weight:500}
+  .ob-nav{display:flex;justify-content:space-between;align-items:center;margin-top:44px}
+  .ob-back{background:none;border:none;color:var(--marble-dim);font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+  .ob-back:hover{color:var(--marble)}
+
+  .spine{border-top:1px solid var(--line)}
+  .spine-row{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid var(--line);align-items:baseline;
+    opacity:0;animation:rise .5s ease forwards}
+  .spine-row:nth-child(2){animation-delay:.12s}
+  .spine-row:nth-child(3){animation-delay:.24s}
+  .spine-row:nth-child(4){animation-delay:.36s}
+  .spine-row:nth-child(5){animation-delay:.48s}
+  .spine-row .serif{min-width:150px;color:var(--copper);font-size:16px}
+  .spine-row p{font-size:14px;color:var(--marble-dim)}
+  .spine-why{margin-top:26px;font-size:13.5px;color:var(--verdigris);letter-spacing:.02em}
+
+  .field{margin-bottom:22px}
+  .field label{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--marble-dim);margin-bottom:8px}
+  .field input,.field select,.field textarea{
+    width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);
+    color:var(--marble);font-family:inherit;font-size:15px;padding:10px 2px;resize:vertical;
+  }
+  .field textarea{min-height:56px;line-height:1.5}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-bottom-color:var(--copper)}
+  .field select option{background:var(--ink)}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
+  .q-label{font-size:14.5px;color:var(--marble);letter-spacing:0;text-transform:none;margin-bottom:4px}
+  .q-num{color:var(--copper);font-family:'Marcellus',serif;margin-right:8px}
+  .form-divider{margin:30px 0 24px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--verdigris);
+    border-top:1px solid var(--line);padding-top:24px}
+
+  .done-mark{
+    width:64px;height:64px;border:1px solid var(--copper);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;margin:0 auto 30px;
+    font-family:'Marcellus',serif;font-size:24px;color:var(--copper);
+  }
+  .ob.center{text-align:center}
+
+  @media(max-width:900px){
+    .const-grid,.city,.spine-grid{grid-template-columns:1fr;gap:44px}
+    .pillars,.touch{grid-template-columns:1fr}
+    .tiers{grid-template-columns:1fr}
+    .nav-right a.hidenav{display:none}
+    .ob{padding:36px 26px}
+    .form-grid{grid-template-columns:1fr}
+    section{padding:80px 0}
+    .phases{grid-template-columns:1fr;gap:26px}
+    .phases::before{top:16px;bottom:16px;left:7px;right:auto;width:1px;height:auto}
+    .phase{display:grid;grid-template-columns:15px 1fr;gap:16px;padding:0}
+    .phase .dot{margin:5px 0 0}
+    .phase h3,.phase p,.phase .tag{text-align:left}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Atlas <span>·</span> Istanbul</div>
+  <div class="nav-right">
+    <a href="#map" class="hidenav">The Club</a>
+    <a href="#journey" class="hidenav">The Journey</a>
+    <a href="#membership" class="hidenav">Membership</a>
+    <a href="#city" class="hidenav">The City</a>
+    <button class="btn" onclick="openOB()">Apply</button>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap hero-inner">
+    <span class="eyebrow">A members' club for people rebuilding themselves</span>
+    <h1 lang="tr">Emeğin hâlâ karşılığını bulduğu yer.</h1>
+    <div class="hero-tr">The place where effort still compounds.</div>
+    <div class="hero-witness">One season · One thing changed · Witnessed</div>
+    <p class="hero-sub">Whatever you came to change — weight, presence, sleep, your circle — it never travels alone. Atlas is a private club in Istanbul where every part of that work happens in one place, among people doing the same.</p>
+    <div class="hero-cta">
+      <button class="btn btn-solid" onclick="openOB()">Begin your application</button>
+      <span class="hero-note">Founding cohort · <b>120 places</b> · Bebek · Arnavutköy · Etiler · Nişantaşı</span>
+    </div>
+  </div>
+</header>
+
+<div class="strip" aria-hidden="true">
+  <div class="strip-track">
+    <span>Training <i>·</i></span><span>Nutrition <i>·</i></span><span>Longevity <i>·</i></span><span>Presence <i>·</i></span><span>Mind <i>·</i></span><span>Circle <i>·</i></span><span>Connection <i>·</i></span>
+    <span>Training <i>·</i></span><span>Nutrition <i>·</i></span><span>Longevity <i>·</i></span><span>Presence <i>·</i></span><span>Mind <i>·</i></span><span>Circle <i>·</i></span><span>Connection <i>·</i></span>
+  </div>
+</div>
+
+<section id="map">
+  <div class="wrap const-grid">
+    <div class="const-copy">
+      <span class="eyebrow">The compounding map</span>
+      <h2>No goal stands alone.</h2>
+      <p class="lead">Sleep is a relationships problem. Weight is a stress problem. Presence is a body problem. To lose weight you train — but you also eat, and to eat well you sleep, and to sleep you need a quieter mind, and the fastest way to a quieter mind is good company.</p>
+      <p>Touch any domain to see what it pulls with it. This map is how Atlas builds your programme: you enter through one door, and the club opens the rest as you're ready.</p>
+      <div id="const-caption">
+        <span class="serif">Explore the map</span>
+        Select a domain to see its hidden dependencies.
+      </div>
+    </div>
+    <div>
+      <svg viewBox="0 0 480 480" role="img" aria-label="Interactive map of seven connected life domains" id="constSvg">
+        <g id="edges"></g>
+        <g id="nodes"></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Seven disciplines, one house</span>
+      <h2>What the club covers</h2>
+      <p>Each discipline pairs an always-on intelligent coach with vetted Istanbul specialists. The coach handles the daily work; the human steps in when it matters.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><span class="tag">Body</span><span class="serif">Training</span><p>A programme built around your week, your gym or none at all — adjusted daily, escalated to a coach in the room when plateaus need eyes on you.</p></div>
+      <div class="pillar"><span class="tag">Body</span><span class="serif">Nutrition</span><p>Built for Istanbul kitchens and Istanbul dinners out. Tracking without obsession, and a licensed dietitian one tap away.</p></div>
+      <div class="pillar"><span class="tag">Body</span><span class="serif">Longevity</span><p>Sleep, bloodwork, recovery. The long game, measured — with clinicians who read the results with you.</p></div>
+      <div class="pillar"><span class="tag">Presence</span><span class="serif">Personal brand</span><p>How you enter a room, how you speak about your work, how you're remembered. Coaching for manners, image and self-promotion.</p></div>
+      <div class="pillar"><span class="tag">Mind</span><span class="serif">Psychology &amp; philosophy</span><p>A thinking partner for stress, discipline and meaning. Reflective work daily; licensed therapists when it should be a human.</p></div>
+      <div class="pillar"><span class="tag">People</span><span class="serif">Circle &amp; connection</span><p>Weekly member events — runs, tables, galleries, trips — and, in time, introductions. Friendship first; the rest follows naturally.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="journey">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">From application to evidence</span>
+      <h2>Six moves, one season</h2>
+      <p>Change takes ninety days — long enough to be real, short enough to believe. You don't subscribe to Atlas. You commit to a season, and the season ends with evidence.</p>
+    </div>
+
+    <div class="phases">
+      <div class="phase solid">
+        <span class="tag">Day 0</span><div class="dot"></div>
+        <h3>Application</h3>
+        <p>Six questions, read by a person. We select for movement, not status.</p>
+      </div>
+      <div class="phase solid">
+        <span class="tag">Week 0</span><div class="dot"></div>
+        <h3>Intake</h3>
+        <p>One goal named first. Bloodwork, baseline, and an honest hour with a director.</p>
+      </div>
+      <div class="phase solid">
+        <span class="tag">Week 0</span><div class="dot"></div>
+        <h3>The Spine</h3>
+        <p>The goal is mapped to what it actually depends on across the seven domains.</p>
+      </div>
+      <div class="phase">
+        <span class="tag">Weeks 1–12</span><div class="dot"></div>
+        <h3>The Season</h3>
+        <p>Coaches carry the daily work. Specialists carry the one-to-ones. Events carry you.</p>
+      </div>
+      <div class="phase">
+        <span class="tag">Week 12</span><div class="dot"></div>
+        <h3>Season Review</h3>
+        <p>Measured deltas, witnessed by the cohort. Proof that effort still compounds.</p>
+      </div>
+      <div class="phase">
+        <span class="tag">Season II</span><div class="dot"></div>
+        <h3>The Next Door</h3>
+        <p>A second spine begins — and Connection quietly unlocks for those who want it.</p>
+      </div>
+    </div>
+
+    <div class="sec-head" style="margin-bottom:36px">
+      <span class="eyebrow">Interactive — choose an entry goal</span>
+      <h2 style="font-size:clamp(24px,3.4vw,34px)">Three doors, three spines</h2>
+    </div>
+
+    <div class="goal-tabs" role="tablist" aria-label="Entry goals">
+      <button class="goal-tab" role="tab" aria-selected="true" data-goal="weight">"I want to lose 8 kg"</button>
+      <button class="goal-tab" role="tab" aria-selected="false" data-goal="presence">"I want to command a room"</button>
+      <button class="goal-tab" role="tab" aria-selected="false" data-goal="sleep">"I want my energy back"</button>
+    </div>
+
+    <div class="spine-grid">
+      <div class="jspine" id="jspine"></div>
+      <div class="season-box">
+        <h3 id="season-title"></h3>
+        <p class="sub">How each domain phases in across the ninety days</p>
+        <div id="tracks"></div>
+        <div class="weeks"><span>Wk 1</span><span>Wk 4</span><span>Wk 8</span><span>Wk 12</span></div>
+        <p class="review-note" id="review"></p>
+      </div>
+    </div>
+
+    <div class="sec-head" style="margin-bottom:36px">
+      <span class="eyebrow">Who carries what</span>
+      <h2 style="font-size:clamp(24px,3.4vw,34px)">Three layers of the season</h2>
+    </div>
+    <div class="touch">
+      <article>
+        <h3>Daily — your coaches</h3>
+        <p>Training blocks, nutrition adjustments, sleep and stress check-ins. Relentless, private, never the point of the club — the floor, not the ceiling.</p>
+      </article>
+      <article>
+        <h3>Weekly — the room</h3>
+        <p>Founder-run events from day one. The other 119 members are the product: training partners, dinner company, honest witnesses.</p>
+      </article>
+      <article>
+        <h3>Monthly — specialists</h3>
+        <p>Vetted PTs, dietitians, therapists in one-to-ones, scaled by tier. Licensed humans wherever the law — and good judgement — require one.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="band">
+  <span class="eyebrow">The room</span>
+  <span class="serif">There are a hundred rooms in this city where you perform how well you're doing. <em>This is the other one.</em></span>
+</div>
+
+<section id="membership">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Membership</span>
+      <h2>Three ways in</h2>
+      <p>Membership runs in three-month seasons, not subscriptions. Commit to a season; leave with evidence.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier">
+        <span class="serif">Core</span>
+        <div class="price">₺X,XXX</div>
+        <div class="per">per season · 3 months</div>
+        <ul>
+          <li><b>Full programme</b> across your chosen domains</li>
+          <li>All intelligent coaches, daily</li>
+          <li>Two member events monthly</li>
+          <li>Community access</li>
+        </ul>
+        <button class="btn" onclick="openOB()">Apply for Core</button>
+      </div>
+      <div class="tier featured">
+        <span class="serif">Circle</span>
+        <div class="price">₺X,XXX</div>
+        <div class="per">per season · 3 months</div>
+        <ul>
+          <li>Everything in Core</li>
+          <li><b>Monthly one-to-ones</b> with human specialists</li>
+          <li>All weekly events, priority tables</li>
+          <li>Quarterly bloodwork &amp; review</li>
+          <li>Introductions programme, when ready</li>
+        </ul>
+        <button class="btn btn-solid" onclick="openOB()">Apply for Circle</button>
+      </div>
+      <div class="tier">
+        <span class="serif">Patron</span>
+        <div class="price">₺XX,XXX</div>
+        <div class="per">per season · 3 months</div>
+        <ul>
+          <li>Everything in Circle</li>
+          <li><b>Weekly</b> human specialist sessions</li>
+          <li>A dedicated programme director</li>
+          <li>Hosted dinners &amp; travel</li>
+        </ul>
+        <button class="btn" onclick="openOB()">Apply for Patron</button>
+      </div>
+    </div>
+    <p class="tier-note">Admission is by application. The founding cohort is limited to 120 members across Bebek, Arnavutköy, Etiler and Nişantaşı. A season costs less than its parts — therapist, trainer, dietitian and bloodwork bought separately — and unlike them, it compounds.</p>
+  </div>
+</section>
+
+<div class="band">
+  <span class="eyebrow">Discretion, by design</span>
+  <span class="serif">What we know about your body never meets what we know about your heart.</span>
+  <p>Your health data and your introductions live in separate systems — by design, and by law. Nothing you tell your coaches ever shapes who you meet.</p>
+</div>
+
+<section id="city">
+  <div class="wrap city">
+    <div class="city-visual">
+      <svg class="skyline" viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,120 L0,80 L30,80 L30,60 L45,60 L45,80 L80,80 L80,50 L90,50 L92,30 L98,30 L100,50 L110,50 L110,80 L150,80 L150,65 L180,65 L185,40 L190,65 L220,65 L220,90 L260,90 L260,55 L270,45 L280,55 L280,90 L320,90 L320,70 L330,70 L332,25 L338,25 L340,70 L360,70 L360,90 L410,90 L410,60 L430,50 L450,60 L450,90 L500,90 L500,75 L520,75 L522,45 L528,45 L530,75 L560,75 L560,95 L600,95 L600,120 Z"
+          fill="#0A1417" stroke="rgba(237,230,216,.18)" stroke-width="1"/>
+      </svg>
+      <div class="city-label">41.0082° N — 28.9784° E</div>
+    </div>
+    <div class="city-copy">
+      <span class="eyebrow">Why Istanbul, why now</span>
+      <h2>Built for this city first.</h2>
+      <p>Istanbul holds one of the largest concentrations of ambitious young professionals in Europe — and one of the loneliest. The gyms are full, the apps are full, and yet the thing people actually want, <b>a circle that pulls them upward</b>, is nowhere to be found.</p>
+      <p>Atlas opens in four districts — Bebek, Arnavutköy, Etiler and Nişantaşı — deliberately small. Density before scale. Every founding member will know the rooms, the coaches and each other — that's the product.</p>
+    </div>
+  </div>
+</section>
+
+<div class="final">
+  <span class="eyebrow" style="display:block;margin-bottom:18px">Founding cohort · Autumn 2026</span>
+  <h2>Change one thing. Watch the rest follow.</h2>
+  <p>Applications for the founding 120 are open. <b>We're not selecting for where you are — we're selecting for whether you move.</b> The intake takes ten honest minutes.</p>
+  <button class="btn btn-solid" onclick="openOB()">Begin your application</button>
+</div>
+
+<footer>
+  <span>ATLAS · Istanbul — preview prototype</span>
+  <span>Bebek · Arnavutköy · Etiler · Nişantaşı</span>
+</footer>
+
+<!-- ONBOARDING -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Membership application">
+  <div class="ob" id="obBox"></div>
+</div>
+
+<script>
+/* ---------------- Constellation ---------------- */
+const domains=[
+  {id:'train', label:'Training',   x:240,y:70},
+  {id:'nutri', label:'Nutrition',  x:412,y:150},
+  {id:'longe', label:'Longevity',  x:430,y:320},
+  {id:'brand', label:'Presence',   x:295,y:428},
+  {id:'mind',  label:'Mind',       x:130,y:410},
+  {id:'circle',label:'Circle',     x:48,y:255},
+  {id:'match', label:'Connection', x:110,y:120},
+];
+const links=[
+  ['train','nutri'],['train','longe'],['train','circle'],['train','mind'],
+  ['nutri','longe'],['nutri','mind'],
+  ['longe','mind'],
+  ['brand','circle'],['brand','match'],['brand','mind'],
+  ['mind','circle'],
+  ['circle','match'],['circle','longe'],
+  ['match','mind'],
+];
+const captions={
+  train:['Training','Consistency in the gym depends on recovery, fuel and someone waiting for you at the track. Training pulls in Nutrition, Longevity, Mind and your Circle.'],
+  nutri:['Nutrition','What you eat follows how you sleep and how you feel. Nutrition pulls in Training, Longevity and Mind.'],
+  longe:['Longevity','The long game is sleep, stress and steady habits — kept by people, not willpower. Longevity pulls in Training, Nutrition, Mind and Circle.'],
+  brand:['Presence','How you carry yourself is confidence made visible — built in rooms, with people. Presence pulls in Mind, Circle and Connection.'],
+  mind:['Mind','Cortisol undoes diets, sleep and patience alike. The mind steadies fastest in good company. Mind connects to nearly everything.'],
+  circle:['Circle','The company you keep sets your defaults — your pace, your plate, your standards. Circle pulls in Training, Longevity, Presence and Connection.'],
+  match:['Connection','Real connection begins as friendship inside a shared pursuit. Connection pulls in Circle, Presence and Mind.'],
+};
+const svgNS='http://www.w3.org/2000/svg';
+const gE=document.getElementById('edges'),gN=document.getElementById('nodes');
+links.forEach(([a,b])=>{
+  const A=domains.find(d=>d.id===a),B=domains.find(d=>d.id===b);
+  const l=document.createElementNS(svgNS,'line');
+  l.setAttribute('x1',A.x);l.setAttribute('y1',A.y);l.setAttribute('x2',B.x);l.setAttribute('y2',B.y);
+  l.setAttribute('class','edge');l.dataset.a=a;l.dataset.b=b;gE.appendChild(l);
+});
+domains.forEach(d=>{
+  const g=document.createElementNS(svgNS,'g');
+  g.setAttribute('class','node');g.dataset.id=d.id;g.setAttribute('tabindex','0');
+  g.setAttribute('role','button');g.setAttribute('aria-label',d.label);
+  const c=document.createElementNS(svgNS,'circle');
+  c.setAttribute('cx',d.x);c.setAttribute('cy',d.y);c.setAttribute('r',10);
+  const t=document.createElementNS(svgNS,'text');
+  t.setAttribute('x',d.x);t.setAttribute('y',d.y + (d.y>240?28:-20));
+  t.setAttribute('text-anchor','middle');t.textContent=d.label;
+  g.appendChild(c);g.appendChild(t);gN.appendChild(g);
+  const act=()=>activate(d.id);
+  g.addEventListener('mouseenter',act);
+  g.addEventListener('click',act);
+  g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();act();}});
+});
+function activate(id){
+  document.querySelectorAll('.node').forEach(n=>n.classList.remove('active','linked'));
+  document.querySelectorAll('.edge').forEach(e=>e.classList.remove('lit'));
+  const linked=new Set();
+  document.querySelectorAll('.edge').forEach(e=>{
+    if(e.dataset.a===id||e.dataset.b===id){e.classList.add('lit');linked.add(e.dataset.a===id?e.dataset.b:e.dataset.a);}
+  });
+  document.querySelectorAll('.node').forEach(n=>{
+    if(n.dataset.id===id)n.classList.add('active');
+    else if(linked.has(n.dataset.id))n.classList.add('linked');
+  });
+  const cap=document.getElementById('const-caption');
+  cap.innerHTML='<span class="serif">'+captions[id][0]+'</span>'+captions[id][1];
+}
+
+/* ---------------- Journey spines ---------------- */
+const SPINES = {
+  weight: {
+    title: "Season spine: Body composition",
+    review: "<strong>Week-12 evidence:</strong> DEXA delta, bloodwork panel two, and one habit that survived twelve weeks.",
+    vertebrae: [
+      {dom:"Training", why:"Primary lever — progressive strength three times a week; muscle is the metabolic engine.", wt:"Primary domain", primary:true},
+      {dom:"Nutrition", why:"Protein-anchored plan adjusted weekly against adherence, not ideals.", wt:"Heavy · weeks 1–12"},
+      {dom:"Psychology", why:"Stress eating is a stress problem. Fortnightly sessions target the trigger, not the fork.", wt:"Moderate · from week 2"},
+      {dom:"Longevity", why:"Baseline and week-12 bloodwork turn the season into evidence.", wt:"Bookends · weeks 0 & 12"},
+      {dom:"Community", why:"Cohort training and shared tables — adherence is social before it is chemical.", wt:"Ambient · weekly"}
+    ],
+    tracks: [
+      {lbl:"Training", note:"3× weekly", start:0, width:100, copper:true},
+      {lbl:"Nutrition", note:"adjusted weekly", start:0, width:100},
+      {lbl:"Psychology", note:"fortnightly", start:10, width:90},
+      {lbl:"Longevity", note:"bloodwork bookends", start:0, width:12},
+      {lbl:"Community", note:"weekly events", start:0, width:100}
+    ]
+  },
+  presence: {
+    title: "Season spine: Presence & personal brand",
+    review: "<strong>Week-12 evidence:</strong> one recorded talk, before and after; a written positioning line; a resting heart rate that agrees with it.",
+    vertebrae: [
+      {dom:"Branding & presence", why:"Primary lever — voice, positioning, and a real audience of peers to practise on.", wt:"Primary domain", primary:true},
+      {dom:"Psychology", why:"Stage fear and impostor noise are the actual bottleneck for most professionals.", wt:"Heavy · weeks 1–8"},
+      {dom:"Training", why:"Posture and breath are physical skills; presence is a body problem.", wt:"Moderate · weeks 1–12"},
+      {dom:"Community", why:"Monthly member salons are the rehearsal room — low stakes, honest feedback.", wt:"Core · from week 4"},
+      {dom:"Relationships", why:"How you hold one difficult conversation is how you hold a room.", wt:"Light · from week 6"}
+    ],
+    tracks: [
+      {lbl:"Branding & presence", note:"weekly coaching", start:0, width:100, copper:true},
+      {lbl:"Psychology", note:"front-loaded", start:0, width:66},
+      {lbl:"Training", note:"posture & breath", start:0, width:100},
+      {lbl:"Community", note:"salons", start:25, width:75},
+      {lbl:"Relationships", note:"applied practice", start:45, width:55}
+    ]
+  },
+  sleep: {
+    title: "Season spine: Sleep & energy",
+    review: "<strong>Week-12 evidence:</strong> wearable trendline, morning HRV, and an evening that belongs to you again.",
+    vertebrae: [
+      {dom:"Longevity", why:"Primary lever — sleep architecture, HRV, light and caffeine protocol, tracked daily.", wt:"Primary domain", primary:true},
+      {dom:"Psychology", why:"Rumination is the thief of the third hour. Sessions target the 2 a.m. mind.", wt:"Heavy · weeks 1–12"},
+      {dom:"Relationships", why:"The evening is shared territory; the protocol has to survive a household.", wt:"Moderate · from week 3"},
+      {dom:"Training", why:"Morning strength anchors circadian rhythm and burns off cortisol honestly.", wt:"Moderate · weeks 2–12"},
+      {dom:"Nutrition", why:"Late meals and alcohol timing — small levers, outsized effect on deep sleep.", wt:"Light · weeks 1–6"}
+    ],
+    tracks: [
+      {lbl:"Longevity", note:"daily protocol", start:0, width:100, copper:true},
+      {lbl:"Psychology", note:"weekly", start:0, width:100},
+      {lbl:"Relationships", note:"household design", start:18, width:82},
+      {lbl:"Training", note:"morning blocks", start:8, width:92},
+      {lbl:"Nutrition", note:"timing levers", start:0, width:50}
+    ]
+  }
+};
+const jspineEl = document.getElementById('jspine');
+const tracksEl = document.getElementById('tracks');
+const titleEl = document.getElementById('season-title');
+const reviewEl = document.getElementById('review');
+const tabs = document.querySelectorAll('.goal-tab');
+function renderJourney(key){
+  const s = SPINES[key];
+  titleEl.textContent = s.title;
+  reviewEl.innerHTML = s.review;
+  jspineEl.innerHTML = s.vertebrae.map(v => `
+    <div class="vertebra${v.primary ? ' primary' : ''}">
+      <div class="dom">${v.dom}</div>
+      <p class="why">${v.why}</p>
+      <span class="wt">${v.wt}</span>
+    </div>`).join('');
+  tracksEl.innerHTML = s.tracks.map(t => `
+    <div class="track">
+      <div class="lbl"><span>${t.lbl}</span><span>${t.note}</span></div>
+      <div class="rail"><div class="fill${t.copper ? ' copper' : ''}" style="left:${t.start}%;width:${t.width}%"></div></div>
+    </div>`).join('');
+}
+tabs.forEach(tab => tab.addEventListener('click', () => {
+  tabs.forEach(t => t.setAttribute('aria-selected','false'));
+  tab.setAttribute('aria-selected','true');
+  renderJourney(tab.dataset.goal);
+}));
+renderJourney('weight');
+
+/* ---------------- Onboarding ---------------- */
+const goals=[
+  {id:'weight', label:'Lose weight'},
+  {id:'strength',label:'Get stronger'},
+  {id:'energy', label:'Sleep & energy'},
+  {id:'presence',label:'Sharpen my presence'},
+  {id:'mind',   label:'Quiet my mind'},
+  {id:'friends',label:'Meet my people'},
+  {id:'partner',label:'Find a partner'},
+];
+const obSpines={
+  weight:{title:'Weight',rows:[
+    ['Training','Three sessions a week, built around your schedule and current level.'],
+    ['Nutrition','A deficit you can hold at an Istanbul dinner table. Dietitian on call.'],
+    ['Mind','Stress work — because cortisol quietly cancels deficits.'],
+    ['Circle','A weekly member run or class. Accountability you look forward to.']],
+    why:'Members who came for weight loss keep it off when the circle around them changes too.'},
+  strength:{title:'Strength',rows:[
+    ['Training','Progressive programme, form checks with a coach in the room.'],
+    ['Nutrition','Eating to build — protein targets that survive real life.'],
+    ['Longevity','Recovery and sleep tracked, so progress compounds.'],
+    ['Circle','Training partners at your level, found inside the club.']],
+    why:'Strength is a long game. The club makes the long game social.'},
+  energy:{title:'Sleep & energy',rows:[
+    ['Longevity','Sleep protocol, bloodwork, a clinician reading the results with you.'],
+    ['Mind','Evening wind-down and stress work, guided daily.'],
+    ['Nutrition','Caffeine, timing, and what your afternoons run on.'],
+    ['Training','Movement dosed for energy, not exhaustion.']],
+    why:'Energy is the multiplier — every other domain moves faster once it returns.'},
+  presence:{title:'Presence',rows:[
+    ['Presence','Manners, image, how you speak about your work — coached weekly.'],
+    ['Mind','Confidence work underneath the surface polish.'],
+    ['Circle','Rooms to practise in: dinners, salons, member events.'],
+    ['Training','Posture and bearing — presence starts physical.']],
+    why:'Presence is a skill rehearsed in rooms. The club is the room.'},
+  mind:{title:'Mind',rows:[
+    ['Mind','Daily reflective practice; licensed therapists when it should be human.'],
+    ['Longevity','Sleep first — most anxious minds are tired minds.'],
+    ['Training','Movement as medicine, prescribed gently.'],
+    ['Circle','Fewer, better people. Loneliness is a stressor; we treat it like one.']],
+    why:'A quiet mind is rarely built alone. That is the point of the club.'},
+  friends:{title:'Circle',rows:[
+    ['Circle','Weekly events matched to your interests — runs, tables, galleries, trips.'],
+    ['Presence','Light social coaching, if you want it. Arrive at ease.'],
+    ['Mind','The confidence work that makes new rooms feel smaller.'],
+    ['Training','Shared pursuits bond fastest — pick one with us.']],
+    why:'Friendship forms around shared effort. We build the effort; the friendship follows.'},
+  partner:{title:'Connection',rows:[
+    ['Circle','You meet people as people first — at events, not on a screen.'],
+    ['Presence','How you show up, refined.'],
+    ['Mind','Patterns and standards, worked through honestly.'],
+    ['Training','The version of you that walks in matters. We build it.']],
+    why:'Introductions open after your first season — matches come from inside the community, made carefully.'},
+};
+let obStep=0, selGoal=null;
+const overlay=document.getElementById('overlay');
+const box=document.getElementById('obBox');
+
+function openOB(){obStep=0;selGoal=null;overlay.classList.add('open');document.body.style.overflow='hidden';render();}
+function closeOB(){overlay.classList.remove('open');document.body.style.overflow='';}
+overlay.addEventListener('click',e=>{if(e.target===overlay)closeOB();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOB();});
+
+function prog(n){
+  let h='<div class="ob-progress">';
+  for(let i=0;i<4;i++)h+='<i class="'+(i<=n?'done':'')+'"></i>';
+  return h+'</div>';
+}
+function render(){
+  box.scrollTop=0;
+  if(obStep===0){
+    box.className='ob';
+    box.innerHTML=prog(0)+
+    '<button class="ob-close" onclick="closeOB()" aria-label="Close">×</button>'+
+    '<span class="eyebrow">The intake · 01</span>'+
+    '<h3>What do you want to change first?</h3>'+
+    '<p class="sub">One honest answer. We\'ll take it from there.</p>'+
+    '<div class="chips">'+goals.map(g=>'<button class="chip'+(selGoal===g.id?' sel':'')+'" onclick="pick(\''+g.id+'\')">'+g.label+'</button>').join('')+'</div>'+
+    '<div class="ob-nav"><span></span><button class="btn btn-solid" id="next1" '+(selGoal?'':'disabled style="opacity:.35;pointer-events:none"')+' onclick="go(1)">Continue</button></div>';
+  }
+  if(obStep===1){
+    const s=obSpines[selGoal];
+    box.className='ob';
+    box.innerHTML=prog(1)+
+    '<button class="ob-close" onclick="closeOB()" aria-label="Close">×</button>'+
+    '<span class="eyebrow">The intake · 02</span>'+
+    '<h3>Your programme spine — '+s.title+'</h3>'+
+    '<p class="sub">This is what your goal actually depends on. Your season is built on these four.</p>'+
+    '<div class="spine">'+s.rows.map(r=>'<div class="spine-row"><span class="serif">'+r[0]+'</span><p>'+r[1]+'</p></div>').join('')+'</div>'+
+    '<p class="spine-why">'+s.why+'</p>'+
+    '<div class="ob-nav"><button class="ob-back" onclick="go(0)">← Back</button><button class="btn btn-solid" onclick="go(2)">This is me — continue</button></div>';
+  }
+  if(obStep===2){
+    box.className='ob';
+    box.innerHTML=prog(2)+
+    '<button class="ob-close" onclick="closeOB()" aria-label="Close">×</button>'+
+    '<span class="eyebrow">The intake · 03</span>'+
+    '<h3>The application</h3>'+
+    '<p class="sub">Six questions, read by a person — not a queue. We select for movement, not status.</p>'+
+    '<div class="form-grid">'+
+      '<div class="field"><label for="f-name">Full name</label><input id="f-name" autocomplete="off" placeholder="—"></div>'+
+      '<div class="field"><label for="f-age">Age</label><input id="f-age" inputmode="numeric" placeholder="—"></div>'+
+      '<div class="field"><label for="f-work">Occupation</label><input id="f-work" placeholder="—"></div>'+
+      '<div class="field"><label for="f-dist">District</label><select id="f-dist"><option>Bebek</option><option>Arnavutköy</option><option>Etiler</option><option>Nişantaşı</option><option>Elsewhere in Istanbul</option></select></div>'+
+    '</div>'+
+    '<div class="form-divider">The six questions · your first answer is already in</div>'+
+    '<div class="field"><label class="q-label"><span class="q-num">II</span>What have you already tried, and what did it teach you?</label><textarea rows="2" placeholder="—"></textarea></div>'+
+    '<div class="field"><label class="q-label"><span class="q-num">III</span>Tell us about the last promise you kept to yourself.</label><textarea rows="2" placeholder="—"></textarea></div>'+
+    '<div class="field"><label class="q-label"><span class="q-num">IV</span>A season asks for five to seven hours a week. Which hours are they?</label><textarea rows="2" placeholder="—"></textarea></div>'+
+    '<div class="field"><label class="q-label"><span class="q-num">V</span>What would the other 119 members get from having you in the room?</label><textarea rows="2" placeholder="—"></textarea></div>'+
+    '<div class="field"><label class="q-label"><span class="q-num">VI</span>What are you not willing to change?</label><textarea rows="2" placeholder="—"></textarea></div>'+
+    '<div class="ob-nav"><button class="ob-back" onclick="go(1)">← Back</button><button class="btn btn-solid" onclick="go(3)">Submit application</button></div>';
+  }
+  if(obStep===3){
+    box.className='ob center';
+    box.innerHTML=prog(3)+
+    '<button class="ob-close" onclick="closeOB()" aria-label="Close">×</button>'+
+    '<div class="done-mark">A</div>'+
+    '<h3>Application received.</h3>'+
+    '<p class="sub" style="max-width:40ch;margin:0 auto 34px">Every application is read by a person. If your season and ours align, you\'ll hear from us within a week — and your intake conversation will be with your programme director, not a form.</p>'+
+    '<button class="btn" onclick="closeOB()">Return to the club</button>';
+  }
+}
+function pick(id){selGoal=id;render();}
+function go(n){obStep=n;render();}
+</script>
+</body>
+</html>
