@@ -1,0 +1,137 @@
+/* ================= LANGUAGE ================= */
+let lang='en';
+const I18N={en:{},tr:{
+  "nav-club":"Kulüp","nav-journey":"Yolculuk","nav-gather":"Buluşmalar","nav-evidence":"Kanıt","nav-membership":"Üyelik","nav-city":"Şehir","nav-apply":"Başvur",
+  "mm-note":"Kurucu kadro · 120 yer · İstanbul",
+  "hero-eyebrow":"Kendini yeniden inşa edenler için bir üyelik kulübü",
+  "hero-h1":"Emeğin hâlâ <em>karşılığını bulduğu</em> yer.",
+  "hero-accent":"The place where effort still compounds.",
+  "hero-witness":"Bir sezon · Tek bir değişim · Tanıklar önünde",
+  "hero-sub":"Değiştirmeye geldiğin şey ne olursa olsun — kilo, duruş, uyku, çevre — hiçbiri tek başına ilerlemez. Atlas, bu işin her parçasının tek çatı altında, aynı yolda yürüyen insanlarla yapıldığı İstanbul'a özel bir kulüp.",
+  "hero-cta":"Başvurunu başlat",
+  "hero-note":"Kurucu kadro · <b>120 yerin 23'ü tutuldu</b> · Bebek · Arnavutköy · Etiler · Nişantaşı",
+  "strip":"<span>Antrenman <i>·</i></span><span>Beslenme <i>·</i></span><span>Uzun Ömür <i>·</i></span><span>Duruş <i>·</i></span><span>Zihin <i>·</i></span><span>Çevre <i>·</i></span><span>Bağ <i>·</i></span><span>Antrenman <i>·</i></span><span>Beslenme <i>·</i></span><span>Uzun Ömür <i>·</i></span><span>Duruş <i>·</i></span><span>Zihin <i>·</i></span><span>Çevre <i>·</i></span><span>Bağ <i>·</i></span>",
+  "map-eyebrow":"Birikim haritası",
+  "map-h2":"Hiçbir hedef tek başına durmaz.",
+  "map-lead":"Uyku bir ilişki meselesi. Kilo bir stres meselesi. Duruş bir beden meselesi. Kilo vermek için antrenman yaparsın — ama aynı zamanda yersin; iyi yemek için uyursun; uyumak için daha sakin bir zihin gerekir; sakin zihnin en kısa yolu iyi bir çevredir.",
+  "map-p2":"Bir alana dokun, neyi peşinden getirdiğini gör. Atlas programını böyle kurar: tek kapıdan girersin; hazır oldukça kulüp diğerlerini açar.",
+  "cap-default":"<span class='serif'>Haritayı keşfet</span>Gizli bağımlılıklarını görmek için bir alan seç.",
+  "pil-eyebrow":"Yedi disiplin, tek çatı",
+  "pil-h2":"Kulübün kapsamı",
+  "pil-p":"Her disiplin, her an yanında olan akıllı bir koçu İstanbul'un seçilmiş uzmanlarıyla eşleştirir. Günlük işi koç taşır; önemli anda insan devreye girer.",
+  "pil-1":"<span class='tag'>Beden</span><span class='serif'>Antrenman</span><p>Haftana, salonuna — ya da salonsuzluğuna — göre kurulmuş program. Her gün ayarlanır; plato geldiğinde salondaki koça devredilir.</p>",
+  "pil-2":"<span class='tag'>Beden</span><span class='serif'>Beslenme</span><p>İstanbul mutfağına ve İstanbul akşamlarına göre. Takıntısız takip; tek dokunuşla lisanslı diyetisyen.</p>",
+  "pil-3":"<span class='tag'>Beden</span><span class='serif'>Uzun Ömür</span><p>Uyku, kan tahlili, toparlanma. Uzun oyun, ölçülerek — sonuçları seninle birlikte okuyan klinisyenlerle.</p>",
+  "pil-4":"<span class='tag'>Duruş</span><span class='serif'>Kişisel marka</span><p>Bir odaya nasıl girdiğin, işini nasıl anlattığın, nasıl hatırlandığın. Adab, imaj ve kendini anlatma koçluğu.</p>",
+  "pil-5":"<span class='tag'>Zihin</span><span class='serif'>Psikoloji ve felsefe</span><p>Stres, disiplin ve anlam için bir düşünme ortağı. Günlük derinleşme; insan gerektiğinde lisanslı terapistler.</p>",
+  "pil-6":"<span class='tag'>İnsan</span><span class='serif'>Çevre ve bağ</span><p>Haftalık üye etkinlikleri — koşular, sofralar, galeriler, geziler — ve zamanla tanıştırmalar. Önce dostluk; gerisi kendiliğinden.</p>",
+  "j-eyebrow":"Başvurudan kanıta",
+  "j-h2":"Altı hamle, tek sezon",
+  "j-p":"Değişim doksan gün ister — gerçek olacak kadar uzun, inanılacak kadar kısa. Atlas'a abone olmazsın. Bir sezona söz verirsin; sezon kanıtla biter.",
+  "ph-1":"<span class='tag'>Gün 0</span><div class='dot'></div><h3>Başvuru</h3><p>Altı soru, bir insan okur. Statüye değil harekete bakarız.</p>",
+  "ph-2":"<span class='tag'>Hafta 0</span><div class='dot'></div><h3>Kabul</h3><p>Önce tek hedef. Kan tahlili, başlangıç ölçümü ve direktörle dürüst bir saat.</p>",
+  "ph-3":"<span class='tag'>Hafta 0</span><div class='dot'></div><h3>Omurga</h3><p>Hedef, yedi alan içindeki gerçek bağımlılıklarına haritalanır.</p>",
+  "ph-4":"<span class='tag'>Hafta 1–12</span><div class='dot'></div><h3>Sezon</h3><p>Günlük işi koçlar taşır. Birebirleri uzmanlar. Seni ise etkinlikler.</p>",
+  "ph-5":"<span class='tag'>Hafta 12</span><div class='dot'></div><h3>Sezon Değerlendirmesi</h3><p>Ölçülmüş farklar, kohortun tanıklığında. Emeğin hâlâ karşılık bulduğunun kanıtı.</p>",
+  "ph-6":"<span class='tag'>Sezon II</span><div class='dot'></div><h3>Sıradaki Kapı</h3><p>İkinci omurga başlar — isteyene Bağ sessizce açılır.</p>",
+  "j2-eyebrow":"Etkileşimli — bir giriş hedefi seç",
+  "j2-h2":"Üç kapı, üç omurga",
+  "tab-weight":"\"8 kilo vermek istiyorum\"",
+  "tab-presence":"\"Bir odaya hükmetmek istiyorum\"",
+  "tab-sleep":"\"Enerjimi geri istiyorum\"",
+  "season-sub":"Doksan gün boyunca alanların devreye giriş sırası",
+  "weeks":"<span>Hf 1</span><span>Hf 4</span><span>Hf 8</span><span>Hf 12</span>",
+  "lay-eyebrow":"Yükü kim taşır",
+  "lay-h2":"Sezonun üç katmanı",
+  "touch-1":"<h3>Günlük — koçların</h3><p>Antrenman blokları, beslenme ayarları, uyku ve stres kontrolleri. Aralıksız, mahrem; kulübün amacı değil zemini.</p>",
+  "touch-2":"<h3>Haftalık — oda</h3><p>İlk günden kurucuların yürüttüğü etkinlikler. Diğer 119 üye ürünün kendisi: antrenman ortağı, sofra arkadaşı, dürüst tanık.</p>",
+  "touch-3":"<h3>Aylık — uzmanlar</h3><p>Seçilmiş antrenörler, diyetisyenler, terapistler; kademeye göre birebir. Yasanın — ve sağduyunun — insan istediği her yerde lisanslı insan.</p>",
+  "room-eyebrow":"Oda",
+  "room-serif":"Bu şehirde ne kadar iyi olduğunu sergilediğin yüz oda var. <em>Burası öteki.</em>",
+  "g-eyebrow":"Takvim",
+  "g-h2":"Kulüp, tekrar ettiği şeydir.",
+  "g-p":"Haftada dört sabit saat, ayda bir uzun gece — ilk günden kurucuların yürüttüğü, dört semte yayılan bir ritim. Bilerek küçük: burada hiçbir şey bir masadan büyüğe ölçeklenmez.",
+  "g-r1":"<div class='day'>Salı<b>06:45</b></div><div class='wbody'><h3>Sahil koşusu</h3><p>Şehir uyanmadan Bebek sahilinde beş kilometre. Her tempo makbul; son kilometre her zaman birlikte koşulur.</p></div><div class='meta'><b>Bebek</b>her hafta · tüm üyeler</div>",
+  "g-r2":"<div class='day'>Perşembe<b>20:00</b></div><div class='wbody'><h3>Perşembe sofrası</h3><p>Dokuz kişilik akşam yemeği; oturma düzenini ev kurar — tanıdık yüzlerin yanına yenileri. Odayı tek kural tutar: sofrada söylenen sofrada kalır.</p></div><div class='meta'><b>Arnavutköy</b>her hafta · dokuz sandalye</div>",
+  "g-r3":"<div class='day'>Cumartesi<b>11:00</b></div><div class='wbody'><h3>Açık salon</h3><p>Kulüp koçlarının sahada olduğu ortak kuvvet bloğu. Form düzeltilir, platolar kırılır, antrenman partnerleri bulunur.</p></div><div class='meta'><b>Etiler</b>her hafta · serbest katılım</div>",
+  "g-r4":"<div class='day'>Pazar<b>17:00</b></div><div class='wbody'><h3>Salon</h3><p>Bir üye odayı yirmi dakikalığına alır — bir konuşma, bir soru, gerçek sahneden önce bir prova. İstanbul'un en nazik seyircisi.</p></div><div class='meta'><b>Nişantaşı</b>her hafta · yirmi sandalye</div>",
+  "g-r5":"<div class='day'>Ayda bir<b>—</b></div><div class='wbody'><h3>Şehir saatleri</h3><p>Yalnızca yerlilerin açabildiği İstanbul: kapanıştan sonra bir hamam, açılmadan önce bir galeri, suda biten bir yürüyüş.</p></div><div class='meta'><b>Dört semt</b>ayda bir · küçük gruplar</div>",
+  "g-m1":"<span class='tag'>Hafta 0</span><span class='serif'>Açılış gecesi</span><p>Kohort tam kadro yalnızca bir kez buluşur — 120 kişi, önce isimler — sonra bir daha asla hep birlikte.</p>",
+  "g-m2":"<span class='tag'>Hafta 6</span><span class='serif'>Boğaz gecesi</span><p>Suda ağır bir gece — sezonların gevşemeye başladığı tam o noktada.</p>",
+  "g-m3":"<span class='tag'>Hafta 12</span><span class='serif'>Değerlendirme gecesi</span><p>Ölçülmüş farklar, yüksek sesle, kohortun tanıklığında. Sezonun varlık sebebi.</p>",
+  "g-house":"Ev notları <i>·</i> telefonlar kapıda uyur <i>·</i> fotoğraf yok <i>·</i> iş konuşması yok <i>·</i> misafir yalnızca adaylıkla",
+  "ev-eyebrow":"On ikinci hafta",
+  "ev-h2":"Sezon kanıtla biter.",
+  "ev-p":"Her sezon bir değerlendirmeyle kapanır: ölçülmüş farklar, yüksek sesle okunur, kohort tanıklık eder. İşte bir örneği.",
+  "d-eyebrow":"Atlas · Sezon Değerlendirmesi · Tanıklı",
+  "d-title":"S.K. — Sezon I: Vücut kompozisyonu",
+  "d-meta":"31 · Nişantaşı · Kilo kapısından girdi · Hafta 0–12",
+  "dm-1":"Yağ oranı<small>DEXA taraması</small>",
+  "dm-2":"Kilo<small>aynı tartı, aynı saat</small>",
+  "dm-3":"Dinlenik nabız<small>7 günlük ortalama</small>",
+  "dm-4":"Uyku<small>gecelik ortalama, giyilebilir</small>",
+  "dm-5":"HbA1c<small>kan tahlili, ikinci panel</small>",
+  "d-habit":"<b>Hayatta kalan alışkanlık:</b> Salı 06:45, Bebek sahil koşusu. On bir hafta kesintisiz — yalnız başladı, şimdi üç üyeyle koşuyor.",
+  "d-foot1":"12 Aralık'ta değerlendirildi · Kohort I, on dört tanık",
+  "d-foot2":"Program direktörü · Atlas İstanbul",
+  "d-note":"Temsili üye. Program hedeflerinden derlenmiştir — her gerçek değerlendirme üyenin kendi başlangıç değerleriyle kurulur.",
+  "mem-eyebrow":"Üyelik",
+  "mem-h2":"Üç giriş yolu",
+  "mem-p":"Üyelik aylık abonelikle değil üç aylık sezonlarla işler. Bir sezona söz ver; kanıtla ayrıl.",
+  "t-per1":"sezon başına · 3 ay","t-per2":"sezon başına · 3 ay","t-per3":"sezon başına · 3 ay",
+  "t1-list":"<li>Seçtiğin alanlarda <b>tam program</b></li><li>Tüm akıllı koçlar, her gün</li><li>Ayda iki üye etkinliği</li><li>Topluluk erişimi</li>",
+  "t2-list":"<li>Core'daki her şey</li><li>Uzmanlarla <b>aylık birebirler</b></li><li>Tüm haftalık etkinlikler, öncelikli masa</li><li>Üç ayda bir kan tahlili ve değerlendirme</li><li>Hazır olunca tanıştırma programı</li>",
+  "t3-list":"<li>Circle'daki her şey</li><li><b>Haftalık</b> uzman seansları</li><li>Özel program direktörü</li><li>Ev sahipliğinde yemekler ve geziler</li>",
+  "t1-btn":"Core için başvur","t2-btn":"Circle için başvur","t3-btn":"Patron için başvur",
+  "tier-note":"Kabul başvuruyladır. Kurucu kadro Bebek, Arnavutköy, Etiler ve Nişantaşı genelinde 120 üyeyle sınırlıdır. Bir sezon, parçalarının toplamından ucuzdur — terapist, antrenör, diyetisyen ve kan tahlili ayrı ayrı alındığında — ve onlardan farklı olarak birikir.",
+  "found-cap":"Depozitoyla tutulan kurucu yerler",
+  "found-p":"Kurucu yer <b>tamamen iade edilebilir bir depozitoyla</b> tutulur; kabulde ilk sezonundan düşülür. Başvurun kabul edilmezse — ya da açılıştan önce vazgeçersen — eksiksiz iade edilir.",
+  "disc-eyebrow":"Tasarım gereği ketumiyet",
+  "disc-serif":"Bedenin hakkında bildiklerimiz, kalbin hakkında bildiklerimizle asla buluşmaz.",
+  "disc-p":"Sağlık verilerin ve tanıştırmaların ayrı sistemlerde yaşar — tasarım gereği ve yasa gereği. Koçlarına anlattığın hiçbir şey kiminle tanışacağını belirlemez.",
+  "nom-eyebrow":"Kapı içeriden açılır",
+  "nom-serif":"Her üye, her sezon <em>tek bir isim</em> önerebilir.",
+  "nom-p":"Adaylıklar da başvuru gibi okunur — üye kefil olur, oda karar verir. Atlas'a başka bir kestirme yol yok.",
+  "nom-btn":"Birini aday göster",
+  "city-eyebrow":"Neden İstanbul, neden şimdi",
+  "city-h2":"Önce bu şehir için kuruldu.",
+  "city-p1":"İstanbul, Avrupa'nın en yoğun hırslı genç profesyonel nüfuslarından birini barındırıyor — ve en yalnızlarından birini. Salonlar dolu, uygulamalar dolu; ama insanların asıl istediği şey, <b>insanı yukarı çeken bir çevre</b>, hiçbir yerde bulunmuyor.",
+  "city-p2":"Atlas dört semtte açılıyor — Bebek, Arnavutköy, Etiler ve Nişantaşı — bilerek küçük. Önce yoğunluk, sonra ölçek. Her kurucu üye odaları, koçları ve birbirini tanıyacak — ürün bu.",
+  "fin-eyebrow":"Kurucu kadro · Sonbahar 2026",
+  "fin-h2":"Tek bir şeyi değiştir. Gerisinin gelişini izle.",
+  "fin-p":"Kurucu 120 yerin yirmi üçü şimdiden tutuldu. <b>Nerede olduğuna değil, hareket edip etmediğine bakıyoruz.</b> Kabul on dürüst dakika sürer.",
+  "fin-btn":"Başvurunu başlat",
+  "f-left":"ATLAS · İstanbul — önizleme prototipi",
+  "f-preview":"Üye önizlemesi →",
+  "nomf-eyebrow":"Adaylık · sezonda bir",
+  "nomf-h3":"Bir isim öner",
+  "nomf-sub":"Sen kefil olursun, oda karar verir. Kabul edilirse başvuru daveti ona senden ulaşır — asla bizden.",
+  "nomf-f1":"Adı",
+  "nomf-f2":"Neden o — tek dürüst cümle",
+  "nomf-f3":"Senin adın (üye)",
+  "nomf-send":"Adaylığı gönder",
+  "nomd-h3":"Adaylık alındı.",
+  "nomd-p":"Bir başvuru gibi okunacak. Oda uygun görürse, başvuru daveti ona ulaşacak — bizim değil, senin adını taşıyarak.",
+  "nomd-ret":"Kulübe dön"
+}};
+function initI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    if(!(el.dataset.i18n in I18N.en))I18N.en[el.dataset.i18n]=el.innerHTML;
+  });
+}
+function setLang(l){
+  lang=l;
+  document.documentElement.lang=(l==='tr')?'tr':'en';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const v=I18N[l][el.dataset.i18n];
+    if(v!=null)el.innerHTML=v;
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>{if(b.id!=='dashClose')b.textContent=(l==='en')?'TR':'EN';});
+  document.getElementById('heroH1').setAttribute('lang', l==='tr'?'tr':'en');
+  document.getElementById('heroAccent').setAttribute('lang', l==='tr'?'en':'tr');
+  renderJourney(document.querySelector('.goal-tab[aria-selected="true"]').dataset.goal);
+  if(activeNode)activate(activeNode);
+  if(overlay.classList.contains('open'))render();
+  if(dashEl.classList.contains('open'))renderDash();
+}
+
