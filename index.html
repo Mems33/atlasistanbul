@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>ATLAS — Istanbul</title>
+<meta name="description" content="A private members' club in Istanbul for people rebuilding themselves. Seven domains, one roof, ninety-day seasons. Founding cohort: 120 places across Bebek, Arnavutköy, Etiler and Nişantaşı.">
+<meta name="theme-color" content="#0C1A1D">
+<meta property="og:title" content="ATLAS — Istanbul">
+<meta property="og:description" content="The place where effort still compounds. A members' club: seven domains, one season, witnessed.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230C1A1D'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23C08552' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Albert+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -17,6 +24,7 @@
     --verdigris:#7E9E8F;
     --line:rgba(237,230,216,.14);
     --maxw:1120px;
+    --ease:cubic-bezier(.22,.8,.28,1);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -33,6 +41,7 @@
   h1,h2,h3,.serif{font-family:'Marcellus',serif;font-weight:400;letter-spacing:.01em}
   a{color:inherit}
   button{font-family:inherit;cursor:pointer}
+  img,svg{display:block;max-width:100%}
 
   .eyebrow{
     font-size:11px;letter-spacing:.28em;text-transform:uppercase;
@@ -40,33 +49,98 @@
   }
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
 
+  /* ---------- SCROLL REVEAL ---------- */
+  .rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+  .rv.in{opacity:1;transform:none}
+  .rv-d1{transition-delay:.08s}.rv-d2{transition-delay:.16s}.rv-d3{transition-delay:.24s}
+  .rv-d4{transition-delay:.32s}.rv-d5{transition-delay:.4s}.rv-d6{transition-delay:.48s}
+
   /* ---------- NAV ---------- */
   nav{
-    position:fixed;top:0;left:0;right:0;z-index:50;
+    position:fixed;top:0;left:0;right:0;z-index:60;
     display:flex;justify-content:space-between;align-items:center;
     padding:20px 32px;
-    background:linear-gradient(to bottom, rgba(12,26,29,.92), rgba(12,26,29,0));
-    backdrop-filter:blur(2px);
+    transition:background .4s,border-color .4s,padding .4s;
+    border-bottom:1px solid transparent;
+  }
+  nav.scrolled{
+    background:rgba(12,26,29,.9);backdrop-filter:blur(12px);
+    border-bottom-color:var(--line);padding:14px 32px;
   }
   .logo{font-family:'Marcellus',serif;font-size:20px;letter-spacing:.32em;text-transform:uppercase}
   .logo span{color:var(--copper)}
-  .nav-right{display:flex;gap:28px;align-items:center;font-size:13px;letter-spacing:.06em}
-  .nav-right a{text-decoration:none;color:var(--marble-dim);transition:color .2s}
+  .nav-right{display:flex;gap:26px;align-items:center;font-size:13px;letter-spacing:.06em}
+  .nav-right a{text-decoration:none;color:var(--marble-dim);transition:color .2s;position:relative}
+  .nav-right a::after{
+    content:'';position:absolute;left:0;right:100%;bottom:-5px;height:1px;background:var(--copper);
+    transition:right .35s var(--ease);
+  }
   .nav-right a:hover,.nav-right a:focus-visible{color:var(--marble)}
+  .nav-right a:hover::after{right:0}
+  .lang-btn{
+    background:none;border:1px solid var(--line);color:var(--marble-dim);
+    padding:8px 13px;font-size:11px;letter-spacing:.18em;transition:all .25s;
+  }
+  .lang-btn:hover{border-color:var(--copper);color:var(--marble)}
+
   .btn{
     display:inline-block;border:1px solid var(--copper);color:var(--marble);
-    background:transparent;padding:11px 26px;font-size:13px;letter-spacing:.12em;
-    text-transform:uppercase;text-decoration:none;transition:background .25s,color .25s;
+    background:transparent;padding:12px 28px;font-size:13px;letter-spacing:.12em;
+    text-transform:uppercase;text-decoration:none;
+    position:relative;overflow:hidden;transition:color .3s,border-color .3s;
+    isolation:isolate;
   }
-  .btn:hover,.btn:focus-visible{background:var(--copper);color:var(--ink)}
+  .btn::before{
+    content:'';position:absolute;inset:0;z-index:-1;background:var(--copper);
+    transform:translateX(-101%);transition:transform .38s var(--ease);
+  }
+  .btn:hover,.btn:focus-visible{color:var(--ink)}
+  .btn:hover::before,.btn:focus-visible::before{transform:translateX(0)}
   .btn-solid{background:var(--copper);color:var(--ink)}
-  .btn-solid:hover,.btn-solid:focus-visible{background:#D49664}
+  .btn-solid::before{background:#DCA06C;transform:translateX(-101%)}
+  .btn-solid:hover{color:var(--ink)}
   :focus-visible{outline:2px solid var(--verdigris);outline-offset:3px}
+
+  .burger{display:none;background:none;border:none;width:44px;height:44px;position:relative;z-index:70}
+  .burger i{
+    position:absolute;left:10px;right:10px;height:1.5px;background:var(--marble);
+    transition:transform .35s var(--ease),opacity .25s,top .35s var(--ease);
+  }
+  .burger i:nth-child(1){top:16px}
+  .burger i:nth-child(2){top:22px}
+  .burger i:nth-child(3){top:28px}
+  body.menu-open .burger i:nth-child(1){top:22px;transform:rotate(45deg)}
+  body.menu-open .burger i:nth-child(2){opacity:0}
+  body.menu-open .burger i:nth-child(3){top:22px;transform:rotate(-45deg)}
+
+  .mobile-menu{
+    position:fixed;inset:0;z-index:65;background:rgba(12,26,29,.98);backdrop-filter:blur(14px);
+    display:flex;flex-direction:column;justify-content:center;padding:0 40px;gap:8px;
+    opacity:0;pointer-events:none;transition:opacity .4s var(--ease);
+  }
+  body.menu-open .mobile-menu{opacity:1;pointer-events:auto}
+  .mobile-menu a{
+    font-family:'Marcellus',serif;font-size:31px;text-decoration:none;padding:11px 0;
+    color:var(--marble);border-bottom:1px solid var(--line);
+    opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease);
+  }
+  body.menu-open .mobile-menu a{opacity:1;transform:none}
+  body.menu-open .mobile-menu a:nth-child(1){transition-delay:.08s}
+  body.menu-open .mobile-menu a:nth-child(2){transition-delay:.13s}
+  body.menu-open .mobile-menu a:nth-child(3){transition-delay:.18s}
+  body.menu-open .mobile-menu a:nth-child(4){transition-delay:.23s}
+  body.menu-open .mobile-menu a:nth-child(5){transition-delay:.28s}
+  body.menu-open .mobile-menu a:nth-child(6){transition-delay:.33s}
+  .mobile-menu .mm-note{
+    margin-top:26px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--marble-dim);
+    opacity:0;transition:opacity .5s .4s;
+  }
+  body.menu-open .mobile-menu .mm-note{opacity:1}
 
   /* ---------- HERO ---------- */
   header{
     min-height:100svh;display:flex;flex-direction:column;justify-content:center;
-    position:relative;
+    position:relative;overflow:hidden;
     background:
       radial-gradient(ellipse 90% 60% at 70% 110%, rgba(126,158,143,.13), transparent 60%),
       radial-gradient(ellipse 70% 55% at 20% -10%, rgba(27,61,70,.85), transparent 65%),
@@ -78,18 +152,29 @@
     background-size:26px 26px;
     mask-image:linear-gradient(to bottom, transparent, black 30%, transparent 95%);
   }
-  .hero-inner{position:relative;z-index:1;padding-top:80px}
+  header::before{
+    content:'';position:absolute;inset:-20%;pointer-events:none;z-index:0;
+    background:radial-gradient(ellipse 40% 32% at 74% 30%, rgba(192,133,82,.10), transparent 70%);
+    animation:drift 14s ease-in-out infinite alternate;
+  }
+  @keyframes drift{from{transform:translate3d(-2%,1%,0)}to{transform:translate3d(2%,-2%,0)}}
+  .hero-inner{position:relative;z-index:1;padding-top:90px}
+  @keyframes riseIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+  .ld{opacity:0;animation:riseIn 1s var(--ease) forwards}
+  .ld1{animation-delay:.15s}.ld2{animation-delay:.35s}.ld3{animation-delay:.6s}
+  .ld4{animation-delay:.78s}.ld5{animation-delay:.95s}.ld6{animation-delay:1.15s}
   .hero-inner .eyebrow{display:block;margin-bottom:28px}
   h1{
-    font-size:clamp(38px,5.8vw,76px);line-height:1.12;max-width:18ch;
+    font-size:clamp(40px,6vw,80px);line-height:1.1;max-width:16ch;
     color:var(--marble);
   }
+  h1 em{font-style:normal;color:var(--copper)}
   .hero-tr{
-    margin-top:18px;font-family:'Marcellus',serif;font-size:clamp(17px,2vw,22px);
+    margin-top:18px;font-family:'Marcellus',serif;font-size:clamp(16px,2vw,21px);
     color:var(--copper);letter-spacing:.02em;
   }
   .hero-witness{
-    margin-top:26px;font-size:13px;letter-spacing:.22em;text-transform:uppercase;
+    margin-top:26px;font-size:12px;letter-spacing:.24em;text-transform:uppercase;
     color:var(--verdigris);font-weight:500;
   }
   .hero-sub{
@@ -98,6 +183,16 @@
   .hero-cta{margin-top:44px;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
   .hero-note{font-size:12px;letter-spacing:.08em;color:var(--marble-dim)}
   .hero-note b{color:var(--verdigris);font-weight:500}
+  .scroll-hint{
+    position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+    width:1px;height:52px;overflow:hidden;z-index:1;
+  }
+  .scroll-hint::after{
+    content:'';position:absolute;top:-52px;left:0;width:1px;height:52px;
+    background:linear-gradient(to bottom, transparent, var(--copper));
+    animation:hint 2.4s var(--ease) infinite;
+  }
+  @keyframes hint{0%{top:-52px}55%{top:52px}100%{top:52px}}
 
   /* ---------- MARQUEE STRIP ---------- */
   .strip{
@@ -111,7 +206,7 @@
   @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
   /* ---------- SECTIONS ---------- */
-  section{padding:110px 0}
+  section{padding:120px 0}
   .sec-head{max-width:640px;margin-bottom:64px}
   .sec-head .eyebrow{display:block;margin-bottom:18px}
   h2{font-size:clamp(30px,4vw,48px);line-height:1.15}
@@ -120,34 +215,48 @@
   /* ---------- CONSTELLATION ---------- */
   #map{background:linear-gradient(to bottom, var(--ink), #0E2126 55%, var(--ink))}
   .const-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-  .const-copy h2{max-width:12ch}
+  .const-copy h2{max-width:14ch}
   .const-copy p{margin-top:22px;color:var(--marble-dim)}
   .const-copy .lead{color:var(--marble);font-size:18px}
   #const-caption{
     margin-top:30px;padding:18px 22px;border-left:2px solid var(--copper);
     background:rgba(27,61,70,.35);font-size:15px;color:var(--marble);
-    min-height:86px;transition:opacity .2s;
+    min-height:96px;
   }
   #const-caption .serif{display:block;font-size:17px;margin-bottom:4px;color:var(--copper)}
+  #const-caption .cap-body{display:block;animation:capIn .45s var(--ease)}
+  @keyframes capIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  svg#constSvg{overflow:visible}
   svg text{font-family:'Albert Sans',sans-serif;font-size:11.5px;letter-spacing:.08em;fill:var(--marble-dim);text-transform:uppercase}
   .node{cursor:pointer}
-  .node circle{fill:var(--petrol-2);stroke:var(--marble-dim);stroke-width:1;transition:all .25s}
-  .node.active circle{fill:var(--copper);stroke:var(--copper)}
+  .node circle{fill:var(--petrol-2);stroke:var(--marble-dim);stroke-width:1;transition:fill .3s,stroke .3s;
+    transform-box:fill-box;transform-origin:center;animation:breathe 5s ease-in-out infinite}
+  .node:nth-child(2n) circle{animation-delay:1.4s}
+  .node:nth-child(3n) circle{animation-delay:2.6s}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+  .node.active circle{fill:var(--copper);stroke:var(--copper);animation-play-state:paused;transform:scale(1.25)}
   .node.linked circle{stroke:var(--verdigris);fill:#22454F}
   .node.active text,.node.linked text{fill:var(--marble)}
-  .edge{stroke:var(--line);stroke-width:1;transition:all .25s}
+  .node text{transition:fill .3s}
+  .edge{stroke:var(--line);stroke-width:1;transition:stroke .3s,stroke-width .3s}
   .edge.lit{stroke:var(--verdigris);stroke-width:1.6}
+  #map.drawn .edge{transition:stroke .3s,stroke-width .3s,stroke-dashoffset 1.4s var(--ease)}
 
   /* ---------- PILLARS ---------- */
   .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-  .pillar{background:var(--ink);padding:38px 30px;transition:background .3s}
+  .pillar{background:var(--ink);padding:38px 30px;transition:background .35s;position:relative;overflow:hidden}
+  .pillar::after{
+    content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--copper);
+    transform:scaleY(0);transform-origin:top;transition:transform .4s var(--ease);
+  }
   .pillar:hover{background:var(--petrol)}
+  .pillar:hover::after{transform:scaleY(1)}
   .pillar .serif{font-size:20px;display:block;margin-bottom:12px}
   .pillar p{font-size:14px;color:var(--marble-dim)}
   .pillar .tag{display:inline-block;margin-bottom:18px;font-size:10px;letter-spacing:.22em;
     text-transform:uppercase;color:var(--verdigris);border:1px solid rgba(126,158,143,.4);padding:4px 10px}
 
-  /* ---------- JOURNEY: PHASES ---------- */
+  /* ---------- JOURNEY ---------- */
   #journey{background:#0E2126;border-top:1px solid var(--line)}
   .phases{display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative;margin-bottom:96px}
   .phases::before{
@@ -158,9 +267,10 @@
   .phase .dot{
     width:15px;height:15px;border-radius:50%;
     border:1px solid var(--copper);background:var(--ink);
-    margin:0 auto 18px;position:relative;z-index:1;
+    margin:0 auto 18px;position:relative;z-index:1;transition:box-shadow .3s;
   }
   .phase.solid .dot{background:var(--copper)}
+  .phase:hover .dot{box-shadow:0 0 0 6px rgba(192,133,82,.15)}
   .phase h3{font-size:15px;text-align:center;margin-bottom:8px}
   .phase p{font-size:12.5px;color:var(--marble-dim);text-align:center;line-height:1.55}
   .phase .tag{
@@ -168,18 +278,21 @@
     color:var(--verdigris);margin-bottom:6px;font-weight:500;
   }
 
-  /* ---------- JOURNEY: SPINES ---------- */
   .goal-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
   .goal-tab{
     border:1px solid var(--line);background:transparent;color:var(--marble-dim);
-    padding:12px 20px;font-size:13px;letter-spacing:.06em;transition:all .25s;
+    padding:12px 20px;font-size:13px;letter-spacing:.06em;transition:all .25s;white-space:nowrap;
   }
   .goal-tab[aria-selected="true"]{border-color:var(--copper);color:var(--marble);background:rgba(192,133,82,.08)}
   .goal-tab:hover{color:var(--marble)}
   .spine-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:48px;align-items:start;margin-bottom:96px}
   .jspine{position:relative;padding-left:26px}
   .jspine::before{content:'';position:absolute;left:7px;top:10px;bottom:10px;width:1px;background:var(--line)}
-  .vertebra{position:relative;padding:0 0 26px}
+  .vertebra{position:relative;padding:0 0 26px;opacity:0;transform:translateY(12px);
+    animation:riseIn .6s var(--ease) forwards}
+  .vertebra:nth-child(1){animation-delay:.05s}.vertebra:nth-child(2){animation-delay:.15s}
+  .vertebra:nth-child(3){animation-delay:.25s}.vertebra:nth-child(4){animation-delay:.35s}
+  .vertebra:nth-child(5){animation-delay:.45s}
   .vertebra::before{
     content:'';position:absolute;left:-26px;top:7px;width:15px;height:15px;border-radius:50%;
     border:1px solid var(--verdigris);background:var(--ink);
@@ -196,12 +309,12 @@
   .season-box h3{font-size:16px;margin-bottom:4px}
   .season-box .sub{font-size:12.5px;color:var(--marble-dim);margin-bottom:24px}
   .track{margin-bottom:18px}
-  .track .lbl{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px}
-  .track .lbl span:last-child{color:var(--marble-dim)}
+  .track .lbl{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;gap:12px}
+  .track .lbl span:last-child{color:var(--marble-dim);text-align:right}
   .rail{height:8px;background:rgba(237,230,216,.07);position:relative;overflow:hidden}
   .fill{
     position:absolute;top:0;bottom:0;background:var(--verdigris);opacity:.85;
-    transform-origin:left;transition:left .5s ease,width .5s ease;
+    width:0;transition:width 1s var(--ease);
   }
   .fill.copper{background:var(--copper)}
   .weeks{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.14em;color:var(--marble-dim);margin-top:14px;text-transform:uppercase}
@@ -211,42 +324,88 @@
   }
   .review-note strong{color:var(--marble);font-weight:500}
 
-  /* ---------- JOURNEY: LAYERS ---------- */
   .touch{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-  .touch article{background:var(--ink);padding:26px 24px}
+  .touch article{background:var(--ink);padding:26px 24px;transition:background .35s}
+  .touch article:hover{background:var(--petrol)}
   .touch h3{font-size:16px;margin-bottom:10px;color:var(--copper)}
   .touch p{font-size:13.5px;color:var(--marble-dim)}
 
-  /* ---------- QUOTE + DISCRETION BANDS ---------- */
-  .band{
-    padding:100px 32px;text-align:center;border-top:1px solid var(--line);
-  }
+  /* ---------- BANDS ---------- */
+  .band{padding:110px 32px;text-align:center;border-top:1px solid var(--line)}
   .band .serif{
-    font-size:clamp(23px,3.4vw,38px);max-width:26ch;margin:0 auto;line-height:1.28;display:block;
+    font-size:clamp(23px,3.4vw,38px);max-width:26ch;margin:0 auto;line-height:1.3;display:block;
   }
   .band .serif em{color:var(--copper);font-style:normal}
   .band .eyebrow{display:block;margin-bottom:22px}
   .band p{margin:22px auto 0;max-width:52ch;color:var(--marble-dim);font-size:15px}
+  .band .rv{transition-duration:1.1s}
+  .band .btn{margin-top:34px}
 
-  /* ---------- METHOD (removed, replaced by journey) ---------- */
-
-  /* ---------- MEMBERSHIP ---------- */
-  #membership{background:#0E2126;border-top:1px solid var(--line)}
-  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;align-items:stretch}
-  .tier{
-    border:1px solid var(--line);padding:40px 32px;display:flex;flex-direction:column;
-    background:var(--ink);transition:transform .3s,border-color .3s;
+  /* ---------- EVIDENCE DOSSIER ---------- */
+  #evidence{background:linear-gradient(to bottom, var(--ink), #0E2126 55%, var(--ink))}
+  .dossier{
+    max-width:740px;margin:0 auto;background:var(--marble);color:#1B2427;
+    padding:52px 56px;position:relative;
+    box-shadow:0 50px 110px -45px rgba(0,0,0,.95);
   }
-  .tier:hover{transform:translateY(-6px);border-color:rgba(192,133,82,.5)}
-  .tier.featured{border-color:var(--copper);background:linear-gradient(180deg,#182F36,var(--ink))}
-  .tier .serif{font-size:24px}
-  .tier .price{font-family:'Marcellus',serif;font-size:34px;margin:18px 0 4px;color:var(--marble)}
-  .tier .per{font-size:12px;color:var(--marble-dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:24px}
-  .tier ul{list-style:none;margin-bottom:32px;flex:1}
-  .tier li{font-size:14px;color:var(--marble-dim);padding:9px 0;border-bottom:1px solid rgba(237,230,216,.07)}
-  .tier li b{color:var(--marble);font-weight:500}
-  .tier .btn{text-align:center}
-  .tier-note{margin-top:26px;font-size:12.5px;color:var(--marble-dim);text-align:center;letter-spacing:.04em;max-width:70ch;margin-left:auto;margin-right:auto}
+  .dossier::before{
+    content:'A';position:absolute;top:40px;right:44px;width:58px;height:58px;
+    border:1.5px solid #A96F3F;border-radius:50%;color:#A96F3F;
+    font-family:'Marcellus',serif;font-size:24px;display:flex;align-items:center;justify-content:center;
+    transform:rotate(-8deg);opacity:.85;
+  }
+  .d-eyebrow{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#A96F3F;font-weight:500}
+  .d-title{font-family:'Marcellus',serif;font-size:27px;margin:10px 0 4px;color:#141C1E}
+  .d-meta{font-size:12.5px;color:#5C6663;letter-spacing:.04em;margin-bottom:34px}
+  .d-metric{
+    display:grid;grid-template-columns:1.1fr 1fr auto;gap:10px 20px;align-items:center;
+    padding:13px 0;border-top:1px solid rgba(20,28,30,.14);
+  }
+  .d-metric .m-name{font-size:13.5px;color:#2A3437;font-weight:500}
+  .d-metric .m-name small{display:block;font-weight:300;color:#6B7572;font-size:11.5px}
+  .d-metric .m-vals{font-family:'Marcellus',serif;font-size:16px;color:#141C1E;white-space:nowrap}
+  .d-metric .m-vals span{color:#8C9691;font-size:13px;font-family:'Albert Sans',sans-serif;margin:0 7px}
+  .d-metric .m-delta{
+    font-size:12px;font-weight:600;letter-spacing:.04em;color:#3E6353;
+    background:rgba(78,110,96,.14);padding:5px 11px;white-space:nowrap;
+  }
+  .d-rail{grid-column:1 / -1;height:4px;background:rgba(20,28,30,.08);position:relative;overflow:hidden;margin-top:2px}
+  .d-rail i{position:absolute;top:0;bottom:0;left:0;background:#A96F3F;width:0;transition:width 1.2s var(--ease)}
+  .d-habit{
+    margin-top:30px;padding:20px 22px;background:rgba(169,111,63,.08);border-left:2px solid #A96F3F;
+    font-size:14px;color:#2A3437;
+  }
+  .d-habit b{font-weight:600;color:#141C1E}
+  .d-foot{
+    margin-top:32px;padding-top:20px;border-top:1px solid rgba(20,28,30,.14);
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#6B7572;
+  }
+  .d-note{margin-top:26px;text-align:center;font-size:11.5px;color:var(--marble-dim);letter-spacing:.06em}
+
+  /* ---------- FOUNDING RAIL ---------- */
+  .found{max-width:640px;margin:64px auto 0;text-align:center}
+  .found .num{
+    font-family:'Marcellus',serif;font-size:clamp(40px,6vw,58px);color:var(--marble);line-height:1;
+  }
+  .found .num em{font-style:normal;color:var(--copper)}
+  .found .cap{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--verdigris);margin-top:10px;font-weight:500}
+  .found .rail2{height:6px;background:rgba(237,230,216,.08);margin:26px 0 18px;position:relative;overflow:hidden}
+  .found .rail2 i{position:absolute;top:0;bottom:0;left:0;width:0;background:var(--copper);transition:width 1.6s var(--ease)}
+  .found p{font-size:13.5px;color:var(--marble-dim);max-width:52ch;margin:0 auto}
+  .found p b{color:var(--marble);font-weight:500}
+
+  /* ---------- DEPOSIT ---------- */
+  .dep-card{
+    border:1px solid var(--copper);padding:28px 26px;margin-top:6px;
+    background:linear-gradient(180deg, rgba(192,133,82,.09), transparent);
+  }
+  .dep-card .serif{font-size:21px;display:block}
+  .dep-card .dep-no{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--verdigris);font-weight:500;margin-bottom:12px;display:block}
+  .dep-card p{font-size:14px;color:var(--marble-dim);margin-top:12px}
+  .dep-card p b{color:var(--marble);font-weight:500}
+  .dep-skip{background:none;border:none;color:var(--marble-dim);font-size:13px;letter-spacing:.08em;text-decoration:underline;text-underline-offset:4px}
+  .dep-skip:hover{color:var(--marble)}
 
   /* ---------- CITY ---------- */
   .city{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
@@ -260,6 +419,12 @@
   .city-visual::before{
     content:'';position:absolute;left:0;right:0;bottom:34%;height:1px;background:rgba(237,230,216,.25);
   }
+  .city-visual::after{
+    content:'';position:absolute;left:0;right:0;bottom:0;top:66%;
+    background:linear-gradient(to bottom, rgba(192,133,82,.06), transparent);
+    animation:water 6s ease-in-out infinite alternate;
+  }
+  @keyframes water{from{opacity:.4}to{opacity:1}}
   .skyline{position:absolute;bottom:34%;left:0;right:0;height:120px}
   .city-label{
     position:absolute;bottom:26px;left:26px;
@@ -268,55 +433,63 @@
   .city-copy p{color:var(--marble-dim);margin-top:20px;font-size:15.5px}
   .city-copy p b{color:var(--marble);font-weight:500}
 
-  /* ---------- FOOTER CTA ---------- */
+  /* ---------- FINAL ---------- */
   .final{
-    text-align:center;padding:140px 32px;
+    text-align:center;padding:150px 32px;
     background:radial-gradient(ellipse 60% 70% at 50% 100%, rgba(192,133,82,.14), transparent 70%), var(--ink);
     border-top:1px solid var(--line);
   }
   .final h2{max-width:20ch;margin:0 auto 20px}
   .final p{color:var(--marble-dim);max-width:48ch;margin:0 auto 40px}
   .final p b{color:var(--marble);font-weight:500}
-  footer{border-top:1px solid var(--line);padding:30px 32px;display:flex;justify-content:space-between;
+  footer{border-top:1px solid var(--line);padding:30px 32px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
     font-size:12px;color:var(--marble-dim);letter-spacing:.08em}
+  .linklike{background:none;border:none;color:var(--marble-dim);font-size:12px;letter-spacing:.08em;
+    text-decoration:underline;text-underline-offset:4px;transition:color .2s}
+  .linklike:hover{color:var(--copper)}
 
-  /* ---------- ONBOARDING OVERLAY ---------- */
+  /* ---------- OVERLAYS (application + nomination) ---------- */
   .overlay{
     position:fixed;inset:0;z-index:100;background:rgba(10,20,23,.97);backdrop-filter:blur(8px);
     display:none;align-items:center;justify-content:center;padding:24px;
   }
   .overlay.open{display:flex}
   .ob{
-    width:100%;max-width:680px;max-height:92vh;overflow-y:auto;
+    width:100%;max-width:680px;max-height:92svh;overflow-y:auto;
     border:1px solid var(--line);background:var(--ink);
-    padding:56px;position:relative;animation:rise .45s ease both;
+    padding:52px 56px;position:relative;animation:rise .45s var(--ease) both;
+    -webkit-overflow-scrolling:touch;
   }
   @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
   .ob-close{
-    position:sticky;top:0;float:right;background:none;border:none;color:var(--marble-dim);
-    font-size:22px;line-height:1;padding:6px;z-index:2;
+    position:absolute;top:14px;right:14px;background:none;border:none;color:var(--marble-dim);
+    font-size:24px;line-height:1;padding:8px;z-index:2;
   }
   .ob-close:hover{color:var(--marble)}
   .ob-progress{display:flex;gap:6px;margin-bottom:40px}
-  .ob-progress i{height:2px;flex:1;background:var(--line)}
-  .ob-progress i.done{background:var(--copper)}
+  .ob-progress i{height:2px;flex:1;background:var(--line);position:relative;overflow:hidden}
+  .ob-progress i.done::after{
+    content:'';position:absolute;inset:0;background:var(--copper);
+    transform-origin:left;animation:barIn .5s var(--ease) both;
+  }
+  @keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
   .ob .eyebrow{display:block;margin-bottom:14px}
-  .ob h3{font-size:clamp(24px,3.4vw,32px);line-height:1.2;margin-bottom:10px}
+  .ob h3{font-size:clamp(23px,3.4vw,32px);line-height:1.2;margin-bottom:10px}
   .ob .sub{color:var(--marble-dim);font-size:15px;margin-bottom:34px}
   .chips{display:flex;flex-wrap:wrap;gap:12px}
   .chip{
     border:1px solid var(--line);background:transparent;color:var(--marble);
     padding:13px 22px;font-size:14.5px;letter-spacing:.02em;transition:all .2s;
   }
-  .chip:hover{border-color:var(--copper)}
+  .chip:hover{border-color:var(--copper);transform:translateY(-2px)}
   .chip.sel{background:var(--copper);border-color:var(--copper);color:var(--ink);font-weight:500}
-  .ob-nav{display:flex;justify-content:space-between;align-items:center;margin-top:44px}
+  .ob-nav{display:flex;justify-content:space-between;align-items:center;margin-top:44px;gap:14px}
   .ob-back{background:none;border:none;color:var(--marble-dim);font-size:13px;letter-spacing:.1em;text-transform:uppercase}
   .ob-back:hover{color:var(--marble)}
 
   .spine{border-top:1px solid var(--line)}
   .spine-row{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid var(--line);align-items:baseline;
-    opacity:0;animation:rise .5s ease forwards}
+    opacity:0;animation:rise .5s var(--ease) forwards}
   .spine-row:nth-child(2){animation-delay:.12s}
   .spine-row:nth-child(3){animation-delay:.24s}
   .spine-row:nth-child(4){animation-delay:.36s}
@@ -330,7 +503,8 @@
     color:var(--marble-dim);margin-bottom:8px}
   .field input,.field select,.field textarea{
     width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);
-    color:var(--marble);font-family:inherit;font-size:15px;padding:10px 2px;resize:vertical;
+    color:var(--marble);font-family:inherit;font-size:16px;padding:12px 2px;resize:vertical;
+    border-radius:0;-webkit-appearance:none;appearance:none;
   }
   .field textarea{min-height:56px;line-height:1.5}
   .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-bottom-color:var(--copper)}
@@ -345,58 +519,397 @@
     width:64px;height:64px;border:1px solid var(--copper);border-radius:50%;
     display:flex;align-items:center;justify-content:center;margin:0 auto 30px;
     font-family:'Marcellus',serif;font-size:24px;color:var(--copper);
+    animation:markIn .8s var(--ease) both;
   }
+  @keyframes markIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
   .ob.center{text-align:center}
 
+  /* ---------- DASHBOARD ---------- */
+  .dash{position:fixed;inset:0;z-index:90;background:var(--ink);overflow-y:auto;display:none;
+    -webkit-overflow-scrolling:touch}
+  .dash.open{display:block}
+  .dash-head{
+    position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:14px;
+    padding:18px 28px;background:rgba(12,26,29,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+    flex-wrap:wrap;
+  }
+  .dash-head .who{font-size:13px;color:var(--marble-dim);letter-spacing:.04em}
+  .dash-head .who b{color:var(--marble);font-weight:500}
+  .dash-week{
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--verdigris);
+    border:1px solid rgba(126,158,143,.4);padding:6px 12px;font-weight:500;
+  }
+  .dash-body{max-width:980px;margin:0 auto;padding:40px 28px 80px}
+  .dash-prog{height:6px;background:rgba(237,230,216,.08);position:relative;overflow:hidden;margin-bottom:8px}
+  .dash-prog i{position:absolute;top:0;bottom:0;left:0;width:0;background:var(--copper);transition:width 1.4s var(--ease)}
+  .dash-prog-lbl{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--marble-dim);margin-bottom:36px}
+  .dash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .dcard{border:1px solid var(--line);padding:26px 24px;background:linear-gradient(180deg, rgba(27,61,70,.28), transparent)}
+  .dcard h4{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--copper);font-weight:500;margin-bottom:18px}
+  .dtask{
+    display:flex;gap:14px;align-items:flex-start;padding:11px 0;border-top:1px solid rgba(237,230,216,.08);
+    cursor:pointer;font-size:14px;color:var(--marble);transition:color .2s;
+  }
+  .dtask .box{
+    flex:0 0 16px;height:16px;border:1px solid var(--marble-dim);margin-top:3px;position:relative;transition:all .25s;
+  }
+  .dtask.done .box{background:var(--copper);border-color:var(--copper)}
+  .dtask.done .box::after{content:'✓';position:absolute;inset:0;font-size:11px;color:var(--ink);
+    display:flex;align-items:center;justify-content:center;font-weight:600}
+  .dtask.done{color:var(--marble-dim);text-decoration:line-through;text-decoration-color:rgba(192,133,82,.5)}
+  .devent .serif{font-size:19px;display:block;margin-bottom:6px}
+  .devent p{font-size:13px;color:var(--marble-dim)}
+  .devent p b{color:var(--verdigris);font-weight:500}
+  .dspec{padding:11px 0;border-top:1px solid rgba(237,230,216,.08);font-size:14px}
+  .dspec small{display:block;color:var(--marble-dim);font-size:12.5px;margin-top:2px}
+  .dbar{margin-bottom:14px}
+  .dbar .lbl{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;color:var(--marble)}
+  .dbar .lbl span:last-child{color:var(--marble-dim)}
+  .dbar .rail{height:6px}
+  .ddelta{font-family:'Marcellus',serif;font-size:clamp(19px,2.6vw,24px);color:var(--marble);line-height:1.5}
+  .ddelta em{font-style:normal;color:var(--copper)}
+  .dreview{grid-column:1 / -1;text-align:center;padding:30px 24px;border:1px dashed rgba(192,133,82,.45)}
+  .dreview .serif{font-size:19px;color:var(--marble)}
+  .dreview p{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--marble-dim);margin-top:8px}
+  .dash-note{text-align:center;margin-top:30px;font-size:11.5px;color:var(--marble-dim);letter-spacing:.08em}
+
+  /* ---------- MOBILE ---------- */
   @media(max-width:900px){
-    .const-grid,.city,.spine-grid{grid-template-columns:1fr;gap:44px}
-    .pillars,.touch{grid-template-columns:1fr}
-    .tiers{grid-template-columns:1fr}
+    .wrap{padding:0 22px}
+    nav{padding:16px 22px}
+    nav.scrolled{padding:12px 22px}
+    .logo{font-size:16px;letter-spacing:.24em}
+    .nav-right{gap:10px}
     .nav-right a.hidenav{display:none}
-    .ob{padding:36px 26px}
-    .form-grid{grid-template-columns:1fr}
-    section{padding:80px 0}
-    .phases{grid-template-columns:1fr;gap:26px}
+    .nav-right .btn{padding:10px 16px;font-size:11px}
+    .lang-btn{padding:8px 10px}
+    .burger{display:block}
+
+    header{min-height:100svh}
+    .hero-inner{padding-top:110px;padding-bottom:80px}
+    h1{font-size:clamp(34px,10vw,46px);max-width:100%}
+    .hero-sub{font-size:15.5px}
+    .hero-cta{margin-top:36px;gap:16px}
+    .hero-cta .btn{width:100%;text-align:center;padding:16px 28px}
+    .hero-note{line-height:1.8}
+    .scroll-hint{display:none}
+
+    section{padding:76px 0}
+    .sec-head{margin-bottom:44px}
+
+    .const-grid,.city,.spine-grid{grid-template-columns:1fr;gap:40px}
+    svg#constSvg{max-width:430px;margin:0 auto}
+    #const-caption{min-height:0}
+
+    .pillars,.touch{grid-template-columns:1fr}
+    .pillar{padding:30px 24px}
+
+    .phases{grid-template-columns:1fr;gap:30px;margin-bottom:70px}
     .phases::before{top:16px;bottom:16px;left:7px;right:auto;width:1px;height:auto}
-    .phase{display:grid;grid-template-columns:15px 1fr;gap:16px;padding:0}
-    .phase .dot{margin:5px 0 0}
+    .phase{display:grid;grid-template-columns:15px 1fr;gap:0 18px;padding:0}
+    .phase .dot{margin:5px 0 0;grid-row:1 / span 3}
     .phase h3,.phase p,.phase .tag{text-align:left}
+
+    .goal-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px;margin-left:-22px;margin-right:-22px;
+      padding-left:22px;padding-right:22px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .goal-tabs::-webkit-scrollbar{display:none}
+    .goal-tab{flex:0 0 auto;padding:12px 18px}
+    .spine-grid{margin-bottom:70px}
+    .season-box{padding:24px 20px}
+    .track .lbl{font-size:11.5px}
+
+    .band{padding:80px 22px}
+    .tiers{grid-template-columns:1fr;gap:18px}
+    .tier{padding:34px 26px}
+    .tier:hover{transform:none}
+    .city-visual{aspect-ratio:16/11}
+
+    .final{padding:100px 22px}
+    .final .btn{width:100%;max-width:360px}
+
+    .dossier{padding:38px 24px}
+    .dossier::before{top:26px;right:22px;width:46px;height:46px;font-size:19px}
+    .d-metric{grid-template-columns:1fr auto;gap:6px 14px}
+    .d-metric .m-vals{grid-column:1;font-size:15px}
+    .d-metric .m-delta{grid-row:1 / span 2;align-self:center}
+    .found{margin-top:52px}
+
+    .overlay{padding:0}
+    .ob{max-width:none;height:100svh;max-height:none;padding:76px 24px 40px;border:none}
+    .form-grid{grid-template-columns:1fr}
+    .ob-nav{position:sticky;bottom:0;background:linear-gradient(to top, var(--ink) 65%, transparent);
+      padding:18px 0 4px;margin-top:34px}
+    .ob-nav .btn{flex:1;text-align:center;padding:15px 20px}
+    .chip{padding:14px 20px}
+
+    .dash-body{padding:30px 20px 70px}
+    .dash-grid{grid-template-columns:1fr;gap:16px}
+    .dash-head{padding:14px 20px}
+  }
+  @media(max-width:380px){
+    h1{font-size:32px}
+    .logo{letter-spacing:.18em}
   }
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
     html{scroll-behavior:auto}
+    .rv,.ld{opacity:1!important;transform:none!important}
   }
+
+  /* ---------- MEMBERSHIP ---------- */
+  #membership{background:#0E2126;border-top:1px solid var(--line)}
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;align-items:stretch}
+  .tier{
+    border:1px solid var(--line);padding:40px 32px;display:flex;flex-direction:column;
+    background:var(--ink);transition:transform .4s var(--ease),border-color .4s,box-shadow .4s;
+  }
+  .tier:hover{transform:translateY(-8px);border-color:rgba(192,133,82,.5);box-shadow:0 24px 60px -30px rgba(0,0,0,.8)}
+  .tier.featured{border-color:var(--copper);background:linear-gradient(180deg,#182F36,var(--ink))}
+  .tier .serif{font-size:24px}
+  .tier .price{font-family:'Marcellus',serif;font-size:34px;margin:18px 0 4px;color:var(--marble)}
+  .tier .per{font-size:12px;color:var(--marble-dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:24px}
+  .tier ul{list-style:none;margin-bottom:32px;flex:1}
+  .tier li{font-size:14px;color:var(--marble-dim);padding:9px 0;border-bottom:1px solid rgba(237,230,216,.07)}
+  .tier li b{color:var(--marble);font-weight:500}
+  .tier .btn{text-align:center}
+  .tier-note{margin-top:26px;font-size:12.5px;color:var(--marble-dim);text-align:center;letter-spacing:.04em;max-width:70ch;margin-left:auto;margin-right:auto}
+  @media(max-width:900px){
+    .tiers{grid-template-columns:1fr}
+  }
+</style>
+<style id="lux">
+/* ================= LUX LAYER ================= */
+
+/* ---------- SCROLL PROGRESS ---------- */
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:90;pointer-events:none}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--copper),#DCA06C);
+  transform-origin:left;transform:scaleX(0)}
+
+/* ---------- FILM GRAIN ---------- */
+.grain{position:fixed;inset:-60%;z-index:85;pointer-events:none;opacity:.045;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='240' height='240' filter='url(%23f)'/></svg>");
+  animation:grain 7s steps(8) infinite}
+@keyframes grain{
+  0%,100%{transform:translate(0,0)}12%{transform:translate(-2%,1.4%)}25%{transform:translate(1.6%,-1%)}
+  37%{transform:translate(-1%,2%)}50%{transform:translate(2%,1%)}62%{transform:translate(-1.6%,-1.4%)}
+  75%{transform:translate(1%,-2%)}87%{transform:translate(-2%,-1%)}}
+
+/* ---------- PRELOADER ---------- */
+.preloader{position:fixed;inset:0;z-index:200;background:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  clip-path:inset(0 0 0 0);transition:clip-path 1s var(--ease) .1s}
+.preloader.done{clip-path:inset(0 0 100% 0)}
+.pl-inner{text-align:center;transition:opacity .5s,transform .8s var(--ease)}
+.preloader.done .pl-inner{opacity:0;transform:translateY(-34px)}
+.pl-word{font-family:'Marcellus',serif;font-size:clamp(26px,4.4vw,42px);
+  letter-spacing:.5em;text-indent:.5em;color:var(--marble);display:flex;justify-content:center}
+.pl-word b{font-weight:400;opacity:0;transform:translateY(26px);animation:plUp .85s var(--ease) forwards}
+.pl-word b:nth-child(1){animation-delay:.12s}.pl-word b:nth-child(2){animation-delay:.2s}
+.pl-word b:nth-child(3){animation-delay:.28s}.pl-word b:nth-child(4){animation-delay:.36s}
+.pl-word b:nth-child(5){animation-delay:.44s}
+@keyframes plUp{to{opacity:1;transform:none}}
+.pl-line{height:1px;width:0;margin:24px auto 16px;background:var(--copper);
+  animation:plLine 1.1s .55s var(--ease) forwards}
+@keyframes plLine{to{width:min(300px,56vw)}}
+.pl-city{font-size:10px;letter-spacing:.5em;text-indent:.5em;text-transform:uppercase;
+  color:var(--marble-dim);opacity:0;animation:plFade .8s 1.15s forwards}
+@keyframes plFade{to{opacity:1}}
+body.preloading{overflow:hidden}
+body.preloading .ld{animation-play-state:paused}
+
+/* ---------- HERO SPLIT-TEXT ---------- */
+.wsplit{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
+.wsplit>span{display:inline-block;transform:translateY(118%);transition:transform 1.15s var(--ease)}
+body.loaded .wsplit>span{transform:none}
+
+/* ---------- HEADLINE WIPE + RICHER REVEALS ---------- */
+.rv{filter:blur(7px);transition:opacity .95s var(--ease),transform .95s var(--ease),filter .95s var(--ease)}
+.rv.in{filter:blur(0)}
+h2.rv{clip-path:inset(0 0 101% 0);transition:opacity .9s var(--ease),transform .9s var(--ease),
+  filter .9s var(--ease),clip-path 1.05s var(--ease)}
+h2.rv.in{clip-path:inset(-6% 0 -12% 0)}
+
+/* ---------- MAGNETIC BUTTONS ---------- */
+.btn{will-change:transform}
+.btn.unmag{transition:color .3s,border-color .3s,transform .5s var(--ease)}
+
+/* ---------- CARD SPOTLIGHT ---------- */
+.tier,.pillar,.marker{position:relative}
+.tier::before,.pillar::before,.marker::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:0;
+  transition:opacity .45s;z-index:0;
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(192,133,82,.13),transparent 65%)}
+.tier:hover::before,.pillar:hover::before,.marker:hover::before{opacity:1}
+.tier>*,.pillar>*,.marker>*{position:relative;z-index:1}
+
+/* ---------- DOSSIER TILT ---------- */
+#dossier{transform-style:preserve-3d;will-change:transform;transition:transform .5s var(--ease)}
+
+/* ---------- SMALL LUXURIES ---------- */
+.strip:hover .strip-track{animation-play-state:paused}
+nav .logo{transition:letter-spacing .6s var(--ease)}
+nav.scrolled .logo{letter-spacing:.22em}
+.hero-inner,.scroll-hint{will-change:transform,opacity}
+
+/* ---------- CUSTOM CURSOR ---------- */
+@media (hover:hover) and (pointer:fine){
+  body.cursor-on, body.cursor-on a, body.cursor-on button, body.cursor-on .node,
+  body.cursor-on input, body.cursor-on select, body.cursor-on textarea, body.cursor-on label{cursor:none}
+  .cursor{position:fixed;left:0;top:0;width:6px;height:6px;border-radius:50%;background:var(--copper);
+    z-index:220;pointer-events:none;transform:translate(-50%,-50%);opacity:0;transition:opacity .3s}
+  .cursor-ring{position:fixed;left:0;top:0;width:36px;height:36px;border-radius:50%;
+    border:1px solid rgba(192,133,82,.5);z-index:219;pointer-events:none;opacity:0;
+    transition:opacity .3s,width .35s var(--ease),height .35s var(--ease),
+      border-color .35s,background .35s}
+  body.cursor-on .cursor,body.cursor-on .cursor-ring{opacity:1}
+  .cursor-ring.hov{width:60px;height:60px;border-color:var(--copper);background:rgba(192,133,82,.07)}
+  .cursor-ring.press{width:26px;height:26px}
+}
+@media (hover:none),(pointer:coarse){.cursor,.cursor-ring{display:none}}
+
+/* ---------- GATHERINGS ---------- */
+#gatherings{background:linear-gradient(to bottom,var(--ink),#0E2126 60%,var(--ink))}
+.week{border:1px solid var(--line)}
+.wrow{display:grid;grid-template-columns:130px 1fr auto;gap:30px;align-items:baseline;
+  padding:28px 30px;border-bottom:1px solid var(--line);position:relative;overflow:hidden;
+  transition:background .4s}
+.wrow:last-child{border-bottom:none}
+.wrow:hover{background:rgba(27,61,70,.4)}
+.wrow::after{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--copper);
+  transform:scaleY(0);transform-origin:top;transition:transform .45s var(--ease)}
+.wrow:hover::after{transform:scaleY(1)}
+.wrow .day{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--verdigris);font-weight:500}
+.wrow .day b{display:block;font-family:'Marcellus',serif;font-weight:400;font-size:24px;
+  color:var(--marble);letter-spacing:.02em;margin-top:4px;transition:color .35s}
+.wrow:hover .day b{color:var(--copper)}
+.wrow h3{font-size:19px}
+.wrow .wbody p{font-size:14px;color:var(--marble-dim);margin-top:6px;max-width:62ch}
+.wrow .meta{text-align:right;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--marble-dim);white-space:nowrap}
+.wrow .meta b{display:block;color:var(--copper);font-weight:500;margin-bottom:5px;letter-spacing:.22em}
+.markers{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);margin-top:56px}
+.marker{background:var(--ink);padding:32px 28px;position:relative;transition:background .35s}
+.marker:hover{background:var(--petrol)}
+.marker .tag{display:inline-block;margin-bottom:16px;font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--verdigris);border:1px solid rgba(126,158,143,.4);padding:4px 10px}
+.marker .serif{display:block;font-size:20px;margin-bottom:10px}
+.marker p{font-size:14px;color:var(--marble-dim)}
+.house{margin-top:38px;text-align:center;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--marble-dim)}
+.house i{font-style:normal;color:var(--copper);margin:0 10px}
+@media(max-width:820px){
+  .wrow{grid-template-columns:1fr;gap:10px;padding:24px 22px}
+  .wrow .meta{text-align:left;white-space:normal}
+  .markers{grid-template-columns:1fr}
+}
+
+/* ---------- SCROLL-OUT FADE (headlines dissolve as they leave) ---------- */
+.sec-head,.band,.final,.house{will-change:opacity,transform}
+
+/* ---------- GRADIENT SHEEN ON QUOTES ---------- */
+.band .serif.in,.final h2.in{
+  background:linear-gradient(105deg,var(--marble) 40%,#FFF3DF 50%,var(--marble) 60%);
+  background-size:230% 100%;-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:sheen 2.6s var(--ease) .45s 1 both}
+.band .serif em{-webkit-text-fill-color:var(--copper)}
+@keyframes sheen{from{background-position:130% 0}to{background-position:-30% 0}}
+
+/* ---------- EYEBROW LINE-DRAW ---------- */
+.sec-head .eyebrow{position:relative;padding-left:36px}
+.sec-head .eyebrow::before{content:'';position:absolute;left:0;top:50%;width:24px;height:1px;
+  background:var(--copper);transform:scaleX(0);transform-origin:left;
+  transition:transform .9s var(--ease) .15s}
+.sec-head .eyebrow.in::before{transform:scaleX(1)}
+
+/* ---------- MARQUEE LEAN + PARALLAX LAYERS ---------- */
+.strip{will-change:transform}
+[data-plx]{will-change:transform}
+.mobile-menu a:nth-child(7){transition-delay:.38s}
+
+/* ---------- ROBUSTNESS & POLISH ---------- */
+/* CSS failsafe: the preloader can never trap the page, even with JS dead */
+.preloader{animation:plKill .7s ease 4.2s forwards}
+@keyframes plKill{to{opacity:0;visibility:hidden}}
+section,#gatherings,#map,#journey,#evidence,#membership,#city{scroll-margin-top:76px}
+*{-webkit-tap-highlight-color:transparent}
+button,a,.chip,.goal-tab{touch-action:manipulation}
+.ob,.dash{overscroll-behavior:contain}
+.d-metric .m-vals,.dash-week,.num{font-variant-numeric:tabular-nums}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce){
+  .preloader{display:none}
+  .grain{animation:none}
+  .cursor,.cursor-ring{display:none}
+  .wsplit>span{transform:none!important;transition:none!important}
+  h2.rv{clip-path:none!important}
+  .rv{filter:none!important}
+  .band .serif.in,.final h2.in{animation:none;background:none;
+    -webkit-background-clip:initial;background-clip:initial;-webkit-text-fill-color:currentColor}
+  .sec-head .eyebrow::before{transform:scaleX(1);transition:none}
+}
 </style>
 </head>
 <body>
 
-<nav>
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="pl-inner">
+    <div class="pl-word"><b>A</b><b>T</b><b>L</b><b>A</b><b>S</b></div>
+    <div class="pl-line"></div>
+    <div class="pl-city">Istanbul · MMXXVI</div>
+  </div>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><i id="progFill"></i></div>
+<div class="cursor" id="cur" aria-hidden="true"></div>
+<div class="cursor-ring" id="curRing" aria-hidden="true"></div>
+
+<nav id="nav">
   <div class="logo">Atlas <span>·</span> Istanbul</div>
   <div class="nav-right">
-    <a href="#map" class="hidenav">The Club</a>
-    <a href="#journey" class="hidenav">The Journey</a>
-    <a href="#membership" class="hidenav">Membership</a>
-    <a href="#city" class="hidenav">The City</a>
-    <button class="btn" onclick="openOB()">Apply</button>
+    <a href="#map" class="hidenav" data-i18n="nav-club">The Club</a>
+    <a href="#journey" class="hidenav" data-i18n="nav-journey">The Journey</a>
+    <a href="#gatherings" class="hidenav" data-i18n="nav-gather">Gatherings</a>
+    <a href="#evidence" class="hidenav" data-i18n="nav-evidence">The Evidence</a>
+    <a href="#membership" class="hidenav" data-i18n="nav-membership">Membership</a>
+    <a href="#city" class="hidenav" data-i18n="nav-city">The City</a>
+    <button class="lang-btn" data-act="lang" aria-label="Türkçe / English">TR</button>
+    <button class="btn" data-act="openOB" data-i18n="nav-apply">Apply</button>
+    <button class="burger" aria-label="Menu" aria-expanded="false" data-act="menu"><i></i><i></i><i></i></button>
   </div>
 </nav>
 
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#map" data-act="menuNav" data-i18n="nav-club">The Club</a>
+  <a href="#journey" data-act="menuNav" data-i18n="nav-journey">The Journey</a>
+  <a href="#gatherings" data-act="menuNav" data-i18n="nav-gather">Gatherings</a>
+  <a href="#evidence" data-act="menuNav" data-i18n="nav-evidence">The Evidence</a>
+  <a href="#membership" data-act="menuNav" data-i18n="nav-membership">Membership</a>
+  <a href="#city" data-act="menuNav" data-i18n="nav-city">The City</a>
+  <a href="#" data-act="menuApply" data-i18n="nav-apply">Apply</a>
+  <div class="mm-note" data-i18n="mm-note">Founding cohort · 120 places · Istanbul</div>
+</div>
+
 <header>
   <div class="wrap hero-inner">
-    <span class="eyebrow">A members' club for people rebuilding themselves</span>
-    <h1 lang="tr">Emeğin hâlâ karşılığını bulduğu yer.</h1>
-    <div class="hero-tr">The place where effort still compounds.</div>
-    <div class="hero-witness">One season · One thing changed · Witnessed</div>
-    <p class="hero-sub">Whatever you came to change — weight, presence, sleep, your circle — it never travels alone. Atlas is a private club in Istanbul where every part of that work happens in one place, among people doing the same.</p>
-    <div class="hero-cta">
-      <button class="btn btn-solid" onclick="openOB()">Begin your application</button>
-      <span class="hero-note">Founding cohort · <b>120 places</b> · Bebek · Arnavutköy · Etiler · Nişantaşı</span>
+    <span class="eyebrow ld ld1" data-i18n="hero-eyebrow">A members' club for people rebuilding themselves</span>
+    <h1 class="ld ld2" id="heroH1" data-i18n="hero-h1">The place where effort <em>still compounds.</em></h1>
+    <div class="hero-tr ld ld3" id="heroAccent" lang="tr" data-i18n="hero-accent">Emeğin hâlâ karşılığını bulduğu yer.</div>
+    <div class="hero-witness ld ld4" data-i18n="hero-witness">One season · One thing changed · Witnessed</div>
+    <p class="hero-sub ld ld5" data-i18n="hero-sub">Whatever you came to change — weight, presence, sleep, your circle — it never travels alone. Atlas is a private club in Istanbul where every part of that work happens in one place, among people doing the same.</p>
+    <div class="hero-cta ld ld6">
+      <button class="btn btn-solid" data-act="openOB" data-i18n="hero-cta">Begin your application</button>
+      <span class="hero-note" data-i18n="hero-note">Founding cohort · <b>23 of 120 places held</b> · Bebek · Arnavutköy · Etiler · Nişantaşı</span>
     </div>
   </div>
+  <div class="scroll-hint" aria-hidden="true"></div>
 </header>
 
 <div class="strip" aria-hidden="true">
-  <div class="strip-track">
+  <div class="strip-track" data-i18n="strip">
     <span>Training <i>·</i></span><span>Nutrition <i>·</i></span><span>Longevity <i>·</i></span><span>Presence <i>·</i></span><span>Mind <i>·</i></span><span>Circle <i>·</i></span><span>Connection <i>·</i></span>
     <span>Training <i>·</i></span><span>Nutrition <i>·</i></span><span>Longevity <i>·</i></span><span>Presence <i>·</i></span><span>Mind <i>·</i></span><span>Circle <i>·</i></span><span>Connection <i>·</i></span>
   </div>
@@ -405,17 +918,14 @@
 <section id="map">
   <div class="wrap const-grid">
     <div class="const-copy">
-      <span class="eyebrow">The compounding map</span>
-      <h2>No goal stands alone.</h2>
-      <p class="lead">Sleep is a relationships problem. Weight is a stress problem. Presence is a body problem. To lose weight you train — but you also eat, and to eat well you sleep, and to sleep you need a quieter mind, and the fastest way to a quieter mind is good company.</p>
-      <p>Touch any domain to see what it pulls with it. This map is how Atlas builds your programme: you enter through one door, and the club opens the rest as you're ready.</p>
-      <div id="const-caption">
-        <span class="serif">Explore the map</span>
-        Select a domain to see its hidden dependencies.
-      </div>
+      <span class="eyebrow rv" data-i18n="map-eyebrow">The compounding map</span>
+      <h2 class="rv rv-d1" data-i18n="map-h2">No goal stands alone.</h2>
+      <p class="lead rv rv-d2" data-i18n="map-lead">Sleep is a relationships problem. Weight is a stress problem. Presence is a body problem. To lose weight you train — but you also eat, and to eat well you sleep, and to sleep you need a quieter mind, and the fastest way to a quieter mind is good company.</p>
+      <p class="rv rv-d3" data-i18n="map-p2">Touch any domain to see what it pulls with it. This map is how Atlas builds your programme: you enter through one door, and the club opens the rest as you're ready.</p>
+      <div id="const-caption" class="rv rv-d4"><span class="cap-body" data-i18n="cap-default"><span class="serif">Explore the map</span>Select a domain to see its hidden dependencies.</span></div>
     </div>
-    <div>
-      <svg viewBox="0 0 480 480" role="img" aria-label="Interactive map of seven connected life domains" id="constSvg">
+    <div class="rv rv-d2">
+      <svg viewBox="0 0 480 480" role="img" aria-label="Interactive map of seven connected life domains" id="constSvg" data-plx="0.05">
         <g id="edges"></g>
         <g id="nodes"></g>
       </svg>
@@ -426,17 +936,17 @@
 <section>
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">Seven disciplines, one house</span>
-      <h2>What the club covers</h2>
-      <p>Each discipline pairs an always-on intelligent coach with vetted Istanbul specialists. The coach handles the daily work; the human steps in when it matters.</p>
+      <span class="eyebrow rv" data-i18n="pil-eyebrow">Seven disciplines, one house</span>
+      <h2 class="rv rv-d1" data-i18n="pil-h2">What the club covers</h2>
+      <p class="rv rv-d2" data-i18n="pil-p">Each discipline pairs an always-on intelligent coach with vetted Istanbul specialists. The coach handles the daily work; the human steps in when it matters.</p>
     </div>
     <div class="pillars">
-      <div class="pillar"><span class="tag">Body</span><span class="serif">Training</span><p>A programme built around your week, your gym or none at all — adjusted daily, escalated to a coach in the room when plateaus need eyes on you.</p></div>
-      <div class="pillar"><span class="tag">Body</span><span class="serif">Nutrition</span><p>Built for Istanbul kitchens and Istanbul dinners out. Tracking without obsession, and a licensed dietitian one tap away.</p></div>
-      <div class="pillar"><span class="tag">Body</span><span class="serif">Longevity</span><p>Sleep, bloodwork, recovery. The long game, measured — with clinicians who read the results with you.</p></div>
-      <div class="pillar"><span class="tag">Presence</span><span class="serif">Personal brand</span><p>How you enter a room, how you speak about your work, how you're remembered. Coaching for manners, image and self-promotion.</p></div>
-      <div class="pillar"><span class="tag">Mind</span><span class="serif">Psychology &amp; philosophy</span><p>A thinking partner for stress, discipline and meaning. Reflective work daily; licensed therapists when it should be a human.</p></div>
-      <div class="pillar"><span class="tag">People</span><span class="serif">Circle &amp; connection</span><p>Weekly member events — runs, tables, galleries, trips — and, in time, introductions. Friendship first; the rest follows naturally.</p></div>
+      <div class="pillar rv" data-i18n="pil-1"><span class="tag">Body</span><span class="serif">Training</span><p>A programme built around your week, your gym or none at all — adjusted daily, escalated to a coach in the room when plateaus need eyes on you.</p></div>
+      <div class="pillar rv rv-d1" data-i18n="pil-2"><span class="tag">Body</span><span class="serif">Nutrition</span><p>Built for Istanbul kitchens and Istanbul dinners out. Tracking without obsession, and a licensed dietitian one tap away.</p></div>
+      <div class="pillar rv rv-d2" data-i18n="pil-3"><span class="tag">Body</span><span class="serif">Longevity</span><p>Sleep, bloodwork, recovery. The long game, measured — with clinicians who read the results with you.</p></div>
+      <div class="pillar rv" data-i18n="pil-4"><span class="tag">Presence</span><span class="serif">Personal brand</span><p>How you enter a room, how you speak about your work, how you're remembered. Coaching for manners, image and self-promotion.</p></div>
+      <div class="pillar rv rv-d1" data-i18n="pil-5"><span class="tag">Mind</span><span class="serif">Psychology &amp; philosophy</span><p>A thinking partner for stress, discipline and meaning. Reflective work daily; licensed therapists when it should be a human.</p></div>
+      <div class="pillar rv rv-d2" data-i18n="pil-6"><span class="tag">People</span><span class="serif">Circle &amp; connection</span><p>Weekly member events — runs, tables, galleries, trips — and, in time, introductions. Friendship first; the rest follows naturally.</p></div>
     </div>
   </div>
 </section>
@@ -444,194 +954,468 @@
 <section id="journey">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">From application to evidence</span>
-      <h2>Six moves, one season</h2>
-      <p>Change takes ninety days — long enough to be real, short enough to believe. You don't subscribe to Atlas. You commit to a season, and the season ends with evidence.</p>
+      <span class="eyebrow rv" data-i18n="j-eyebrow">From application to evidence</span>
+      <h2 class="rv rv-d1" data-i18n="j-h2">Six moves, one season</h2>
+      <p class="rv rv-d2" data-i18n="j-p">Change takes ninety days — long enough to be real, short enough to believe. You don't subscribe to Atlas. You commit to a season, and the season ends with evidence.</p>
     </div>
 
     <div class="phases">
-      <div class="phase solid">
-        <span class="tag">Day 0</span><div class="dot"></div>
-        <h3>Application</h3>
-        <p>Six questions, read by a person. We select for movement, not status.</p>
-      </div>
-      <div class="phase solid">
-        <span class="tag">Week 0</span><div class="dot"></div>
-        <h3>Intake</h3>
-        <p>One goal named first. Bloodwork, baseline, and an honest hour with a director.</p>
-      </div>
-      <div class="phase solid">
-        <span class="tag">Week 0</span><div class="dot"></div>
-        <h3>The Spine</h3>
-        <p>The goal is mapped to what it actually depends on across the seven domains.</p>
-      </div>
-      <div class="phase">
-        <span class="tag">Weeks 1–12</span><div class="dot"></div>
-        <h3>The Season</h3>
-        <p>Coaches carry the daily work. Specialists carry the one-to-ones. Events carry you.</p>
-      </div>
-      <div class="phase">
-        <span class="tag">Week 12</span><div class="dot"></div>
-        <h3>Season Review</h3>
-        <p>Measured deltas, witnessed by the cohort. Proof that effort still compounds.</p>
-      </div>
-      <div class="phase">
-        <span class="tag">Season II</span><div class="dot"></div>
-        <h3>The Next Door</h3>
-        <p>A second spine begins — and Connection quietly unlocks for those who want it.</p>
-      </div>
+      <div class="phase solid rv" data-i18n="ph-1"><span class="tag">Day 0</span><div class="dot"></div><h3>Application</h3><p>Six questions, read by a person. We select for movement, not status.</p></div>
+      <div class="phase solid rv rv-d1" data-i18n="ph-2"><span class="tag">Week 0</span><div class="dot"></div><h3>Intake</h3><p>One goal named first. Bloodwork, baseline, and an honest hour with a director.</p></div>
+      <div class="phase solid rv rv-d2" data-i18n="ph-3"><span class="tag">Week 0</span><div class="dot"></div><h3>The Spine</h3><p>The goal is mapped to what it actually depends on across the seven domains.</p></div>
+      <div class="phase rv rv-d3" data-i18n="ph-4"><span class="tag">Weeks 1–12</span><div class="dot"></div><h3>The Season</h3><p>Coaches carry the daily work. Specialists carry the one-to-ones. Events carry you.</p></div>
+      <div class="phase rv rv-d4" data-i18n="ph-5"><span class="tag">Week 12</span><div class="dot"></div><h3>Season Review</h3><p>Measured deltas, witnessed by the cohort. Proof that effort still compounds.</p></div>
+      <div class="phase rv rv-d5" data-i18n="ph-6"><span class="tag">Season II</span><div class="dot"></div><h3>The Next Door</h3><p>A second spine begins — and Connection quietly unlocks for those who want it.</p></div>
     </div>
 
     <div class="sec-head" style="margin-bottom:36px">
-      <span class="eyebrow">Interactive — choose an entry goal</span>
-      <h2 style="font-size:clamp(24px,3.4vw,34px)">Three doors, three spines</h2>
+      <span class="eyebrow rv" data-i18n="j2-eyebrow">Interactive — choose an entry goal</span>
+      <h2 class="rv rv-d1" style="font-size:clamp(24px,3.4vw,34px)" data-i18n="j2-h2">Three doors, three spines</h2>
     </div>
 
-    <div class="goal-tabs" role="tablist" aria-label="Entry goals">
-      <button class="goal-tab" role="tab" aria-selected="true" data-goal="weight">"I want to lose 8 kg"</button>
-      <button class="goal-tab" role="tab" aria-selected="false" data-goal="presence">"I want to command a room"</button>
-      <button class="goal-tab" role="tab" aria-selected="false" data-goal="sleep">"I want my energy back"</button>
+    <div class="goal-tabs rv rv-d2" role="tablist" aria-label="Entry goals">
+      <button class="goal-tab" role="tab" aria-selected="true" data-goal="weight" data-i18n="tab-weight">"I want to lose 8 kg"</button>
+      <button class="goal-tab" role="tab" aria-selected="false" data-goal="presence" data-i18n="tab-presence">"I want to command a room"</button>
+      <button class="goal-tab" role="tab" aria-selected="false" data-goal="sleep" data-i18n="tab-sleep">"I want my energy back"</button>
     </div>
 
     <div class="spine-grid">
-      <div class="jspine" id="jspine"></div>
-      <div class="season-box">
+      <div class="jspine rv" id="jspine"></div>
+      <div class="season-box rv rv-d2" id="seasonBox">
         <h3 id="season-title"></h3>
-        <p class="sub">How each domain phases in across the ninety days</p>
+        <p class="sub" data-i18n="season-sub">How each domain phases in across the ninety days</p>
         <div id="tracks"></div>
-        <div class="weeks"><span>Wk 1</span><span>Wk 4</span><span>Wk 8</span><span>Wk 12</span></div>
+        <div class="weeks" data-i18n="weeks"><span>Wk 1</span><span>Wk 4</span><span>Wk 8</span><span>Wk 12</span></div>
         <p class="review-note" id="review"></p>
       </div>
     </div>
 
     <div class="sec-head" style="margin-bottom:36px">
-      <span class="eyebrow">Who carries what</span>
-      <h2 style="font-size:clamp(24px,3.4vw,34px)">Three layers of the season</h2>
+      <span class="eyebrow rv" data-i18n="lay-eyebrow">Who carries what</span>
+      <h2 class="rv rv-d1" style="font-size:clamp(24px,3.4vw,34px)" data-i18n="lay-h2">Three layers of the season</h2>
     </div>
     <div class="touch">
-      <article>
-        <h3>Daily — your coaches</h3>
-        <p>Training blocks, nutrition adjustments, sleep and stress check-ins. Relentless, private, never the point of the club — the floor, not the ceiling.</p>
-      </article>
-      <article>
-        <h3>Weekly — the room</h3>
-        <p>Founder-run events from day one. The other 119 members are the product: training partners, dinner company, honest witnesses.</p>
-      </article>
-      <article>
-        <h3>Monthly — specialists</h3>
-        <p>Vetted PTs, dietitians, therapists in one-to-ones, scaled by tier. Licensed humans wherever the law — and good judgement — require one.</p>
-      </article>
+      <article class="rv" data-i18n="touch-1"><h3>Daily — your coaches</h3><p>Training blocks, nutrition adjustments, sleep and stress check-ins. Relentless, private, never the point of the club — the floor, not the ceiling.</p></article>
+      <article class="rv rv-d1" data-i18n="touch-2"><h3>Weekly — the room</h3><p>Founder-run events from day one. The other 119 members are the product: training partners, dinner company, honest witnesses.</p></article>
+      <article class="rv rv-d2" data-i18n="touch-3"><h3>Monthly — specialists</h3><p>Vetted PTs, dietitians, therapists in one-to-ones, scaled by tier. Licensed humans wherever the law — and good judgement — require one.</p></article>
     </div>
   </div>
 </section>
 
 <div class="band">
-  <span class="eyebrow">The room</span>
-  <span class="serif">There are a hundred rooms in this city where you perform how well you're doing. <em>This is the other one.</em></span>
+  <span class="eyebrow rv" data-i18n="room-eyebrow">The room</span>
+  <span class="serif rv rv-d1" data-i18n="room-serif">There are a hundred rooms in this city where you perform how well you're doing. <em>This is the other one.</em></span>
 </div>
+
+<section id="gatherings">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow rv" data-i18n="g-eyebrow">The calendar</span>
+      <h2 class="rv rv-d1" data-i18n="g-h2">A club is what it repeats.</h2>
+      <p class="rv rv-d2" data-i18n="g-p">Four fixed hours a week and one long night a month — founder-run from day one, across four districts. Deliberately small: nothing here scales past a table.</p>
+    </div>
+
+    <div class="week">
+      <div class="wrow rv" data-i18n="g-r1">
+        <div class="day">Tuesday<b>06:45</b></div>
+        <div class="wbody"><h3>The shore run</h3><p>Five kilometres along the Bebek water before the city wakes. Every pace is welcome; the last kilometre is always run together.</p></div>
+        <div class="meta"><b>Bebek</b>weekly · all members</div>
+      </div>
+      <div class="wrow rv rv-d1" data-i18n="g-r2">
+        <div class="day">Thursday<b>20:00</b></div>
+        <div class="wbody"><h3>The Thursday table</h3><p>Dinner for nine, seated by the house — new faces beside familiar ones. One rule holds the room: what's said at the table stays at the table.</p></div>
+        <div class="meta"><b>Arnavutköy</b>weekly · nine seats</div>
+      </div>
+      <div class="wrow rv rv-d2" data-i18n="g-r3">
+        <div class="day">Saturday<b>11:00</b></div>
+        <div class="wbody"><h3>The open floor</h3><p>A shared strength block with the club's coaches on the floor. Form corrected, plateaus broken, training partners found.</p></div>
+        <div class="meta"><b>Etiler</b>weekly · drop-in</div>
+      </div>
+      <div class="wrow rv rv-d3" data-i18n="g-r4">
+        <div class="day">Sunday<b>17:00</b></div>
+        <div class="wbody"><h3>The salon</h3><p>One member takes the room for twenty minutes — a talk, a question, a rehearsal before the real stage. The gentlest audience in Istanbul.</p></div>
+        <div class="meta"><b>Nişantaşı</b>weekly · twenty chairs</div>
+      </div>
+      <div class="wrow rv rv-d4" data-i18n="g-r5">
+        <div class="day">Monthly<b>—</b></div>
+        <div class="wbody"><h3>City hours</h3><p>The Istanbul only locals can open: a hammam after closing, a gallery before it unlocks, a walk that ends on the water.</p></div>
+        <div class="meta"><b>Four districts</b>monthly · small groups</div>
+      </div>
+    </div>
+
+    <div class="markers rv rv-d2">
+      <div class="marker" data-i18n="g-m1"><span class="tag">Week 0</span><span class="serif">Opening night</span><p>The cohort meets at full strength exactly once — all 120, first names first — and then never all at once again.</p></div>
+      <div class="marker" data-i18n="g-m2"><span class="tag">Week 6</span><span class="serif">The Bosphorus evening</span><p>A slow night on the water, held exactly where seasons tend to sag.</p></div>
+      <div class="marker" data-i18n="g-m3"><span class="tag">Week 12</span><span class="serif">Review night</span><p>Measured deltas, read aloud, witnessed by the cohort. The reason the season exists.</p></div>
+    </div>
+
+    <p class="house rv rv-d3" data-i18n="g-house">House notes <i>·</i> phones sleep at the door <i>·</i> no photographs <i>·</i> no pitches <i>·</i> guests by nomination only</p>
+  </div>
+</section>
+
+<section id="evidence">
+  <div class="wrap">
+    <div class="sec-head" style="margin-left:auto;margin-right:auto;text-align:center;max-width:560px">
+      <span class="eyebrow rv" data-i18n="ev-eyebrow">Week twelve</span>
+      <h2 class="rv rv-d1" data-i18n="ev-h2">The season ends with evidence.</h2>
+      <p class="rv rv-d2" data-i18n="ev-p">Every season closes with a review: measured deltas, read aloud, witnessed by the cohort. This is what one looks like.</p>
+    </div>
+
+    <div class="dossier rv rv-d2" id="dossier">
+      <span class="d-eyebrow" data-i18n="d-eyebrow">Atlas · Season Review · Witnessed</span>
+      <div class="d-title" data-i18n="d-title">S.K. — Season I: Body composition</div>
+      <div class="d-meta" data-i18n="d-meta">31 · Nişantaşı · Entered through the weight door · Weeks 0–12</div>
+
+      <div class="d-metric">
+        <div class="m-name" data-i18n="dm-1">Body fat<small>DEXA scan</small></div>
+        <div class="m-vals">24.1%<span>→</span>19.6%</div>
+        <div class="m-delta">−4.5 pts</div>
+        <div class="d-rail"><i data-w="62"></i></div>
+      </div>
+      <div class="d-metric">
+        <div class="m-name" data-i18n="dm-2">Weight<small>same scale, same hour</small></div>
+        <div class="m-vals">92.4 kg<span>→</span>84.9 kg</div>
+        <div class="m-delta">−7.5 kg</div>
+        <div class="d-rail"><i data-w="70"></i></div>
+      </div>
+      <div class="d-metric">
+        <div class="m-name" data-i18n="dm-3">Resting heart rate<small>7-day average</small></div>
+        <div class="m-vals">71<span>→</span>62 bpm</div>
+        <div class="m-delta">−9 bpm</div>
+        <div class="d-rail"><i data-w="48"></i></div>
+      </div>
+      <div class="d-metric">
+        <div class="m-name" data-i18n="dm-4">Sleep<small>nightly average, wearable</small></div>
+        <div class="m-vals">5 h 58<span>→</span>7 h 12</div>
+        <div class="m-delta">+1 h 14</div>
+        <div class="d-rail"><i data-w="76"></i></div>
+      </div>
+      <div class="d-metric">
+        <div class="m-name" data-i18n="dm-5">HbA1c<small>bloodwork, panel two</small></div>
+        <div class="m-vals">5.9%<span>→</span>5.5%</div>
+        <div class="m-delta">−0.4 pts</div>
+        <div class="d-rail"><i data-w="40"></i></div>
+      </div>
+
+      <div class="d-habit" data-i18n="d-habit"><b>The habit that survived:</b> Tuesday 06:45, the Bebek shore run. Eleven weeks unbroken — started alone, now runs with three other members.</div>
+
+      <div class="d-foot">
+        <span data-i18n="d-foot1">Reviewed 12 Dec · Cohort I, fourteen witnesses</span>
+        <span data-i18n="d-foot2">Programme director · Atlas Istanbul</span>
+      </div>
+    </div>
+    <p class="d-note rv" data-i18n="d-note">Illustrative member. Composite of programme targets — every real review is built from the member's own baselines.</p>
+  </div>
+</section>
 
 <section id="membership">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">Membership</span>
-      <h2>Three ways in</h2>
-      <p>Membership runs in three-month seasons, not subscriptions. Commit to a season; leave with evidence.</p>
+      <span class="eyebrow rv" data-i18n="mem-eyebrow">Membership</span>
+      <h2 class="rv rv-d1" data-i18n="mem-h2">Three ways in</h2>
+      <p class="rv rv-d2" data-i18n="mem-p">Membership runs in three-month seasons, not subscriptions. Commit to a season; leave with evidence.</p>
     </div>
     <div class="tiers">
-      <div class="tier">
+      <div class="tier rv">
         <span class="serif">Core</span>
         <div class="price">₺X,XXX</div>
-        <div class="per">per season · 3 months</div>
-        <ul>
+        <div class="per" data-i18n="t-per1">per season · 3 months</div>
+        <ul data-i18n="t1-list">
           <li><b>Full programme</b> across your chosen domains</li>
           <li>All intelligent coaches, daily</li>
           <li>Two member events monthly</li>
           <li>Community access</li>
         </ul>
-        <button class="btn" onclick="openOB()">Apply for Core</button>
+        <button class="btn" data-act="openOB" data-i18n="t1-btn">Apply for Core</button>
       </div>
-      <div class="tier featured">
+      <div class="tier featured rv rv-d1">
         <span class="serif">Circle</span>
         <div class="price">₺X,XXX</div>
-        <div class="per">per season · 3 months</div>
-        <ul>
+        <div class="per" data-i18n="t-per2">per season · 3 months</div>
+        <ul data-i18n="t2-list">
           <li>Everything in Core</li>
           <li><b>Monthly one-to-ones</b> with human specialists</li>
           <li>All weekly events, priority tables</li>
           <li>Quarterly bloodwork &amp; review</li>
           <li>Introductions programme, when ready</li>
         </ul>
-        <button class="btn btn-solid" onclick="openOB()">Apply for Circle</button>
+        <button class="btn btn-solid" data-act="openOB" data-i18n="t2-btn">Apply for Circle</button>
       </div>
-      <div class="tier">
+      <div class="tier rv rv-d2">
         <span class="serif">Patron</span>
         <div class="price">₺XX,XXX</div>
-        <div class="per">per season · 3 months</div>
-        <ul>
+        <div class="per" data-i18n="t-per3">per season · 3 months</div>
+        <ul data-i18n="t3-list">
           <li>Everything in Circle</li>
           <li><b>Weekly</b> human specialist sessions</li>
           <li>A dedicated programme director</li>
           <li>Hosted dinners &amp; travel</li>
         </ul>
-        <button class="btn" onclick="openOB()">Apply for Patron</button>
+        <button class="btn" data-act="openOB" data-i18n="t3-btn">Apply for Patron</button>
       </div>
     </div>
-    <p class="tier-note">Admission is by application. The founding cohort is limited to 120 members across Bebek, Arnavutköy, Etiler and Nişantaşı. A season costs less than its parts — therapist, trainer, dietitian and bloodwork bought separately — and unlike them, it compounds.</p>
+    <p class="tier-note rv" data-i18n="tier-note">Admission is by application. The founding cohort is limited to 120 members across Bebek, Arnavutköy, Etiler and Nişantaşı. A season costs less than its parts — therapist, trainer, dietitian and bloodwork bought separately — and unlike them, it compounds.</p>
+
+    <div class="found rv" id="found">
+      <div class="num"><em class="wl-count" data-count>0</em> <span style="color:var(--marble-dim);font-size:.5em">/ 120</span></div>
+      <div class="cap" data-i18n="found-cap">Founding places held with deposits</div>
+      <div class="rail2"><i id="foundFill" data-w="19.2"></i></div>
+      <p data-i18n="found-p">A founding place is held with a <b>fully refundable deposit</b>, credited against your first season on admission. If your application isn't accepted — or you change your mind before opening — it returns to you entirely.</p>
+    </div>
   </div>
 </section>
 
 <div class="band">
-  <span class="eyebrow">Discretion, by design</span>
-  <span class="serif">What we know about your body never meets what we know about your heart.</span>
-  <p>Your health data and your introductions live in separate systems — by design, and by law. Nothing you tell your coaches ever shapes who you meet.</p>
+  <span class="eyebrow rv" data-i18n="disc-eyebrow">Discretion, by design</span>
+  <span class="serif rv rv-d1" data-i18n="disc-serif">What we know about your body never meets what we know about your heart.</span>
+  <p class="rv rv-d2" data-i18n="disc-p">Your health data and your introductions live in separate systems — by design, and by law. Nothing you tell your coaches ever shapes who you meet.</p>
+</div>
+
+<div class="band" style="background:#0E2126">
+  <span class="eyebrow rv" data-i18n="nom-eyebrow">The door opens from inside</span>
+  <span class="serif rv rv-d1" data-i18n="nom-serif">Every member may put <em>one name</em> forward, once a season.</span>
+  <p class="rv rv-d2" data-i18n="nom-p">Nominations are read like applications — the member vouches, the room decides. There is no other fast lane into Atlas.</p>
+  <button class="btn rv rv-d3" data-act="openNom" data-i18n="nom-btn">Nominate someone</button>
 </div>
 
 <section id="city">
   <div class="wrap city">
-    <div class="city-visual">
-      <svg class="skyline" viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true">
+    <div class="city-visual rv">
+      <svg class="skyline" data-plx="0.1" viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true">
         <path d="M0,120 L0,80 L30,80 L30,60 L45,60 L45,80 L80,80 L80,50 L90,50 L92,30 L98,30 L100,50 L110,50 L110,80 L150,80 L150,65 L180,65 L185,40 L190,65 L220,65 L220,90 L260,90 L260,55 L270,45 L280,55 L280,90 L320,90 L320,70 L330,70 L332,25 L338,25 L340,70 L360,70 L360,90 L410,90 L410,60 L430,50 L450,60 L450,90 L500,90 L500,75 L520,75 L522,45 L528,45 L530,75 L560,75 L560,95 L600,95 L600,120 Z"
           fill="#0A1417" stroke="rgba(237,230,216,.18)" stroke-width="1"/>
       </svg>
       <div class="city-label">41.0082° N — 28.9784° E</div>
     </div>
     <div class="city-copy">
-      <span class="eyebrow">Why Istanbul, why now</span>
-      <h2>Built for this city first.</h2>
-      <p>Istanbul holds one of the largest concentrations of ambitious young professionals in Europe — and one of the loneliest. The gyms are full, the apps are full, and yet the thing people actually want, <b>a circle that pulls them upward</b>, is nowhere to be found.</p>
-      <p>Atlas opens in four districts — Bebek, Arnavutköy, Etiler and Nişantaşı — deliberately small. Density before scale. Every founding member will know the rooms, the coaches and each other — that's the product.</p>
+      <span class="eyebrow rv" data-i18n="city-eyebrow">Why Istanbul, why now</span>
+      <h2 class="rv rv-d1" data-i18n="city-h2">Built for this city first.</h2>
+      <p class="rv rv-d2" data-i18n="city-p1">Istanbul holds one of the largest concentrations of ambitious young professionals in Europe — and one of the loneliest. The gyms are full, the apps are full, and yet the thing people actually want, <b>a circle that pulls them upward</b>, is nowhere to be found.</p>
+      <p class="rv rv-d3" data-i18n="city-p2">Atlas opens in four districts — Bebek, Arnavutköy, Etiler and Nişantaşı — deliberately small. Density before scale. Every founding member will know the rooms, the coaches and each other — that's the product.</p>
     </div>
   </div>
 </section>
 
 <div class="final">
-  <span class="eyebrow" style="display:block;margin-bottom:18px">Founding cohort · Autumn 2026</span>
-  <h2>Change one thing. Watch the rest follow.</h2>
-  <p>Applications for the founding 120 are open. <b>We're not selecting for where you are — we're selecting for whether you move.</b> The intake takes ten honest minutes.</p>
-  <button class="btn btn-solid" onclick="openOB()">Begin your application</button>
+  <span class="eyebrow rv" style="display:block;margin-bottom:18px" data-i18n="fin-eyebrow">Founding cohort · Autumn 2026</span>
+  <h2 class="rv rv-d1" data-i18n="fin-h2">Change one thing. Watch the rest follow.</h2>
+  <p class="rv rv-d2" data-i18n="fin-p">Twenty-three of the founding 120 places are already held. <b>We're not selecting for where you are — we're selecting for whether you move.</b> The intake takes ten honest minutes.</p>
+  <button class="btn btn-solid rv rv-d3" data-act="openOB" data-i18n="fin-btn">Begin your application</button>
 </div>
 
 <footer>
-  <span>ATLAS · Istanbul — preview prototype</span>
+  <span data-i18n="f-left">ATLAS · Istanbul — preview prototype</span>
   <span>Bebek · Arnavutköy · Etiler · Nişantaşı</span>
+  <button class="linklike" data-act="openDash" data-i18n="f-preview">Member preview →</button>
 </footer>
 
-<!-- ONBOARDING -->
+<!-- APPLICATION -->
 <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Membership application">
   <div class="ob" id="obBox"></div>
 </div>
 
+<!-- NOMINATION -->
+<div class="overlay" id="nomOverlay" role="dialog" aria-modal="true" aria-label="Nomination">
+  <div class="ob" id="nomBox">
+    <button class="ob-close" data-act="closeNom" aria-label="Close">×</button>
+    <div id="nomForm">
+      <span class="eyebrow" data-i18n="nomf-eyebrow">Nomination · one per season</span>
+      <h3 data-i18n="nomf-h3">Put a name forward</h3>
+      <p class="sub" data-i18n="nomf-sub">You vouch, the room decides. If accepted, the invitation to apply reaches them from you — never from us.</p>
+      <div class="field"><label for="n-name" data-i18n="nomf-f1">Their name</label><input id="n-name" autocomplete="off" placeholder="—"></div>
+      <div class="field"><label for="n-why" data-i18n="nomf-f2">Why them — one honest line</label><textarea id="n-why" rows="2" placeholder="—"></textarea></div>
+      <div class="field"><label for="n-you" data-i18n="nomf-f3">Your name (member)</label><input id="n-you" autocomplete="off" placeholder="—"></div>
+      <div class="ob-nav"><span></span><button class="btn btn-solid" data-act="sendNom" data-i18n="nomf-send">Send nomination</button></div>
+    </div>
+    <div id="nomDone" style="display:none;text-align:center">
+      <div class="done-mark">A</div>
+      <h3 data-i18n="nomd-h3">Nomination received.</h3>
+      <p class="sub" style="max-width:40ch;margin:0 auto 34px" data-i18n="nomd-p">It will be read like an application. If the room agrees, they'll receive an invitation to apply — carrying your name, not ours.</p>
+      <button class="btn" data-act="closeNom" data-i18n="nomd-ret">Return to the club</button>
+    </div>
+  </div>
+</div>
+
+<!-- MEMBER DASHBOARD MOCK -->
+<div class="dash" id="dash" role="dialog" aria-modal="true" aria-label="Member preview">
+  <div class="dash-head">
+    <div class="logo" style="font-size:15px">Atlas <span>·</span> Istanbul</div>
+    <div class="who" id="dashWho"></div>
+    <div style="display:flex;gap:12px;align-items:center">
+      <span class="dash-week" id="dashWeek"></span>
+      <button class="lang-btn" data-act="closeDash" id="dashClose">×</button>
+    </div>
+  </div>
+  <div class="dash-body" id="dashBody"></div>
+</div>
+
 <script>
-/* ---------------- Constellation ---------------- */
+/* ================= LANGUAGE ================= */
+let lang='en';
+const I18N={en:{},tr:{
+  "nav-club":"Kulüp","nav-journey":"Yolculuk","nav-gather":"Buluşmalar","nav-evidence":"Kanıt","nav-membership":"Üyelik","nav-city":"Şehir","nav-apply":"Başvur",
+  "mm-note":"Kurucu kadro · 120 yer · İstanbul",
+  "hero-eyebrow":"Kendini yeniden inşa edenler için bir üyelik kulübü",
+  "hero-h1":"Emeğin hâlâ <em>karşılığını bulduğu</em> yer.",
+  "hero-accent":"The place where effort still compounds.",
+  "hero-witness":"Bir sezon · Tek bir değişim · Tanıklar önünde",
+  "hero-sub":"Değiştirmeye geldiğin şey ne olursa olsun — kilo, duruş, uyku, çevre — hiçbiri tek başına ilerlemez. Atlas, bu işin her parçasının tek çatı altında, aynı yolda yürüyen insanlarla yapıldığı İstanbul'a özel bir kulüp.",
+  "hero-cta":"Başvurunu başlat",
+  "hero-note":"Kurucu kadro · <b>120 yerin 23'ü tutuldu</b> · Bebek · Arnavutköy · Etiler · Nişantaşı",
+  "strip":"<span>Antrenman <i>·</i></span><span>Beslenme <i>·</i></span><span>Uzun Ömür <i>·</i></span><span>Duruş <i>·</i></span><span>Zihin <i>·</i></span><span>Çevre <i>·</i></span><span>Bağ <i>·</i></span><span>Antrenman <i>·</i></span><span>Beslenme <i>·</i></span><span>Uzun Ömür <i>·</i></span><span>Duruş <i>·</i></span><span>Zihin <i>·</i></span><span>Çevre <i>·</i></span><span>Bağ <i>·</i></span>",
+  "map-eyebrow":"Birikim haritası",
+  "map-h2":"Hiçbir hedef tek başına durmaz.",
+  "map-lead":"Uyku bir ilişki meselesi. Kilo bir stres meselesi. Duruş bir beden meselesi. Kilo vermek için antrenman yaparsın — ama aynı zamanda yersin; iyi yemek için uyursun; uyumak için daha sakin bir zihin gerekir; sakin zihnin en kısa yolu iyi bir çevredir.",
+  "map-p2":"Bir alana dokun, neyi peşinden getirdiğini gör. Atlas programını böyle kurar: tek kapıdan girersin; hazır oldukça kulüp diğerlerini açar.",
+  "cap-default":"<span class='serif'>Haritayı keşfet</span>Gizli bağımlılıklarını görmek için bir alan seç.",
+  "pil-eyebrow":"Yedi disiplin, tek çatı",
+  "pil-h2":"Kulübün kapsamı",
+  "pil-p":"Her disiplin, her an yanında olan akıllı bir koçu İstanbul'un seçilmiş uzmanlarıyla eşleştirir. Günlük işi koç taşır; önemli anda insan devreye girer.",
+  "pil-1":"<span class='tag'>Beden</span><span class='serif'>Antrenman</span><p>Haftana, salonuna — ya da salonsuzluğuna — göre kurulmuş program. Her gün ayarlanır; plato geldiğinde salondaki koça devredilir.</p>",
+  "pil-2":"<span class='tag'>Beden</span><span class='serif'>Beslenme</span><p>İstanbul mutfağına ve İstanbul akşamlarına göre. Takıntısız takip; tek dokunuşla lisanslı diyetisyen.</p>",
+  "pil-3":"<span class='tag'>Beden</span><span class='serif'>Uzun Ömür</span><p>Uyku, kan tahlili, toparlanma. Uzun oyun, ölçülerek — sonuçları seninle birlikte okuyan klinisyenlerle.</p>",
+  "pil-4":"<span class='tag'>Duruş</span><span class='serif'>Kişisel marka</span><p>Bir odaya nasıl girdiğin, işini nasıl anlattığın, nasıl hatırlandığın. Adab, imaj ve kendini anlatma koçluğu.</p>",
+  "pil-5":"<span class='tag'>Zihin</span><span class='serif'>Psikoloji ve felsefe</span><p>Stres, disiplin ve anlam için bir düşünme ortağı. Günlük derinleşme; insan gerektiğinde lisanslı terapistler.</p>",
+  "pil-6":"<span class='tag'>İnsan</span><span class='serif'>Çevre ve bağ</span><p>Haftalık üye etkinlikleri — koşular, sofralar, galeriler, geziler — ve zamanla tanıştırmalar. Önce dostluk; gerisi kendiliğinden.</p>",
+  "j-eyebrow":"Başvurudan kanıta",
+  "j-h2":"Altı hamle, tek sezon",
+  "j-p":"Değişim doksan gün ister — gerçek olacak kadar uzun, inanılacak kadar kısa. Atlas'a abone olmazsın. Bir sezona söz verirsin; sezon kanıtla biter.",
+  "ph-1":"<span class='tag'>Gün 0</span><div class='dot'></div><h3>Başvuru</h3><p>Altı soru, bir insan okur. Statüye değil harekete bakarız.</p>",
+  "ph-2":"<span class='tag'>Hafta 0</span><div class='dot'></div><h3>Kabul</h3><p>Önce tek hedef. Kan tahlili, başlangıç ölçümü ve direktörle dürüst bir saat.</p>",
+  "ph-3":"<span class='tag'>Hafta 0</span><div class='dot'></div><h3>Omurga</h3><p>Hedef, yedi alan içindeki gerçek bağımlılıklarına haritalanır.</p>",
+  "ph-4":"<span class='tag'>Hafta 1–12</span><div class='dot'></div><h3>Sezon</h3><p>Günlük işi koçlar taşır. Birebirleri uzmanlar. Seni ise etkinlikler.</p>",
+  "ph-5":"<span class='tag'>Hafta 12</span><div class='dot'></div><h3>Sezon Değerlendirmesi</h3><p>Ölçülmüş farklar, kohortun tanıklığında. Emeğin hâlâ karşılık bulduğunun kanıtı.</p>",
+  "ph-6":"<span class='tag'>Sezon II</span><div class='dot'></div><h3>Sıradaki Kapı</h3><p>İkinci omurga başlar — isteyene Bağ sessizce açılır.</p>",
+  "j2-eyebrow":"Etkileşimli — bir giriş hedefi seç",
+  "j2-h2":"Üç kapı, üç omurga",
+  "tab-weight":"\"8 kilo vermek istiyorum\"",
+  "tab-presence":"\"Bir odaya hükmetmek istiyorum\"",
+  "tab-sleep":"\"Enerjimi geri istiyorum\"",
+  "season-sub":"Doksan gün boyunca alanların devreye giriş sırası",
+  "weeks":"<span>Hf 1</span><span>Hf 4</span><span>Hf 8</span><span>Hf 12</span>",
+  "lay-eyebrow":"Yükü kim taşır",
+  "lay-h2":"Sezonun üç katmanı",
+  "touch-1":"<h3>Günlük — koçların</h3><p>Antrenman blokları, beslenme ayarları, uyku ve stres kontrolleri. Aralıksız, mahrem; kulübün amacı değil zemini.</p>",
+  "touch-2":"<h3>Haftalık — oda</h3><p>İlk günden kurucuların yürüttüğü etkinlikler. Diğer 119 üye ürünün kendisi: antrenman ortağı, sofra arkadaşı, dürüst tanık.</p>",
+  "touch-3":"<h3>Aylık — uzmanlar</h3><p>Seçilmiş antrenörler, diyetisyenler, terapistler; kademeye göre birebir. Yasanın — ve sağduyunun — insan istediği her yerde lisanslı insan.</p>",
+  "room-eyebrow":"Oda",
+  "room-serif":"Bu şehirde ne kadar iyi olduğunu sergilediğin yüz oda var. <em>Burası öteki.</em>",
+  "g-eyebrow":"Takvim",
+  "g-h2":"Kulüp, tekrar ettiği şeydir.",
+  "g-p":"Haftada dört sabit saat, ayda bir uzun gece — ilk günden kurucuların yürüttüğü, dört semte yayılan bir ritim. Bilerek küçük: burada hiçbir şey bir masadan büyüğe ölçeklenmez.",
+  "g-r1":"<div class='day'>Salı<b>06:45</b></div><div class='wbody'><h3>Sahil koşusu</h3><p>Şehir uyanmadan Bebek sahilinde beş kilometre. Her tempo makbul; son kilometre her zaman birlikte koşulur.</p></div><div class='meta'><b>Bebek</b>her hafta · tüm üyeler</div>",
+  "g-r2":"<div class='day'>Perşembe<b>20:00</b></div><div class='wbody'><h3>Perşembe sofrası</h3><p>Dokuz kişilik akşam yemeği; oturma düzenini ev kurar — tanıdık yüzlerin yanına yenileri. Odayı tek kural tutar: sofrada söylenen sofrada kalır.</p></div><div class='meta'><b>Arnavutköy</b>her hafta · dokuz sandalye</div>",
+  "g-r3":"<div class='day'>Cumartesi<b>11:00</b></div><div class='wbody'><h3>Açık salon</h3><p>Kulüp koçlarının sahada olduğu ortak kuvvet bloğu. Form düzeltilir, platolar kırılır, antrenman partnerleri bulunur.</p></div><div class='meta'><b>Etiler</b>her hafta · serbest katılım</div>",
+  "g-r4":"<div class='day'>Pazar<b>17:00</b></div><div class='wbody'><h3>Salon</h3><p>Bir üye odayı yirmi dakikalığına alır — bir konuşma, bir soru, gerçek sahneden önce bir prova. İstanbul'un en nazik seyircisi.</p></div><div class='meta'><b>Nişantaşı</b>her hafta · yirmi sandalye</div>",
+  "g-r5":"<div class='day'>Ayda bir<b>—</b></div><div class='wbody'><h3>Şehir saatleri</h3><p>Yalnızca yerlilerin açabildiği İstanbul: kapanıştan sonra bir hamam, açılmadan önce bir galeri, suda biten bir yürüyüş.</p></div><div class='meta'><b>Dört semt</b>ayda bir · küçük gruplar</div>",
+  "g-m1":"<span class='tag'>Hafta 0</span><span class='serif'>Açılış gecesi</span><p>Kohort tam kadro yalnızca bir kez buluşur — 120 kişi, önce isimler — sonra bir daha asla hep birlikte.</p>",
+  "g-m2":"<span class='tag'>Hafta 6</span><span class='serif'>Boğaz gecesi</span><p>Suda ağır bir gece — sezonların gevşemeye başladığı tam o noktada.</p>",
+  "g-m3":"<span class='tag'>Hafta 12</span><span class='serif'>Değerlendirme gecesi</span><p>Ölçülmüş farklar, yüksek sesle, kohortun tanıklığında. Sezonun varlık sebebi.</p>",
+  "g-house":"Ev notları <i>·</i> telefonlar kapıda uyur <i>·</i> fotoğraf yok <i>·</i> iş konuşması yok <i>·</i> misafir yalnızca adaylıkla",
+  "ev-eyebrow":"On ikinci hafta",
+  "ev-h2":"Sezon kanıtla biter.",
+  "ev-p":"Her sezon bir değerlendirmeyle kapanır: ölçülmüş farklar, yüksek sesle okunur, kohort tanıklık eder. İşte bir örneği.",
+  "d-eyebrow":"Atlas · Sezon Değerlendirmesi · Tanıklı",
+  "d-title":"S.K. — Sezon I: Vücut kompozisyonu",
+  "d-meta":"31 · Nişantaşı · Kilo kapısından girdi · Hafta 0–12",
+  "dm-1":"Yağ oranı<small>DEXA taraması</small>",
+  "dm-2":"Kilo<small>aynı tartı, aynı saat</small>",
+  "dm-3":"Dinlenik nabız<small>7 günlük ortalama</small>",
+  "dm-4":"Uyku<small>gecelik ortalama, giyilebilir</small>",
+  "dm-5":"HbA1c<small>kan tahlili, ikinci panel</small>",
+  "d-habit":"<b>Hayatta kalan alışkanlık:</b> Salı 06:45, Bebek sahil koşusu. On bir hafta kesintisiz — yalnız başladı, şimdi üç üyeyle koşuyor.",
+  "d-foot1":"12 Aralık'ta değerlendirildi · Kohort I, on dört tanık",
+  "d-foot2":"Program direktörü · Atlas İstanbul",
+  "d-note":"Temsili üye. Program hedeflerinden derlenmiştir — her gerçek değerlendirme üyenin kendi başlangıç değerleriyle kurulur.",
+  "mem-eyebrow":"Üyelik",
+  "mem-h2":"Üç giriş yolu",
+  "mem-p":"Üyelik aylık abonelikle değil üç aylık sezonlarla işler. Bir sezona söz ver; kanıtla ayrıl.",
+  "t-per1":"sezon başına · 3 ay","t-per2":"sezon başına · 3 ay","t-per3":"sezon başına · 3 ay",
+  "t1-list":"<li>Seçtiğin alanlarda <b>tam program</b></li><li>Tüm akıllı koçlar, her gün</li><li>Ayda iki üye etkinliği</li><li>Topluluk erişimi</li>",
+  "t2-list":"<li>Core'daki her şey</li><li>Uzmanlarla <b>aylık birebirler</b></li><li>Tüm haftalık etkinlikler, öncelikli masa</li><li>Üç ayda bir kan tahlili ve değerlendirme</li><li>Hazır olunca tanıştırma programı</li>",
+  "t3-list":"<li>Circle'daki her şey</li><li><b>Haftalık</b> uzman seansları</li><li>Özel program direktörü</li><li>Ev sahipliğinde yemekler ve geziler</li>",
+  "t1-btn":"Core için başvur","t2-btn":"Circle için başvur","t3-btn":"Patron için başvur",
+  "tier-note":"Kabul başvuruyladır. Kurucu kadro Bebek, Arnavutköy, Etiler ve Nişantaşı genelinde 120 üyeyle sınırlıdır. Bir sezon, parçalarının toplamından ucuzdur — terapist, antrenör, diyetisyen ve kan tahlili ayrı ayrı alındığında — ve onlardan farklı olarak birikir.",
+  "found-cap":"Depozitoyla tutulan kurucu yerler",
+  "found-p":"Kurucu yer <b>tamamen iade edilebilir bir depozitoyla</b> tutulur; kabulde ilk sezonundan düşülür. Başvurun kabul edilmezse — ya da açılıştan önce vazgeçersen — eksiksiz iade edilir.",
+  "disc-eyebrow":"Tasarım gereği ketumiyet",
+  "disc-serif":"Bedenin hakkında bildiklerimiz, kalbin hakkında bildiklerimizle asla buluşmaz.",
+  "disc-p":"Sağlık verilerin ve tanıştırmaların ayrı sistemlerde yaşar — tasarım gereği ve yasa gereği. Koçlarına anlattığın hiçbir şey kiminle tanışacağını belirlemez.",
+  "nom-eyebrow":"Kapı içeriden açılır",
+  "nom-serif":"Her üye, her sezon <em>tek bir isim</em> önerebilir.",
+  "nom-p":"Adaylıklar da başvuru gibi okunur — üye kefil olur, oda karar verir. Atlas'a başka bir kestirme yol yok.",
+  "nom-btn":"Birini aday göster",
+  "city-eyebrow":"Neden İstanbul, neden şimdi",
+  "city-h2":"Önce bu şehir için kuruldu.",
+  "city-p1":"İstanbul, Avrupa'nın en yoğun hırslı genç profesyonel nüfuslarından birini barındırıyor — ve en yalnızlarından birini. Salonlar dolu, uygulamalar dolu; ama insanların asıl istediği şey, <b>insanı yukarı çeken bir çevre</b>, hiçbir yerde bulunmuyor.",
+  "city-p2":"Atlas dört semtte açılıyor — Bebek, Arnavutköy, Etiler ve Nişantaşı — bilerek küçük. Önce yoğunluk, sonra ölçek. Her kurucu üye odaları, koçları ve birbirini tanıyacak — ürün bu.",
+  "fin-eyebrow":"Kurucu kadro · Sonbahar 2026",
+  "fin-h2":"Tek bir şeyi değiştir. Gerisinin gelişini izle.",
+  "fin-p":"Kurucu 120 yerin yirmi üçü şimdiden tutuldu. <b>Nerede olduğuna değil, hareket edip etmediğine bakıyoruz.</b> Kabul on dürüst dakika sürer.",
+  "fin-btn":"Başvurunu başlat",
+  "f-left":"ATLAS · İstanbul — önizleme prototipi",
+  "f-preview":"Üye önizlemesi →",
+  "nomf-eyebrow":"Adaylık · sezonda bir",
+  "nomf-h3":"Bir isim öner",
+  "nomf-sub":"Sen kefil olursun, oda karar verir. Kabul edilirse başvuru daveti ona senden ulaşır — asla bizden.",
+  "nomf-f1":"Adı",
+  "nomf-f2":"Neden o — tek dürüst cümle",
+  "nomf-f3":"Senin adın (üye)",
+  "nomf-send":"Adaylığı gönder",
+  "nomd-h3":"Adaylık alındı.",
+  "nomd-p":"Bir başvuru gibi okunacak. Oda uygun görürse, başvuru daveti ona ulaşacak — bizim değil, senin adını taşıyarak.",
+  "nomd-ret":"Kulübe dön"
+}};
+function initI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    if(!(el.dataset.i18n in I18N.en))I18N.en[el.dataset.i18n]=el.innerHTML;
+  });
+}
+function setLang(l){
+  lang=l;
+  document.documentElement.lang=(l==='tr')?'tr':'en';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const v=I18N[l][el.dataset.i18n];
+    if(v!=null)el.innerHTML=v;
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>{if(b.id!=='dashClose')b.textContent=(l==='en')?'TR':'EN';});
+  document.getElementById('heroH1').setAttribute('lang', l==='tr'?'tr':'en');
+  document.getElementById('heroAccent').setAttribute('lang', l==='tr'?'en':'tr');
+  renderJourney(document.querySelector('.goal-tab[aria-selected="true"]').dataset.goal);
+  if(activeNode)activate(activeNode);
+  if(overlay.classList.contains('open'))render();
+  if(dashEl.classList.contains('open'))renderDash();
+}
+
+/* ================= NAV ================= */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>40)},{passive:true});
+function toggleMenu(){
+  const open=document.body.classList.toggle('menu-open');
+  document.querySelector('.burger').setAttribute('aria-expanded',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+
+/* ================= SCROLL REVEAL ================= */
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.16,rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* ================= CONSTELLATION ================= */
 const domains=[
-  {id:'train', label:'Training',   x:240,y:70},
-  {id:'nutri', label:'Nutrition',  x:412,y:150},
-  {id:'longe', label:'Longevity',  x:430,y:320},
-  {id:'brand', label:'Presence',   x:295,y:428},
-  {id:'mind',  label:'Mind',       x:130,y:410},
-  {id:'circle',label:'Circle',     x:48,y:255},
-  {id:'match', label:'Connection', x:110,y:120},
+  {id:'train', x:240,y:70},
+  {id:'nutri', x:412,y:150},
+  {id:'longe', x:430,y:320},
+  {id:'brand', x:295,y:428},
+  {id:'mind',  x:130,y:410},
+  {id:'circle',x:48,y:255},
+  {id:'match', x:110,y:120},
 ];
+const NODE_LBL={
+  en:{train:'Training',nutri:'Nutrition',longe:'Longevity',brand:'Presence',mind:'Mind',circle:'Circle',match:'Connection'},
+  tr:{train:'Antrenman',nutri:'Beslenme',longe:'Uzun Ömür',brand:'Duruş',mind:'Zihin',circle:'Çevre',match:'Bağ'}
+};
 const links=[
   ['train','nutri'],['train','longe'],['train','circle'],['train','mind'],
   ['nutri','longe'],['nutri','mind'],
@@ -641,17 +1425,28 @@ const links=[
   ['circle','match'],['circle','longe'],
   ['match','mind'],
 ];
-const captions={
+const CAPT={
+en:{
   train:['Training','Consistency in the gym depends on recovery, fuel and someone waiting for you at the track. Training pulls in Nutrition, Longevity, Mind and your Circle.'],
   nutri:['Nutrition','What you eat follows how you sleep and how you feel. Nutrition pulls in Training, Longevity and Mind.'],
   longe:['Longevity','The long game is sleep, stress and steady habits — kept by people, not willpower. Longevity pulls in Training, Nutrition, Mind and Circle.'],
   brand:['Presence','How you carry yourself is confidence made visible — built in rooms, with people. Presence pulls in Mind, Circle and Connection.'],
   mind:['Mind','Cortisol undoes diets, sleep and patience alike. The mind steadies fastest in good company. Mind connects to nearly everything.'],
   circle:['Circle','The company you keep sets your defaults — your pace, your plate, your standards. Circle pulls in Training, Longevity, Presence and Connection.'],
-  match:['Connection','Real connection begins as friendship inside a shared pursuit. Connection pulls in Circle, Presence and Mind.'],
-};
+  match:['Connection','Real connection begins as friendship inside a shared pursuit. Connection pulls in Circle, Presence and Mind.']
+},
+tr:{
+  train:['Antrenman','Salondaki süreklilik toparlanmaya, yakıta ve piste seni bekleyen birine bağlıdır. Antrenman; Beslenme, Uzun Ömür, Zihin ve Çevre\u0027yi peşinden getirir.'],
+  nutri:['Beslenme','Ne yediğin, nasıl uyuduğuna ve nasıl hissettiğine bağlıdır. Beslenme; Antrenman, Uzun Ömür ve Zihin\u0027i peşinden getirir.'],
+  longe:['Uzun Ömür','Uzun oyun uyku, stres ve istikrarlı alışkanlıklardır — iradeyle değil insanlarla korunur. Uzun Ömür; Antrenman, Beslenme, Zihin ve Çevre\u0027yi çeker.'],
+  brand:['Duruş','Kendini taşıma biçimin, görünür kılınmış özgüvendir — odalarda, insanlarla kurulur. Duruş; Zihin, Çevre ve Bağ\u0027ı çeker.'],
+  mind:['Zihin','Kortizol diyeti de uykuyu da sabrı da bozar. Zihin en hızlı iyi bir çevrede durulur. Zihin neredeyse her şeye bağlıdır.'],
+  circle:['Çevre','Kimlerle vakit geçirdiğin varsayılanlarını belirler — temponu, tabağını, standartlarını. Çevre; Antrenman, Uzun Ömür, Duruş ve Bağ\u0027ı çeker.'],
+  match:['Bağ','Gerçek bağ, ortak bir uğraşın içindeki dostlukla başlar. Bağ; Çevre, Duruş ve Zihin\u0027i çeker.']
+}};
 const svgNS='http://www.w3.org/2000/svg';
 const gE=document.getElementById('edges'),gN=document.getElementById('nodes');
+let activeNode=null;
 links.forEach(([a,b])=>{
   const A=domains.find(d=>d.id===a),B=domains.find(d=>d.id===b);
   const l=document.createElementNS(svgNS,'line');
@@ -661,19 +1456,27 @@ links.forEach(([a,b])=>{
 domains.forEach(d=>{
   const g=document.createElementNS(svgNS,'g');
   g.setAttribute('class','node');g.dataset.id=d.id;g.setAttribute('tabindex','0');
-  g.setAttribute('role','button');g.setAttribute('aria-label',d.label);
+  g.setAttribute('role','button');
   const c=document.createElementNS(svgNS,'circle');
   c.setAttribute('cx',d.x);c.setAttribute('cy',d.y);c.setAttribute('r',10);
   const t=document.createElementNS(svgNS,'text');
   t.setAttribute('x',d.x);t.setAttribute('y',d.y + (d.y>240?28:-20));
-  t.setAttribute('text-anchor','middle');t.textContent=d.label;
+  t.setAttribute('text-anchor','middle');t.dataset.node=d.id;
   g.appendChild(c);g.appendChild(t);gN.appendChild(g);
-  const act=()=>activate(d.id);
+  const act=()=>{userTouched=true;activate(d.id);};
   g.addEventListener('mouseenter',act);
   g.addEventListener('click',act);
   g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();act();}});
 });
+function paintNodeLabels(){
+  document.querySelectorAll('svg text[data-node]').forEach(t=>{
+    t.textContent=NODE_LBL[lang][t.dataset.node];
+    const g=t.closest('.node');
+    g.setAttribute('aria-label',NODE_LBL[lang][t.dataset.node]);
+  });
+}
 function activate(id){
+  activeNode=id;
   document.querySelectorAll('.node').forEach(n=>n.classList.remove('active','linked'));
   document.querySelectorAll('.edge').forEach(e=>e.classList.remove('lit'));
   const linked=new Set();
@@ -685,219 +1488,641 @@ function activate(id){
     else if(linked.has(n.dataset.id))n.classList.add('linked');
   });
   const cap=document.getElementById('const-caption');
-  cap.innerHTML='<span class="serif">'+captions[id][0]+'</span>'+captions[id][1];
+  cap.innerHTML='<span class="cap-body"><span class="serif">'+CAPT[lang][id][0]+'</span>'+CAPT[lang][id][1]+'</span>';
 }
+let userTouched=false, ambientTimer=null, ambientIdx=0;
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const mapSec=document.getElementById('map');
+document.querySelectorAll('.edge').forEach(e=>{
+  const len=Math.hypot(e.x2.baseVal.value-e.x1.baseVal.value, e.y2.baseVal.value-e.y1.baseVal.value);
+  e.style.strokeDasharray=len;
+  e.style.strokeDashoffset=reduceMotion?0:len;
+});
+const mapIO=new IntersectionObserver(es=>{
+  es.forEach(en=>{
+    if(!en.isIntersecting)return;
+    mapSec.classList.add('drawn');
+    document.querySelectorAll('.edge').forEach((e,i)=>{
+      setTimeout(()=>{e.style.strokeDashoffset=0;}, i*70);
+    });
+    if(!reduceMotion){
+      setTimeout(()=>{
+        if(userTouched)return;
+        const order=['train','nutri','mind','circle','longe','brand','match'];
+        activate(order[0]);
+        ambientTimer=setInterval(()=>{
+          if(userTouched){clearInterval(ambientTimer);return;}
+          ambientIdx=(ambientIdx+1)%order.length;
+          activate(order[ambientIdx]);
+        },3400);
+      },1300);
+    }
+    mapIO.disconnect();
+  });
+},{threshold:.35});
+mapIO.observe(mapSec);
 
-/* ---------------- Journey spines ---------------- */
-const SPINES = {
-  weight: {
-    title: "Season spine: Body composition",
-    review: "<strong>Week-12 evidence:</strong> DEXA delta, bloodwork panel two, and one habit that survived twelve weeks.",
-    vertebrae: [
-      {dom:"Training", why:"Primary lever — progressive strength three times a week; muscle is the metabolic engine.", wt:"Primary domain", primary:true},
-      {dom:"Nutrition", why:"Protein-anchored plan adjusted weekly against adherence, not ideals.", wt:"Heavy · weeks 1–12"},
-      {dom:"Psychology", why:"Stress eating is a stress problem. Fortnightly sessions target the trigger, not the fork.", wt:"Moderate · from week 2"},
-      {dom:"Longevity", why:"Baseline and week-12 bloodwork turn the season into evidence.", wt:"Bookends · weeks 0 & 12"},
-      {dom:"Community", why:"Cohort training and shared tables — adherence is social before it is chemical.", wt:"Ambient · weekly"}
-    ],
-    tracks: [
-      {lbl:"Training", note:"3× weekly", start:0, width:100, copper:true},
-      {lbl:"Nutrition", note:"adjusted weekly", start:0, width:100},
-      {lbl:"Psychology", note:"fortnightly", start:10, width:90},
-      {lbl:"Longevity", note:"bloodwork bookends", start:0, width:12},
-      {lbl:"Community", note:"weekly events", start:0, width:100}
-    ]
-  },
-  presence: {
-    title: "Season spine: Presence & personal brand",
-    review: "<strong>Week-12 evidence:</strong> one recorded talk, before and after; a written positioning line; a resting heart rate that agrees with it.",
-    vertebrae: [
-      {dom:"Branding & presence", why:"Primary lever — voice, positioning, and a real audience of peers to practise on.", wt:"Primary domain", primary:true},
-      {dom:"Psychology", why:"Stage fear and impostor noise are the actual bottleneck for most professionals.", wt:"Heavy · weeks 1–8"},
-      {dom:"Training", why:"Posture and breath are physical skills; presence is a body problem.", wt:"Moderate · weeks 1–12"},
-      {dom:"Community", why:"Monthly member salons are the rehearsal room — low stakes, honest feedback.", wt:"Core · from week 4"},
-      {dom:"Relationships", why:"How you hold one difficult conversation is how you hold a room.", wt:"Light · from week 6"}
-    ],
-    tracks: [
-      {lbl:"Branding & presence", note:"weekly coaching", start:0, width:100, copper:true},
-      {lbl:"Psychology", note:"front-loaded", start:0, width:66},
-      {lbl:"Training", note:"posture & breath", start:0, width:100},
-      {lbl:"Community", note:"salons", start:25, width:75},
-      {lbl:"Relationships", note:"applied practice", start:45, width:55}
-    ]
-  },
-  sleep: {
-    title: "Season spine: Sleep & energy",
-    review: "<strong>Week-12 evidence:</strong> wearable trendline, morning HRV, and an evening that belongs to you again.",
-    vertebrae: [
-      {dom:"Longevity", why:"Primary lever — sleep architecture, HRV, light and caffeine protocol, tracked daily.", wt:"Primary domain", primary:true},
-      {dom:"Psychology", why:"Rumination is the thief of the third hour. Sessions target the 2 a.m. mind.", wt:"Heavy · weeks 1–12"},
-      {dom:"Relationships", why:"The evening is shared territory; the protocol has to survive a household.", wt:"Moderate · from week 3"},
-      {dom:"Training", why:"Morning strength anchors circadian rhythm and burns off cortisol honestly.", wt:"Moderate · weeks 2–12"},
-      {dom:"Nutrition", why:"Late meals and alcohol timing — small levers, outsized effect on deep sleep.", wt:"Light · weeks 1–6"}
-    ],
-    tracks: [
-      {lbl:"Longevity", note:"daily protocol", start:0, width:100, copper:true},
-      {lbl:"Psychology", note:"weekly", start:0, width:100},
-      {lbl:"Relationships", note:"household design", start:18, width:82},
-      {lbl:"Training", note:"morning blocks", start:8, width:92},
-      {lbl:"Nutrition", note:"timing levers", start:0, width:50}
-    ]
-  }
-};
-const jspineEl = document.getElementById('jspine');
-const tracksEl = document.getElementById('tracks');
-const titleEl = document.getElementById('season-title');
-const reviewEl = document.getElementById('review');
-const tabs = document.querySelectorAll('.goal-tab');
+/* ================= JOURNEY SPINES ================= */
+const SP={
+en:{
+  weight:{title:"Season spine: Body composition",
+    review:"<strong>Week-12 evidence:</strong> DEXA delta, bloodwork panel two, and one habit that survived twelve weeks.",
+    vertebrae:[
+      {dom:"Training",why:"Primary lever — progressive strength three times a week; muscle is the metabolic engine.",wt:"Primary domain",primary:true},
+      {dom:"Nutrition",why:"Protein-anchored plan adjusted weekly against adherence, not ideals.",wt:"Heavy · weeks 1–12"},
+      {dom:"Psychology",why:"Stress eating is a stress problem. Fortnightly sessions target the trigger, not the fork.",wt:"Moderate · from week 2"},
+      {dom:"Longevity",why:"Baseline and week-12 bloodwork turn the season into evidence.",wt:"Bookends · weeks 0 & 12"},
+      {dom:"Community",why:"Cohort training and shared tables — adherence is social before it is chemical.",wt:"Ambient · weekly"}],
+    tracks:[
+      {lbl:"Training",note:"3× weekly",start:0,width:100,copper:true},
+      {lbl:"Nutrition",note:"adjusted weekly",start:0,width:100},
+      {lbl:"Psychology",note:"fortnightly",start:10,width:90},
+      {lbl:"Longevity",note:"bloodwork bookends",start:0,width:12},
+      {lbl:"Community",note:"weekly events",start:0,width:100}]},
+  presence:{title:"Season spine: Presence & personal brand",
+    review:"<strong>Week-12 evidence:</strong> one recorded talk, before and after; a written positioning line; a resting heart rate that agrees with it.",
+    vertebrae:[
+      {dom:"Branding & presence",why:"Primary lever — voice, positioning, and a real audience of peers to practise on.",wt:"Primary domain",primary:true},
+      {dom:"Psychology",why:"Stage fear and impostor noise are the actual bottleneck for most professionals.",wt:"Heavy · weeks 1–8"},
+      {dom:"Training",why:"Posture and breath are physical skills; presence is a body problem.",wt:"Moderate · weeks 1–12"},
+      {dom:"Community",why:"Monthly member salons are the rehearsal room — low stakes, honest feedback.",wt:"Core · from week 4"},
+      {dom:"Relationships",why:"How you hold one difficult conversation is how you hold a room.",wt:"Light · from week 6"}],
+    tracks:[
+      {lbl:"Branding & presence",note:"weekly coaching",start:0,width:100,copper:true},
+      {lbl:"Psychology",note:"front-loaded",start:0,width:66},
+      {lbl:"Training",note:"posture & breath",start:0,width:100},
+      {lbl:"Community",note:"salons",start:25,width:75},
+      {lbl:"Relationships",note:"applied practice",start:45,width:55}]},
+  sleep:{title:"Season spine: Sleep & energy",
+    review:"<strong>Week-12 evidence:</strong> wearable trendline, morning HRV, and an evening that belongs to you again.",
+    vertebrae:[
+      {dom:"Longevity",why:"Primary lever — sleep architecture, HRV, light and caffeine protocol, tracked daily.",wt:"Primary domain",primary:true},
+      {dom:"Psychology",why:"Rumination is the thief of the third hour. Sessions target the 2 a.m. mind.",wt:"Heavy · weeks 1–12"},
+      {dom:"Relationships",why:"The evening is shared territory; the protocol has to survive a household.",wt:"Moderate · from week 3"},
+      {dom:"Training",why:"Morning strength anchors circadian rhythm and burns off cortisol honestly.",wt:"Moderate · weeks 2–12"},
+      {dom:"Nutrition",why:"Late meals and alcohol timing — small levers, outsized effect on deep sleep.",wt:"Light · weeks 1–6"}],
+    tracks:[
+      {lbl:"Longevity",note:"daily protocol",start:0,width:100,copper:true},
+      {lbl:"Psychology",note:"weekly",start:0,width:100},
+      {lbl:"Relationships",note:"household design",start:18,width:82},
+      {lbl:"Training",note:"morning blocks",start:8,width:92},
+      {lbl:"Nutrition",note:"timing levers",start:0,width:50}]}
+},
+tr:{
+  weight:{title:"Sezon omurgası: Vücut kompozisyonu",
+    review:"<strong>12. hafta kanıtı:</strong> DEXA farkı, ikinci kan paneli ve on iki haftayı sağ çıkaran bir alışkanlık.",
+    vertebrae:[
+      {dom:"Antrenman",why:"Ana kaldıraç — haftada üç ilerleyen kuvvet seansı; kas, metabolik motorun kendisi.",wt:"Ana alan",primary:true},
+      {dom:"Beslenme",why:"İdeale değil uyuma göre her hafta ayarlanan, protein eksenli plan.",wt:"Yoğun · hafta 1–12"},
+      {dom:"Psikoloji",why:"Stres yemesi bir stres sorunudur. İki haftada bir seans; çatala değil tetiğe odaklanır.",wt:"Orta · 2. haftadan"},
+      {dom:"Uzun Ömür",why:"Başlangıç ve 12. hafta tahlilleri sezonu kanıta çevirir.",wt:"Uçlarda · hafta 0 ve 12"},
+      {dom:"Topluluk",why:"Kohort antrenmanı ve ortak sofralar — bağlılık kimyadan önce sosyaldir.",wt:"Sürekli · haftalık"}],
+    tracks:[
+      {lbl:"Antrenman",note:"haftada 3×",start:0,width:100,copper:true},
+      {lbl:"Beslenme",note:"haftalık ayar",start:0,width:100},
+      {lbl:"Psikoloji",note:"iki haftada bir",start:10,width:90},
+      {lbl:"Uzun Ömür",note:"tahlil uçları",start:0,width:12},
+      {lbl:"Topluluk",note:"haftalık etkinlik",start:0,width:100}]},
+  presence:{title:"Sezon omurgası: Duruş ve kişisel marka",
+    review:"<strong>12. hafta kanıtı:</strong> kayıtlı bir konuşma, öncesi ve sonrası; yazılı bir konumlanma cümlesi; buna eşlik eden bir dinlenik nabız.",
+    vertebrae:[
+      {dom:"Marka ve duruş",why:"Ana kaldıraç — ses, konumlanma ve üzerinde çalışılacak gerçek bir akran topluluğu.",wt:"Ana alan",primary:true},
+      {dom:"Psikoloji",why:"Sahne korkusu ve sahtekârlık hissi çoğu profesyonelin gerçek darboğazı.",wt:"Yoğun · hafta 1–8"},
+      {dom:"Antrenman",why:"Postür ve nefes fiziksel becerilerdir; duruş bir beden meselesidir.",wt:"Orta · hafta 1–12"},
+      {dom:"Topluluk",why:"Aylık üye salonları prova odasıdır — düşük risk, dürüst geri bildirim.",wt:"Çekirdek · 4. haftadan"},
+      {dom:"İlişkiler",why:"Tek bir zor konuşmayı nasıl taşıdığın, bir odayı nasıl taşıdığındır.",wt:"Hafif · 6. haftadan"}],
+    tracks:[
+      {lbl:"Marka ve duruş",note:"haftalık koçluk",start:0,width:100,copper:true},
+      {lbl:"Psikoloji",note:"öne yüklü",start:0,width:66},
+      {lbl:"Antrenman",note:"postür ve nefes",start:0,width:100},
+      {lbl:"Topluluk",note:"salonlar",start:25,width:75},
+      {lbl:"İlişkiler",note:"uygulama",start:45,width:55}]},
+  sleep:{title:"Sezon omurgası: Uyku ve enerji",
+    review:"<strong>12. hafta kanıtı:</strong> giyilebilir cihaz eğrisi, sabah HRV değeri ve yeniden sana ait bir akşam.",
+    vertebrae:[
+      {dom:"Uzun Ömür",why:"Ana kaldıraç — uyku mimarisi, HRV, ışık ve kafein protokolü; günlük takip.",wt:"Ana alan",primary:true},
+      {dom:"Psikoloji",why:"Ruminasyon üçüncü saatin hırsızıdır. Seanslar gece 02.00 zihnini hedefler.",wt:"Yoğun · hafta 1–12"},
+      {dom:"İlişkiler",why:"Akşam ortak bölgedir; protokol bir haneyi de sağ çıkarmalı.",wt:"Orta · 3. haftadan"},
+      {dom:"Antrenman",why:"Sabah kuvveti sirkadiyen ritmi sabitler, kortizolü dürüstçe yakar.",wt:"Orta · hafta 2–12"},
+      {dom:"Beslenme",why:"Geç yemek ve alkol zamanlaması — küçük kaldıraç, derin uykuda büyük etki.",wt:"Hafif · hafta 1–6"}],
+    tracks:[
+      {lbl:"Uzun Ömür",note:"günlük protokol",start:0,width:100,copper:true},
+      {lbl:"Psikoloji",note:"haftalık",start:0,width:100},
+      {lbl:"İlişkiler",note:"hane tasarımı",start:18,width:82},
+      {lbl:"Antrenman",note:"sabah blokları",start:8,width:92},
+      {lbl:"Beslenme",note:"zamanlama",start:0,width:50}]}
+}};
+const jspineEl=document.getElementById('jspine');
+const tracksEl=document.getElementById('tracks');
+const titleEl=document.getElementById('season-title');
+const reviewEl=document.getElementById('review');
+const tabs=document.querySelectorAll('.goal-tab');
 function renderJourney(key){
-  const s = SPINES[key];
-  titleEl.textContent = s.title;
-  reviewEl.innerHTML = s.review;
-  jspineEl.innerHTML = s.vertebrae.map(v => `
-    <div class="vertebra${v.primary ? ' primary' : ''}">
+  const s=SP[lang][key];
+  titleEl.textContent=s.title;
+  reviewEl.innerHTML=s.review;
+  jspineEl.innerHTML=s.vertebrae.map(v=>`
+    <div class="vertebra${v.primary?' primary':''}">
       <div class="dom">${v.dom}</div>
       <p class="why">${v.why}</p>
       <span class="wt">${v.wt}</span>
     </div>`).join('');
-  tracksEl.innerHTML = s.tracks.map(t => `
+  tracksEl.innerHTML=s.tracks.map(t=>`
     <div class="track">
       <div class="lbl"><span>${t.lbl}</span><span>${t.note}</span></div>
-      <div class="rail"><div class="fill${t.copper ? ' copper' : ''}" style="left:${t.start}%;width:${t.width}%"></div></div>
+      <div class="rail"><div class="fill${t.copper?' copper':''}" data-w="${t.width}" style="left:${t.start}%"></div></div>
     </div>`).join('');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    tracksEl.querySelectorAll('.fill').forEach((f,i)=>{
+      setTimeout(()=>{f.style.width=f.dataset.w+'%';},80+i*90);
+    });
+  }));
 }
-tabs.forEach(tab => tab.addEventListener('click', () => {
-  tabs.forEach(t => t.setAttribute('aria-selected','false'));
+tabs.forEach(tab=>tab.addEventListener('click',()=>{
+  tabs.forEach(t=>t.setAttribute('aria-selected','false'));
   tab.setAttribute('aria-selected','true');
   renderJourney(tab.dataset.goal);
 }));
-renderJourney('weight');
+const boxIO=new IntersectionObserver(es=>{
+  es.forEach(en=>{
+    if(!en.isIntersecting)return;
+    renderJourney(document.querySelector('.goal-tab[aria-selected="true"]').dataset.goal);
+    boxIO.disconnect();
+  });
+},{threshold:.3});
+boxIO.observe(document.getElementById('seasonBox'));
 
-/* ---------------- Onboarding ---------------- */
-const goals=[
-  {id:'weight', label:'Lose weight'},
-  {id:'strength',label:'Get stronger'},
-  {id:'energy', label:'Sleep & energy'},
-  {id:'presence',label:'Sharpen my presence'},
-  {id:'mind',   label:'Quiet my mind'},
-  {id:'friends',label:'Meet my people'},
-  {id:'partner',label:'Find a partner'},
-];
-const obSpines={
-  weight:{title:'Weight',rows:[
-    ['Training','Three sessions a week, built around your schedule and current level.'],
-    ['Nutrition','A deficit you can hold at an Istanbul dinner table. Dietitian on call.'],
-    ['Mind','Stress work — because cortisol quietly cancels deficits.'],
-    ['Circle','A weekly member run or class. Accountability you look forward to.']],
-    why:'Members who came for weight loss keep it off when the circle around them changes too.'},
-  strength:{title:'Strength',rows:[
-    ['Training','Progressive programme, form checks with a coach in the room.'],
-    ['Nutrition','Eating to build — protein targets that survive real life.'],
-    ['Longevity','Recovery and sleep tracked, so progress compounds.'],
-    ['Circle','Training partners at your level, found inside the club.']],
-    why:'Strength is a long game. The club makes the long game social.'},
-  energy:{title:'Sleep & energy',rows:[
-    ['Longevity','Sleep protocol, bloodwork, a clinician reading the results with you.'],
-    ['Mind','Evening wind-down and stress work, guided daily.'],
-    ['Nutrition','Caffeine, timing, and what your afternoons run on.'],
-    ['Training','Movement dosed for energy, not exhaustion.']],
-    why:'Energy is the multiplier — every other domain moves faster once it returns.'},
-  presence:{title:'Presence',rows:[
-    ['Presence','Manners, image, how you speak about your work — coached weekly.'],
-    ['Mind','Confidence work underneath the surface polish.'],
-    ['Circle','Rooms to practise in: dinners, salons, member events.'],
-    ['Training','Posture and bearing — presence starts physical.']],
-    why:'Presence is a skill rehearsed in rooms. The club is the room.'},
-  mind:{title:'Mind',rows:[
-    ['Mind','Daily reflective practice; licensed therapists when it should be human.'],
-    ['Longevity','Sleep first — most anxious minds are tired minds.'],
-    ['Training','Movement as medicine, prescribed gently.'],
-    ['Circle','Fewer, better people. Loneliness is a stressor; we treat it like one.']],
-    why:'A quiet mind is rarely built alone. That is the point of the club.'},
-  friends:{title:'Circle',rows:[
-    ['Circle','Weekly events matched to your interests — runs, tables, galleries, trips.'],
-    ['Presence','Light social coaching, if you want it. Arrive at ease.'],
-    ['Mind','The confidence work that makes new rooms feel smaller.'],
-    ['Training','Shared pursuits bond fastest — pick one with us.']],
-    why:'Friendship forms around shared effort. We build the effort; the friendship follows.'},
-  partner:{title:'Connection',rows:[
-    ['Circle','You meet people as people first — at events, not on a screen.'],
-    ['Presence','How you show up, refined.'],
-    ['Mind','Patterns and standards, worked through honestly.'],
-    ['Training','The version of you that walks in matters. We build it.']],
-    why:'Introductions open after your first season — matches come from inside the community, made carefully.'},
-};
-let obStep=0, selGoal=null;
+/* ================= COUNTERS + DOSSIER ================= */
+function countUp(el,to,dur){
+  if(reduceMotion){el.textContent=to;return;}
+  const t0=performance.now();
+  function tick(t){
+    const p=Math.min((t-t0)/dur,1);
+    el.textContent=Math.round(to*(1-Math.pow(1-p,3)));
+    if(p<1)requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+const dossier=document.getElementById('dossier');
+const dIO=new IntersectionObserver(es=>{
+  es.forEach(en=>{
+    if(!en.isIntersecting)return;
+    dossier.querySelectorAll('.d-rail i').forEach((r,i)=>{
+      setTimeout(()=>{r.style.width=r.dataset.w+'%';},250+i*140);
+    });
+    dIO.disconnect();
+  });
+},{threshold:.3});
+dIO.observe(dossier);
+const found=document.getElementById('found');
+const fIO=new IntersectionObserver(es=>{
+  es.forEach(en=>{
+    if(!en.isIntersecting)return;
+    countUp(found.querySelector('[data-count]'),23,1400);
+    const fill=document.getElementById('foundFill');
+    setTimeout(()=>{fill.style.width=fill.dataset.w+'%';},200);
+    fIO.disconnect();
+  });
+},{threshold:.4});
+fIO.observe(found);
+
+/* ================= APPLICATION ================= */
+const GOALS={
+en:[{id:'weight',label:'Lose weight'},{id:'strength',label:'Get stronger'},{id:'energy',label:'Sleep & energy'},{id:'presence',label:'Sharpen my presence'},{id:'mind',label:'Quiet my mind'},{id:'friends',label:'Meet my people'},{id:'partner',label:'Find a partner'}],
+tr:[{id:'weight',label:'Kilo vermek'},{id:'strength',label:'Güçlenmek'},{id:'energy',label:'Uyku ve enerji'},{id:'presence',label:'Duruşumu keskinleştirmek'},{id:'mind',label:'Zihnimi susturmak'},{id:'friends',label:'İnsanlarımı bulmak'},{id:'partner',label:'Bir eş bulmak'}]};
+const OS={
+en:{
+  weight:{title:'Weight',rows:[['Training','Three sessions a week, built around your schedule and current level.'],['Nutrition','A deficit you can hold at an Istanbul dinner table. Dietitian on call.'],['Mind','Stress work — because cortisol quietly cancels deficits.'],['Circle','A weekly member run or class. Accountability you look forward to.']],why:'Members who came for weight loss keep it off when the circle around them changes too.'},
+  strength:{title:'Strength',rows:[['Training','Progressive programme, form checks with a coach in the room.'],['Nutrition','Eating to build — protein targets that survive real life.'],['Longevity','Recovery and sleep tracked, so progress compounds.'],['Circle','Training partners at your level, found inside the club.']],why:'Strength is a long game. The club makes the long game social.'},
+  energy:{title:'Sleep & energy',rows:[['Longevity','Sleep protocol, bloodwork, a clinician reading the results with you.'],['Mind','Evening wind-down and stress work, guided daily.'],['Nutrition','Caffeine, timing, and what your afternoons run on.'],['Training','Movement dosed for energy, not exhaustion.']],why:'Energy is the multiplier — every other domain moves faster once it returns.'},
+  presence:{title:'Presence',rows:[['Presence','Manners, image, how you speak about your work — coached weekly.'],['Mind','Confidence work underneath the surface polish.'],['Circle','Rooms to practise in: dinners, salons, member events.'],['Training','Posture and bearing — presence starts physical.']],why:'Presence is a skill rehearsed in rooms. The club is the room.'},
+  mind:{title:'Mind',rows:[['Mind','Daily reflective practice; licensed therapists when it should be human.'],['Longevity','Sleep first — most anxious minds are tired minds.'],['Training','Movement as medicine, prescribed gently.'],['Circle','Fewer, better people. Loneliness is a stressor; we treat it like one.']],why:'A quiet mind is rarely built alone. That is the point of the club.'},
+  friends:{title:'Circle',rows:[['Circle','Weekly events matched to your interests — runs, tables, galleries, trips.'],['Presence','Light social coaching, if you want it. Arrive at ease.'],['Mind','The confidence work that makes new rooms feel smaller.'],['Training','Shared pursuits bond fastest — pick one with us.']],why:'Friendship forms around shared effort. We build the effort; the friendship follows.'},
+  partner:{title:'Connection',rows:[['Circle','You meet people as people first — at events, not on a screen.'],['Presence','How you show up, refined.'],['Mind','Patterns and standards, worked through honestly.'],['Training','The version of you that walks in matters. We build it.']],why:'Introductions open after your first season — matches come from inside the community, made carefully.'}
+},
+tr:{
+  weight:{title:'Kilo',rows:[['Antrenman','Haftada üç seans; programına ve seviyene göre kurulur.'],['Beslenme','İstanbul sofrasında sürdürülebilir bir açık. Diyetisyen hattın açık.'],['Zihin','Stres çalışması — çünkü kortizol açığı sessizce iptal eder.'],['Çevre','Haftalık üye koşusu ya da dersi. Beklediğin bir hesap verebilirlik.']],why:'Kilo için gelenler, çevreleri de değişince verdiklerini koruyor.'},
+  strength:{title:'Güç',rows:[['Antrenman','İlerleyen program; salonda form kontrolü.'],['Beslenme','İnşa etmek için yemek — gerçek hayata dayanan protein hedefleri.'],['Uzun Ömür','Toparlanma ve uyku takipte; ilerleme birikir.'],['Çevre','Kulüp içinden seviyene uygun antrenman ortakları.']],why:'Güç uzun oyundur. Kulüp uzun oyunu sosyalleştirir.'},
+  energy:{title:'Uyku ve enerji',rows:[['Uzun Ömür','Uyku protokolü, kan tahlili, sonuçları seninle okuyan klinisyen.'],['Zihin','Akşam sakinleşmesi ve stres çalışması, her gün.'],['Beslenme','Kafein, zamanlama ve öğleden sonranın yakıtı.'],['Antrenman','Tüketen değil enerji veren dozda hareket.']],why:'Enerji çarpandır — geri gelince her alan hızlanır.'},
+  presence:{title:'Duruş',rows:[['Duruş','Adab, imaj, işini anlatma biçimin — haftalık koçluk.'],['Zihin','Cilanın altındaki özgüven çalışması.'],['Çevre','Prova odaları: yemekler, salonlar, etkinlikler.'],['Antrenman','Postür ve taşıyış — duruş bedenden başlar.']],why:'Duruş odalarda prova edilen bir beceridir. Kulüp o odadır.'},
+  mind:{title:'Zihin',rows:[['Zihin','Günlük derinleşme; insan gerektiğinde lisanslı terapist.'],['Uzun Ömür','Önce uyku — kaygılı zihinlerin çoğu yorgun zihinlerdir.'],['Antrenman','İlaç niyetine hareket, nazikçe.'],['Çevre','Daha az, daha iyi insan. Yalnızlık bir stresördür; öyle ele alırız.']],why:'Sakin zihin nadiren yalnız kurulur. Kulübün anlamı bu.'},
+  friends:{title:'Çevre',rows:[['Çevre','İlgi alanlarına göre haftalık etkinlikler — koşu, sofra, galeri, gezi.'],['Duruş','İstersen hafif sosyal koçluk. Rahat gel.'],['Zihin','Yeni odaları küçülten özgüven çalışması.'],['Antrenman','Ortak uğraş en hızlı bağlar — birlikte seçelim.']],why:'Dostluk ortak emeğin etrafında kurulur. Emeği biz kurarız; dostluk gelir.'},
+  partner:{title:'Bağ',rows:[['Çevre','İnsanlarla önce insan olarak tanışırsın — ekranda değil, etkinlikte.'],['Duruş','Kendini gösterme biçimin, incelmiş.'],['Zihin','Kalıplar ve standartlar, dürüstçe.'],['Antrenman','İçeri giren hâlin önemli. Onu birlikte kurarız.']],why:'Tanıştırmalar ilk sezondan sonra açılır — eşleşmeler topluluğun içinden, özenle.'}
+}};
+const OBT={
+en:{i1:"The intake · 01",q1:"What do you want to change first?",q1sub:"One honest answer. We'll take it from there.",cont:"Continue",
+i2:"The intake · 02",spineT:"Your programme spine — ",spineSub:"This is what your goal actually depends on. Your season is built on these four.",me:"This is me — continue",back:"← Back",
+i3:"The intake · 03",app:"The application",appSub:"Six questions, read by a person — not a queue. We select for movement, not status.",
+fname:"Full name",age:"Age",occ:"Occupation",dist:"District",elsewhere:"Elsewhere in Istanbul",
+div:"The six questions · your first answer is already in",
+q2:"What have you already tried, and what did it teach you?",q3:"Tell us about the last promise you kept to yourself.",
+q4:"A season asks for five to seven hours a week. Which hours are they?",q5:"What would the other 119 members get from having you in the room?",
+q6:"What are you not willing to change?",submit:"Submit application",
+i4:"The intake · 04",hold:"Hold a founding place",holdSub:"Ninety-seven of the founding 120 remain. A deposit holds yours while your application is read.",
+plno:"Founding place № 24",dep:"Refundable deposit — ₺X,XXX",
+depP:"<b>Credited in full</b> against your first season on admission. If your application isn't accepted, or you withdraw before opening, it returns to you entirely. Founding members keep their season price for life.",
+skip:"Submit without holding a place",reserve:"Reserve place № 24",
+heldT:"Place № 24 is held.",heldP:"Your application will be read by a person within the week. If your season and ours align, your intake conversation is with your programme director — and your deposit becomes your first season. If not, it returns to you in full.",
+recT:"Application received.",recP:"Every application is read by a person. If your season and ours align, you'll hear from us within a week — and your intake conversation will be with your programme director, not a form.",
+ret:"Return to the club"},
+tr:{i1:"Kabul · 01",q1:"Önce neyi değiştirmek istiyorsun?",q1sub:"Tek dürüst cevap. Gerisini biz alırız.",cont:"Devam",
+i2:"Kabul · 02",spineT:"Program omurgan — ",spineSub:"Hedefinin gerçekte bağlı olduğu şeyler. Sezonun bu dördü üzerine kurulur.",me:"Bu benim — devam",back:"← Geri",
+i3:"Kabul · 03",app:"Başvuru",appSub:"Altı soru, bir insan okur — kuyruk değil. Statüye değil harekete bakarız.",
+fname:"Ad soyad",age:"Yaş",occ:"Meslek",dist:"Semt",elsewhere:"İstanbul içinde başka",
+div:"Altı soru · ilk cevabın zaten içeride",
+q2:"Şimdiye dek ne denedin, sana ne öğretti?",q3:"Kendine verdiğin ve tuttuğun son sözü anlat.",
+q4:"Bir sezon haftada beş-yedi saat ister. Bu saatler hangileri?",q5:"Diğer 119 üye, senin odada olmandan ne kazanır?",
+q6:"Neyi değiştirmeye razı değilsin?",submit:"Başvuruyu gönder",
+i4:"Kabul · 04",hold:"Kurucu yerini tut",holdSub:"Kurucu 120 yerin doksan yedisi duruyor. Başvurun okunurken depozito yerini tutar.",
+plno:"Kurucu yer № 24",dep:"İade edilebilir depozito — ₺X.XXX",
+depP:"Kabulde <b>ilk sezonundan eksiksiz düşülür</b>. Başvurun kabul edilmez ya da açılıştan önce çekilirsen tamamı iade edilir. Kurucu üyeler sezon fiyatını ömür boyu korur.",
+skip:"Yer tutmadan gönder",reserve:"№ 24'ü ayırt",
+heldT:"№ 24 tutuldu.",heldP:"Başvurunu bu hafta içinde bir insan okuyacak. Sezonun bizimkiyle örtüşürse kabul görüşmen program direktörünle olur — depoziton ilk sezonun olur. Örtüşmezse eksiksiz iade edilir.",
+recT:"Başvuru alındı.",recP:"Her başvuruyu bir insan okur. Sezonun bizimkiyle örtüşürse bir hafta içinde haber alırsın — kabul görüşmen bir formla değil, program direktörünle olur.",
+ret:"Kulübe dön"}};
+let obStep=0, selGoal=null, deposited=false;
 const overlay=document.getElementById('overlay');
 const box=document.getElementById('obBox');
-
-function openOB(){obStep=0;selGoal=null;overlay.classList.add('open');document.body.style.overflow='hidden';render();}
+function openOB(){obStep=0;selGoal=null;deposited=false;overlay.classList.add('open');document.body.style.overflow='hidden';render();}
 function closeOB(){overlay.classList.remove('open');document.body.style.overflow='';}
 overlay.addEventListener('click',e=>{if(e.target===overlay)closeOB();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOB();});
-
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    if(document.body.classList.contains('menu-open'))toggleMenu();
+    else if(nomOverlay.classList.contains('open'))closeNom();
+    else if(dashEl.classList.contains('open'))closeDash();
+    else closeOB();
+  }
+});
 function prog(n){
   let h='<div class="ob-progress">';
-  for(let i=0;i<4;i++)h+='<i class="'+(i<=n?'done':'')+'"></i>';
+  for(let i=0;i<5;i++)h+='<i class="'+(i<=n?'done':'')+'"></i>';
   return h+'</div>';
 }
 function render(){
   box.scrollTop=0;
+  const T=OBT[lang], G=GOALS[lang];
   if(obStep===0){
     box.className='ob';
     box.innerHTML=prog(0)+
-    '<button class="ob-close" onclick="closeOB()" aria-label="Close">×</button>'+
-    '<span class="eyebrow">The intake · 01</span>'+
-    '<h3>What do you want to change first?</h3>'+
-    '<p class="sub">One honest answer. We\'ll take it from there.</p>'+
-    '<div class="chips">'+goals.map(g=>'<button class="chip'+(selGoal===g.id?' sel':'')+'" onclick="pick(\''+g.id+'\')">'+g.label+'</button>').join('')+'</div>'+
-    '<div class="ob-nav"><span></span><button class="btn btn-solid" id="next1" '+(selGoal?'':'disabled style="opacity:.35;pointer-events:none"')+' onclick="go(1)">Continue</button></div>';
+    '<button class="ob-close" data-act="closeOB" aria-label="Close">×</button>'+
+    '<span class="eyebrow">'+T.i1+'</span>'+
+    '<h3>'+T.q1+'</h3>'+
+    '<p class="sub">'+T.q1sub+'</p>'+
+    '<div class="chips">'+G.map(g=>'<button class="chip'+(selGoal===g.id?' sel':'')+'" data-act="pick" data-arg="'+g.id+'">'+g.label+'</button>').join('')+'</div>'+
+    '<div class="ob-nav"><span></span><button class="btn btn-solid" '+(selGoal?'':'disabled style="opacity:.35;pointer-events:none"')+' data-act="go" data-arg="1">'+T.cont+'</button></div>';
   }
   if(obStep===1){
-    const s=obSpines[selGoal];
+    const T2=OBT[lang], s=OS[lang][selGoal];
     box.className='ob';
     box.innerHTML=prog(1)+
-    '<button class="ob-close" onclick="closeOB()" aria-label="Close">×</button>'+
-    '<span class="eyebrow">The intake · 02</span>'+
-    '<h3>Your programme spine — '+s.title+'</h3>'+
-    '<p class="sub">This is what your goal actually depends on. Your season is built on these four.</p>'+
+    '<button class="ob-close" data-act="closeOB" aria-label="Close">×</button>'+
+    '<span class="eyebrow">'+T2.i2+'</span>'+
+    '<h3>'+T2.spineT+s.title+'</h3>'+
+    '<p class="sub">'+T2.spineSub+'</p>'+
     '<div class="spine">'+s.rows.map(r=>'<div class="spine-row"><span class="serif">'+r[0]+'</span><p>'+r[1]+'</p></div>').join('')+'</div>'+
     '<p class="spine-why">'+s.why+'</p>'+
-    '<div class="ob-nav"><button class="ob-back" onclick="go(0)">← Back</button><button class="btn btn-solid" onclick="go(2)">This is me — continue</button></div>';
+    '<div class="ob-nav"><button class="ob-back" data-act="go" data-arg="0">'+T2.back+'</button><button class="btn btn-solid" data-act="go" data-arg="2">'+T2.me+'</button></div>';
   }
   if(obStep===2){
     box.className='ob';
     box.innerHTML=prog(2)+
-    '<button class="ob-close" onclick="closeOB()" aria-label="Close">×</button>'+
-    '<span class="eyebrow">The intake · 03</span>'+
-    '<h3>The application</h3>'+
-    '<p class="sub">Six questions, read by a person — not a queue. We select for movement, not status.</p>'+
+    '<button class="ob-close" data-act="closeOB" aria-label="Close">×</button>'+
+    '<span class="eyebrow">'+T.i3+'</span>'+
+    '<h3>'+T.app+'</h3>'+
+    '<p class="sub">'+T.appSub+'</p>'+
     '<div class="form-grid">'+
-      '<div class="field"><label for="f-name">Full name</label><input id="f-name" autocomplete="off" placeholder="—"></div>'+
-      '<div class="field"><label for="f-age">Age</label><input id="f-age" inputmode="numeric" placeholder="—"></div>'+
-      '<div class="field"><label for="f-work">Occupation</label><input id="f-work" placeholder="—"></div>'+
-      '<div class="field"><label for="f-dist">District</label><select id="f-dist"><option>Bebek</option><option>Arnavutköy</option><option>Etiler</option><option>Nişantaşı</option><option>Elsewhere in Istanbul</option></select></div>'+
+      '<div class="field"><label for="f-name">'+T.fname+'</label><input id="f-name" autocomplete="off" placeholder="—"></div>'+
+      '<div class="field"><label for="f-age">'+T.age+'</label><input id="f-age" inputmode="numeric" placeholder="—"></div>'+
+      '<div class="field"><label for="f-work">'+T.occ+'</label><input id="f-work" placeholder="—"></div>'+
+      '<div class="field"><label for="f-dist">'+T.dist+'</label><select id="f-dist"><option>Bebek</option><option>Arnavutköy</option><option>Etiler</option><option>Nişantaşı</option><option>'+T.elsewhere+'</option></select></div>'+
     '</div>'+
-    '<div class="form-divider">The six questions · your first answer is already in</div>'+
-    '<div class="field"><label class="q-label"><span class="q-num">II</span>What have you already tried, and what did it teach you?</label><textarea rows="2" placeholder="—"></textarea></div>'+
-    '<div class="field"><label class="q-label"><span class="q-num">III</span>Tell us about the last promise you kept to yourself.</label><textarea rows="2" placeholder="—"></textarea></div>'+
-    '<div class="field"><label class="q-label"><span class="q-num">IV</span>A season asks for five to seven hours a week. Which hours are they?</label><textarea rows="2" placeholder="—"></textarea></div>'+
-    '<div class="field"><label class="q-label"><span class="q-num">V</span>What would the other 119 members get from having you in the room?</label><textarea rows="2" placeholder="—"></textarea></div>'+
-    '<div class="field"><label class="q-label"><span class="q-num">VI</span>What are you not willing to change?</label><textarea rows="2" placeholder="—"></textarea></div>'+
-    '<div class="ob-nav"><button class="ob-back" onclick="go(1)">← Back</button><button class="btn btn-solid" onclick="go(3)">Submit application</button></div>';
+    '<div class="form-divider">'+T.div+'</div>'+
+    '<div class="field"><label class="q-label"><span class="q-num">II</span>'+T.q2+'</label><textarea rows="2" placeholder="—"></textarea></div>'+
+    '<div class="field"><label class="q-label"><span class="q-num">III</span>'+T.q3+'</label><textarea rows="2" placeholder="—"></textarea></div>'+
+    '<div class="field"><label class="q-label"><span class="q-num">IV</span>'+T.q4+'</label><textarea rows="2" placeholder="—"></textarea></div>'+
+    '<div class="field"><label class="q-label"><span class="q-num">V</span>'+T.q5+'</label><textarea rows="2" placeholder="—"></textarea></div>'+
+    '<div class="field"><label class="q-label"><span class="q-num">VI</span>'+T.q6+'</label><textarea rows="2" placeholder="—"></textarea></div>'+
+    '<div class="ob-nav"><button class="ob-back" data-act="go" data-arg="1">'+T.back+'</button><button class="btn btn-solid" data-act="go" data-arg="3">'+T.submit+'</button></div>';
   }
   if(obStep===3){
-    box.className='ob center';
+    box.className='ob';
     box.innerHTML=prog(3)+
-    '<button class="ob-close" onclick="closeOB()" aria-label="Close">×</button>'+
+    '<button class="ob-close" data-act="closeOB" aria-label="Close">×</button>'+
+    '<span class="eyebrow">'+T.i4+'</span>'+
+    '<h3>'+T.hold+'</h3>'+
+    '<p class="sub">'+T.holdSub+'</p>'+
+    '<div class="dep-card">'+
+      '<span class="dep-no">'+T.plno+'</span>'+
+      '<span class="serif">'+T.dep+'</span>'+
+      '<p>'+T.depP+'</p>'+
+    '</div>'+
+    '<div class="ob-nav"><button class="dep-skip" data-act="dep" data-arg="0">'+T.skip+'</button><button class="btn btn-solid" data-act="dep" data-arg="1">'+T.reserve+'</button></div>';
+  }
+  if(obStep===4){
+    box.className='ob center';
+    box.innerHTML=prog(4)+
+    '<button class="ob-close" data-act="closeOB" aria-label="Close">×</button>'+
     '<div class="done-mark">A</div>'+
-    '<h3>Application received.</h3>'+
-    '<p class="sub" style="max-width:40ch;margin:0 auto 34px">Every application is read by a person. If your season and ours align, you\'ll hear from us within a week — and your intake conversation will be with your programme director, not a form.</p>'+
-    '<button class="btn" onclick="closeOB()">Return to the club</button>';
+    (deposited
+      ? '<h3>'+T.heldT+'</h3><p class="sub" style="max-width:42ch;margin:0 auto 34px">'+T.heldP+'</p>'
+      : '<h3>'+T.recT+'</h3><p class="sub" style="max-width:40ch;margin:0 auto 34px">'+T.recP+'</p>')+
+    '<button class="btn" data-act="closeOB">'+T.ret+'</button>';
   }
 }
 function pick(id){selGoal=id;render();}
 function go(n){obStep=n;render();}
+
+/* ================= NOMINATION ================= */
+const nomOverlay=document.getElementById('nomOverlay');
+function openNom(){
+  document.getElementById('nomForm').style.display='';
+  document.getElementById('nomDone').style.display='none';
+  nomOverlay.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeNom(){nomOverlay.classList.remove('open');document.body.style.overflow='';}
+nomOverlay.addEventListener('click',e=>{if(e.target===nomOverlay)closeNom();});
+function sendNom(){
+  document.getElementById('nomForm').style.display='none';
+  document.getElementById('nomDone').style.display='';
+}
+
+/* ================= DASHBOARD ================= */
+const DB={
+en:{who:"<b>S.K.</b> · Season I — Body composition",week:"Week 7 of 12",prog:58,progL:"Season progress",progR:"Review in 35 days",
+today:"Today",tasks:[["Strength B — 18:30, Etiler floor",true],["Protein target 152 g — 96 g so far",false],["Wind-down 22:45 — screens off",false]],
+event:"Next event",eventName:"Thursday table",eventMeta:"Rooftop, Arnavutköy · 20:00 · <b>nine members · you're in</b>",
+spec:"Specialists",s1:["Dietitian — Sat 11:00","Travel-week adjustments"],s2:["Therapist — fortnightly","Next session Tuesday"],
+spine:"Spine status",bars:[["Training",100,true],["Nutrition",82,false],["Mind",55,false],["Circle",70,false]],
+delta:"Season so far",dline:"<em>−4.6 kg</em> · resting HR −5 · sleep +41 min",
+review:"Season review — Cohort I",reviewMeta:"35 days · measured deltas · witnessed",
+note:"Demonstration only — static data, member preview.",close:"× "},
+tr:{who:"<b>S.K.</b> · Sezon I — Vücut kompozisyonu",week:"12 haftanın 7.si",prog:58,progL:"Sezon ilerlemesi",progR:"Değerlendirmeye 35 gün",
+today:"Bugün",tasks:[["Kuvvet B — 18:30, Etiler salonu",true],["Protein hedefi 152 g — şu ana dek 96 g",false],["Sakinleşme 22:45 — ekranlar kapalı",false]],
+event:"Sıradaki etkinlik",eventName:"Perşembe sofrası",eventMeta:"Çatı katı, Arnavutköy · 20:00 · <b>dokuz üye · içeridesin</b>",
+spec:"Uzmanlar",s1:["Diyetisyen — Cmt 11:00","Seyahat haftası ayarları"],s2:["Terapist — iki haftada bir","Sonraki seans Salı"],
+spine:"Omurga durumu",bars:[["Antrenman",100,true],["Beslenme",82,false],["Zihin",55,false],["Çevre",70,false]],
+delta:"Sezon şu ana dek",dline:"<em>−4,6 kg</em> · dinlenik nabız −5 · uyku +41 dk",
+review:"Sezon değerlendirmesi — Kohort I",reviewMeta:"35 gün · ölçülmüş farklar · tanıklı",
+note:"Yalnızca gösterim — statik veri, üye önizlemesi.",close:"× "}};
+const dashEl=document.getElementById('dash');
+function openDash(){dashEl.classList.add('open');document.body.style.overflow='hidden';renderDash();}
+function closeDash(){dashEl.classList.remove('open');document.body.style.overflow='';}
+function renderDash(){
+  const D=DB[lang];
+  document.getElementById('dashWho').innerHTML=D.who;
+  document.getElementById('dashWeek').textContent=D.week;
+  const b=document.getElementById('dashBody');
+  b.innerHTML=`
+    <div class="dash-prog"><i id="dashFill" data-w="${D.prog}"></i></div>
+    <div class="dash-prog-lbl"><span>${D.progL}</span><span>${D.progR}</span></div>
+    <div class="dash-grid">
+      <div class="dcard"><h4>${D.today}</h4>
+        ${D.tasks.map((t,i)=>`<div class="dtask${t[1]?' done':''}" data-act="task"><span class="box"></span><span>${t[0]}</span></div>`).join('')}
+      </div>
+      <div class="dcard devent"><h4>${D.event}</h4>
+        <span class="serif">${D.eventName}</span>
+        <p>${D.eventMeta}</p>
+      </div>
+      <div class="dcard"><h4>${D.spec}</h4>
+        <div class="dspec">${D.s1[0]}<small>${D.s1[1]}</small></div>
+        <div class="dspec">${D.s2[0]}<small>${D.s2[1]}</small></div>
+      </div>
+      <div class="dcard"><h4>${D.spine}</h4>
+        ${D.bars.map(x=>`<div class="dbar"><div class="lbl"><span>${x[0]}</span><span>${x[1]}%</span></div><div class="rail"><div class="fill${x[2]?' copper':''}" data-w="${x[1]}"></div></div></div>`).join('')}
+      </div>
+      <div class="dcard" style="grid-column:1/-1"><h4>${D.delta}</h4>
+        <div class="ddelta">${D.dline}</div>
+      </div>
+      <div class="dreview"><span class="serif">${D.review}</span><p>${D.reviewMeta}</p></div>
+    </div>
+    <div class="dash-note">${D.note}</div>`;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const f=document.getElementById('dashFill');
+    f.style.width=f.dataset.w+'%';
+    b.querySelectorAll('.dbar .fill').forEach((x,i)=>setTimeout(()=>{x.style.width=x.dataset.w+'%';},120+i*90));
+  }));
+}
+
+/* ================= INIT ================= */
+initI18n();
+paintNodeLabels();
+const _paint=paintNodeLabels;
+const _setLang=setLang;
+setLang=function(l){_setLang(l);_paint();};
+renderJourney('weight');
+
+/* ================= LUX LAYER ================= */
+document.body.classList.add('preloading');
+
+/* ---------- delegated actions (no inline handlers: CSP-safe) ---------- */
+document.addEventListener('click', e=>{
+  const el = e.target.closest('[data-act]');
+  if(!el) return;
+  const arg = el.dataset.arg;
+  switch(el.dataset.act){
+    case 'openOB': openOB(); break;
+    case 'closeOB': closeOB(); break;
+    case 'openNom': openNom(); break;
+    case 'closeNom': closeNom(); break;
+    case 'sendNom': sendNom(); break;
+    case 'openDash': openDash(); break;
+    case 'closeDash': closeDash(); break;
+    case 'menu': toggleMenu(); break;
+    case 'menuNav': if(document.body.classList.contains('menu-open')) toggleMenu(); break;
+    case 'menuApply': e.preventDefault(); if(document.body.classList.contains('menu-open')) toggleMenu(); openOB(); break;
+    case 'lang': setLang(lang==='en' ? 'tr' : 'en'); break;
+    case 'go': go(+arg); break;
+    case 'pick': pick(arg); break;
+    case 'dep': deposited = (arg === '1'); go(4); break;
+    case 'task': el.classList.toggle('done'); break;
+  }
+});
+
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FINE = matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+/* ---------- hero split-text ---------- */
+function splitHero(){
+  const h = document.getElementById('heroH1');
+  if(!h) return;
+  h.classList.remove('ld','ld2');
+  h.style.opacity = 1;
+  const frag = document.createDocumentFragment();
+  let wi = 0;
+  const wrapWords = (text, styled) => {
+    text.split(/(\s+)/).forEach(part=>{
+      if(!part) return;
+      if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(' ')); return; }
+      const mask = document.createElement('span'); mask.className = 'wsplit';
+      const w = document.createElement('span'); w.textContent = part;
+      if(styled) w.style.color = 'var(--copper)';
+      w.style.transitionDelay = (0.15 + wi*0.075) + 's';
+      if(splitHero.replay && !RM) w.style.transform = 'translateY(118%)';
+      mask.appendChild(w); frag.appendChild(mask); wi++;
+    });
+  };
+  [...h.childNodes].forEach(n=>{
+    if(n.nodeType === 3) wrapWords(n.textContent, false);
+    else if(n.nodeType === 1) wrapWords(n.textContent, true);
+  });
+  h.textContent = ''; h.appendChild(frag);
+  if(splitHero.replay && !RM){
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      h.querySelectorAll('.wsplit>span').forEach(w=>{ w.style.transform = ''; });
+    }));
+  }
+}
+splitHero();
+splitHero.replay = true;
+const _setLangLux = setLang;
+setLang = function(l){
+  _setLangLux(l);
+  splitHero();
+  document.title = (l === 'tr') ? 'ATLAS — İstanbul' : 'ATLAS — Istanbul';
+};
+/* open in Turkish for Turkish-language devices */
+try{
+  if(typeof navigator !== 'undefined' && (navigator.language||'').toLowerCase().startsWith('tr') && lang === 'en'){
+    setLang('tr');
+  }
+}catch(e){}
+
+/* ---------- preloader sequence ---------- */
+(function(){
+  const pl = document.getElementById('preloader');
+  const finish = ()=>{
+    pl.classList.add('done');
+    document.body.classList.remove('preloading');
+    document.body.classList.add('loaded');
+    setTimeout(()=>pl.remove(), 1400);
+  };
+  if(RM){ pl.remove(); document.body.classList.remove('preloading'); document.body.classList.add('loaded'); return; }
+  setTimeout(finish, 2150);
+})();
+
+/* ---------- scroll: progress + hero parallax + nav ---------- */
+const progFill = document.getElementById('progFill');
+const heroInner = document.querySelector('.hero-inner');
+const scrollHint = document.querySelector('.scroll-hint');
+const sfEls = [...document.querySelectorAll('.sec-head,.band,.final,.house')];
+const plxEls = [...document.querySelectorAll('[data-plx]')];
+let ticking = false;
+function onLuxScroll(){
+  const vh = innerHeight;
+  const max = document.documentElement.scrollHeight - vh;
+  progFill.style.transform = 'scaleX(' + (max>0 ? scrollY/max : 0) + ')';
+  if(!RM && heroInner && scrollY < vh*1.2){
+    heroInner.style.transform = 'translateY(' + scrollY*0.22 + 'px)';
+    heroInner.style.opacity = Math.max(0, 1 - scrollY/(vh*0.8));
+    if(scrollHint) scrollHint.style.opacity = Math.max(0, 1 - scrollY/220);
+  }
+  /* headlines dissolve slowly as they leave the top of the screen */
+  if(!RM){
+    const start = vh*0.40, end = vh*0.06;
+    sfEls.forEach(el=>{
+      const r = el.getBoundingClientRect();
+      if(r.bottom > start + 80 && !el._sf) return;
+      let o = (r.bottom - end)/(start - end);
+      o = Math.max(0, Math.min(1, o));
+      if(o < 1){
+        el.style.opacity = o;
+        el.style.transform = 'translateY(' + (-(1-o)*28) + 'px)';
+        el.style.filter = 'blur(' + ((1-o)*5).toFixed(2) + 'px)';
+        el._sf = true;
+      } else if(el._sf){
+        el.style.opacity = ''; el.style.transform = ''; el.style.filter = '';
+        el._sf = false;
+      }
+    });
+    /* depth layers drift at their own speed */
+    plxEls.forEach(el=>{
+      const s = parseFloat(el.dataset.plx);
+      const r = el.getBoundingClientRect();
+      const cur = el._plx || 0;
+      const off = ((r.top + r.height/2 - cur) - vh/2) * s;
+      el.style.transform = 'translateY(' + off.toFixed(1) + 'px)';
+      el._plx = off;
+    });
+  }
+  ticking = false;
+}
+addEventListener('scroll', ()=>{ if(!ticking){ requestAnimationFrame(onLuxScroll); ticking = true; } }, {passive:true});
+addEventListener('resize', ()=>{ if(!ticking){ requestAnimationFrame(onLuxScroll); ticking = true; } }, {passive:true});
+
+/* ---------- marquee leans with scroll velocity ---------- */
+if(!RM){
+  const strip = document.querySelector('.strip');
+  if(strip){
+    let lastY = scrollY, vel = 0;
+    (function lean(){
+      const dy = scrollY - lastY; lastY = scrollY;
+      vel += (dy - vel)*0.1;
+      const skew = Math.max(-6, Math.min(6, vel*0.4));
+      strip.style.transform = 'skewX(' + (-skew).toFixed(2) + 'deg)';
+      requestAnimationFrame(lean);
+    })();
+  }
+}
+
+/* ---------- custom cursor ---------- */
+if(FINE && !RM){
+  document.body.classList.add('cursor-on');
+  const dot = document.getElementById('cur'), ring = document.getElementById('curRing');
+  let mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my;
+  addEventListener('pointermove', e=>{
+    mx = e.clientX; my = e.clientY;
+    dot.style.transform = 'translate(' + (mx) + 'px,' + (my) + 'px) translate(-50%,-50%)';
+    const t = e.target;
+    ring.classList.toggle('hov', !!t.closest('a,button,.node,.chip,.goal-tab,input,select,textarea,label,.tier,.wrow,.marker,.linklike'));
+  }, {passive:true});
+  addEventListener('pointerdown', ()=>ring.classList.add('press'));
+  addEventListener('pointerup', ()=>ring.classList.remove('press'));
+  document.documentElement.addEventListener('mouseleave', ()=>document.body.classList.remove('cursor-on'));
+  document.documentElement.addEventListener('mouseenter', ()=>document.body.classList.add('cursor-on'));
+  (function follow(){
+    rx += (mx-rx)*0.16; ry += (my-ry)*0.16;
+    ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
+    requestAnimationFrame(follow);
+  })();
+}
+
+/* ---------- magnetic buttons ---------- */
+if(FINE && !RM){
+  document.querySelectorAll('.btn').forEach(b=>{
+    b.addEventListener('pointermove', e=>{
+      const r = b.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width/2), dy = e.clientY - (r.top + r.height/2);
+      b.classList.remove('unmag');
+      b.style.transform = 'translate(' + dx*0.18 + 'px,' + dy*0.28 + 'px)';
+    });
+    b.addEventListener('pointerleave', ()=>{ b.classList.add('unmag'); b.style.transform = ''; });
+  });
+}
+
+/* ---------- card spotlight ---------- */
+if(FINE){
+  document.querySelectorAll('.tier,.pillar,.marker').forEach(c=>{
+    c.addEventListener('pointermove', e=>{
+      const r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', (e.clientX-r.left)+'px');
+      c.style.setProperty('--my', (e.clientY-r.top)+'px');
+    }, {passive:true});
+  });
+}
+
+/* ---------- dossier tilt ---------- */
+if(FINE && !RM){
+  const d = document.getElementById('dossier');
+  if(d){
+    d.addEventListener('pointermove', e=>{
+      const r = d.getBoundingClientRect();
+      const px = (e.clientX-r.left)/r.width - .5, py = (e.clientY-r.top)/r.height - .5;
+      d.style.transform = 'perspective(1100px) rotateX(' + (-py*2.4) + 'deg) rotateY(' + (px*2.8) + 'deg)';
+    }, {passive:true});
+    d.addEventListener('pointerleave', ()=>{ d.style.transform = ''; });
+  }
+}
 </script>
 </body>
 </html>
