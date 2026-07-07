@@ -9,12 +9,28 @@
 <meta property="og:title" content="ATLAS — Istanbul">
 <meta property="og:description" content="The place where effort still compounds. A members' club: seven domains, one season, witnessed.">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="ATLAS — Istanbul">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="tr_TR">
+<meta property="og:image" content="/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ATLAS — Istanbul">
+<meta name="twitter:description" content="The place where effort still compounds. A members' club: seven domains, one season, witnessed.">
+<meta name="twitter:image" content="/og-image.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230C1A1D'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23C08552' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Albert+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/lux.css">
+<noscript><style>
+  /* without JS the reveal observer never fires — show everything */
+  .rv{opacity:1;transform:none;filter:none}
+  h2.rv{clip-path:none}
+  .wsplit>span{transform:none}
+</style></noscript>
 </head>
 <body>
 
@@ -40,13 +56,13 @@
     <a href="#evidence" class="hidenav" data-i18n="nav-evidence">The Evidence</a>
     <a href="#membership" class="hidenav" data-i18n="nav-membership">Membership</a>
     <a href="#city" class="hidenav" data-i18n="nav-city">The City</a>
-    <button class="lang-btn" data-act="lang" aria-label="Türkçe / English">TR</button>
-    <button class="btn" data-act="openOB" data-i18n="nav-apply">Apply</button>
-    <button class="burger" aria-label="Menu" aria-expanded="false" data-act="menu"><i></i><i></i><i></i></button>
+    <button type="button" class="lang-btn" data-act="lang" aria-label="Türkçe / English">TR</button>
+    <button type="button" class="btn" data-act="openOB" data-i18n="nav-apply">Apply</button>
+    <button type="button" class="burger" aria-label="Menu" aria-expanded="false" data-act="menu"><i></i><i></i><i></i></button>
   </div>
 </nav>
 
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Menu">
   <a href="#map" data-act="menuNav" data-i18n="nav-club">The Club</a>
   <a href="#journey" data-act="menuNav" data-i18n="nav-journey">The Journey</a>
   <a href="#gatherings" data-act="menuNav" data-i18n="nav-gather">Gatherings</a>
@@ -65,12 +81,14 @@
     <div class="hero-witness ld ld4" data-i18n="hero-witness">One season · One thing changed · Witnessed</div>
     <p class="hero-sub ld ld5" data-i18n="hero-sub">Whatever you came to change — weight, presence, sleep, your circle — it never travels alone. Atlas is a private club in Istanbul where every part of that work happens in one place, among people doing the same.</p>
     <div class="hero-cta ld ld6">
-      <button class="btn btn-solid" data-act="openOB" data-i18n="hero-cta">Begin your application</button>
+      <button type="button" class="btn btn-solid" data-act="openOB" data-i18n="hero-cta">Begin your application</button>
       <span class="hero-note" data-i18n="hero-note">Founding cohort · <b>23 of 120 places held</b> · Bebek · Arnavutköy · Etiler · Nişantaşı</span>
     </div>
   </div>
   <div class="scroll-hint" aria-hidden="true"></div>
 </header>
+
+<main>
 
 <div class="strip" aria-hidden="true">
   <div class="strip-track" data-i18n="strip">
@@ -89,7 +107,7 @@
       <div id="const-caption" class="rv rv-d4"><span class="cap-body" data-i18n="cap-default"><span class="serif">Explore the map</span>Select a domain to see its hidden dependencies.</span></div>
     </div>
     <div class="rv rv-d2">
-      <svg viewBox="0 0 480 480" role="img" aria-label="Interactive map of seven connected life domains" id="constSvg" data-plx="0.05">
+      <svg viewBox="0 0 480 480" role="group" aria-label="Interactive map of seven connected life domains" id="constSvg" data-plx="0.05">
         <g id="edges"></g>
         <g id="nodes"></g>
       </svg>
@@ -138,9 +156,9 @@
     </div>
 
     <div class="goal-tabs rv rv-d2" role="tablist" aria-label="Entry goals">
-      <button class="goal-tab" role="tab" aria-selected="true" data-goal="weight" data-i18n="tab-weight">"I want to lose 8 kg"</button>
-      <button class="goal-tab" role="tab" aria-selected="false" data-goal="presence" data-i18n="tab-presence">"I want to command a room"</button>
-      <button class="goal-tab" role="tab" aria-selected="false" data-goal="sleep" data-i18n="tab-sleep">"I want my energy back"</button>
+      <button type="button" class="goal-tab" role="tab" aria-selected="true" data-goal="weight" data-i18n="tab-weight">"I want to lose 8 kg"</button>
+      <button type="button" class="goal-tab" role="tab" aria-selected="false" data-goal="presence" data-i18n="tab-presence">"I want to command a room"</button>
+      <button type="button" class="goal-tab" role="tab" aria-selected="false" data-goal="sleep" data-i18n="tab-sleep">"I want my energy back"</button>
     </div>
 
     <div class="spine-grid">
@@ -290,7 +308,7 @@
           <li>Two member events monthly</li>
           <li>Community access</li>
         </ul>
-        <button class="btn" data-act="openOB" data-i18n="t1-btn">Apply for Core</button>
+        <button type="button" class="btn" data-act="openOB" data-i18n="t1-btn">Apply for Core</button>
       </div>
       <div class="tier featured rv rv-d1">
         <span class="serif">Circle</span>
@@ -303,7 +321,7 @@
           <li>Quarterly bloodwork &amp; review</li>
           <li>Introductions programme, when ready</li>
         </ul>
-        <button class="btn btn-solid" data-act="openOB" data-i18n="t2-btn">Apply for Circle</button>
+        <button type="button" class="btn btn-solid" data-act="openOB" data-i18n="t2-btn">Apply for Circle</button>
       </div>
       <div class="tier rv rv-d2">
         <span class="serif">Patron</span>
@@ -315,7 +333,7 @@
           <li>A dedicated programme director</li>
           <li>Hosted dinners &amp; travel</li>
         </ul>
-        <button class="btn" data-act="openOB" data-i18n="t3-btn">Apply for Patron</button>
+        <button type="button" class="btn" data-act="openOB" data-i18n="t3-btn">Apply for Patron</button>
       </div>
     </div>
     <p class="tier-note rv" data-i18n="tier-note">Admission is by application. The founding cohort is limited to 120 members across Bebek, Arnavutköy, Etiler and Nişantaşı. A season costs less than its parts — therapist, trainer, dietitian and bloodwork bought separately — and unlike them, it compounds.</p>
@@ -339,7 +357,7 @@
   <span class="eyebrow rv" data-i18n="nom-eyebrow">The door opens from inside</span>
   <span class="serif rv rv-d1" data-i18n="nom-serif">Every member may put <em>one name</em> forward, once a season.</span>
   <p class="rv rv-d2" data-i18n="nom-p">Nominations are read like applications — the member vouches, the room decides. There is no other fast lane into Atlas.</p>
-  <button class="btn rv rv-d3" data-act="openNom" data-i18n="nom-btn">Nominate someone</button>
+  <button type="button" class="btn rv rv-d3" data-act="openNom" data-i18n="nom-btn">Nominate someone</button>
 </div>
 
 <section id="city">
@@ -364,13 +382,15 @@
   <span class="eyebrow rv" style="display:block;margin-bottom:18px" data-i18n="fin-eyebrow">Founding cohort · Autumn 2026</span>
   <h2 class="rv rv-d1" data-i18n="fin-h2">Change one thing. Watch the rest follow.</h2>
   <p class="rv rv-d2" data-i18n="fin-p">Twenty-three of the founding 120 places are already held. <b>We're not selecting for where you are — we're selecting for whether you move.</b> The intake takes ten honest minutes.</p>
-  <button class="btn btn-solid rv rv-d3" data-act="openOB" data-i18n="fin-btn">Begin your application</button>
+  <button type="button" class="btn btn-solid rv rv-d3" data-act="openOB" data-i18n="fin-btn">Begin your application</button>
 </div>
+
+</main>
 
 <footer>
   <span data-i18n="f-left">ATLAS · Istanbul — preview prototype</span>
   <span>Bebek · Arnavutköy · Etiler · Nişantaşı</span>
-  <button class="linklike" data-act="openDash" data-i18n="f-preview">Member preview →</button>
+  <button type="button" class="linklike" data-act="openDash" data-i18n="f-preview">Member preview →</button>
 </footer>
 
 <!-- APPLICATION -->
@@ -381,21 +401,21 @@
 <!-- NOMINATION -->
 <div class="overlay" id="nomOverlay" role="dialog" aria-modal="true" aria-label="Nomination">
   <div class="ob" id="nomBox">
-    <button class="ob-close" data-act="closeNom" aria-label="Close">×</button>
+    <button type="button" class="ob-close" data-act="closeNom" aria-label="Close">×</button>
     <div id="nomForm">
       <span class="eyebrow" data-i18n="nomf-eyebrow">Nomination · one per season</span>
       <h3 data-i18n="nomf-h3">Put a name forward</h3>
       <p class="sub" data-i18n="nomf-sub">You vouch, the room decides. If accepted, the invitation to apply reaches them from you — never from us.</p>
-      <div class="field"><label for="n-name" data-i18n="nomf-f1">Their name</label><input id="n-name" autocomplete="off" placeholder="—"></div>
+      <div class="field"><label for="n-name" data-i18n="nomf-f1">Their name</label><input type="text" id="n-name" autocomplete="off" placeholder="—"></div>
       <div class="field"><label for="n-why" data-i18n="nomf-f2">Why them — one honest line</label><textarea id="n-why" rows="2" placeholder="—"></textarea></div>
-      <div class="field"><label for="n-you" data-i18n="nomf-f3">Your name (member)</label><input id="n-you" autocomplete="off" placeholder="—"></div>
-      <div class="ob-nav"><span></span><button class="btn btn-solid" data-act="sendNom" data-i18n="nomf-send">Send nomination</button></div>
+      <div class="field"><label for="n-you" data-i18n="nomf-f3">Your name (member)</label><input type="text" id="n-you" autocomplete="off" placeholder="—"></div>
+      <div class="ob-nav"><span></span><button type="button" class="btn btn-solid" data-act="sendNom" data-i18n="nomf-send">Send nomination</button></div>
     </div>
     <div id="nomDone" style="display:none;text-align:center">
       <div class="done-mark">A</div>
       <h3 data-i18n="nomd-h3">Nomination received.</h3>
       <p class="sub" style="max-width:40ch;margin:0 auto 34px" data-i18n="nomd-p">It will be read like an application. If the room agrees, they'll receive an invitation to apply — carrying your name, not ours.</p>
-      <button class="btn" data-act="closeNom" data-i18n="nomd-ret">Return to the club</button>
+      <button type="button" class="btn" data-act="closeNom" data-i18n="nomd-ret">Return to the club</button>
     </div>
   </div>
 </div>
@@ -407,7 +427,7 @@
     <div class="who" id="dashWho"></div>
     <div style="display:flex;gap:12px;align-items:center">
       <span class="dash-week" id="dashWeek"></span>
-      <button class="lang-btn" data-act="closeDash" id="dashClose">×</button>
+      <button type="button" class="lang-btn" data-act="closeDash" id="dashClose">×</button>
     </div>
   </div>
   <div class="dash-body" id="dashBody"></div>

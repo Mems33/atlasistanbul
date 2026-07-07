@@ -48,4 +48,10 @@ vercel --prod        # production URL
 
 Or connect the GitHub repo at https://vercel.com/new for automatic deploys
 on every push. There is no build step — Vercel serves the files as-is
-(`vercel.json` pins `framework: null`).
+(`vercel.json` pins `framework: null`, and adds security headers incl. a
+Content-Security-Policy the code is already compatible with).
+
+After the first deploy, replace the relative `/og-image.png` in the two
+`og:image`/`twitter:image` meta tags with the absolute URL
+(e.g. `https://your-domain.vercel.app/og-image.png`) — most link-preview
+scrapers require an absolute URL.
